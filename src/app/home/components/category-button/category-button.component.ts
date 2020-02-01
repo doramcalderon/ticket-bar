@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { Category } from '../../model/category.model';
+import { Category } from '../../../common/model/category.model';
 
 @Component({
     selector: 'tb-category-button',
