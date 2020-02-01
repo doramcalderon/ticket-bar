@@ -8,6 +8,8 @@ import { CartComponent } from './components/cart/cart.component';
     styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+    public total = 0;
+
     constructor(public modalController: ModalController) {}
 
     async openCart() {
