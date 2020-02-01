@@ -1,4 +1,4 @@
-<ion-button [color]="category.color" size="large" expand="block">
+<ion-button [color]="category.color" [routerLink]="['/category-detail', category.id]" size="large" expand="block">
     <ion-icon [name]="category.icon" slot="start"></ion-icon>
     {{ category.name }}
 </ion-button>
