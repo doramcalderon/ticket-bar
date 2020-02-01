@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Category } from './model/category.model';
-import { HomeService } from './services/home.service';
+import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { CartComponent } from './components/cart/cart.component';
 
 @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
-    public categories: Array<Category>;
+export class HomePage {
+    constructor(public modalController: ModalController) {}
 
-    constructor(private homeService: HomeService) {}
-
-    ngOnInit() {
-        this.categories = this.homeService.loadCategories();
+    async openCart() {
+        const modal = await this.modalController.create({
+            component: CartComponent,
+        });
+        return await modal.present();
     }
 }
