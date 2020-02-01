@@ -5,10 +5,11 @@ import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
 import { CategoryButtonComponent } from './components/category-button/category-button.component';
+import { CategoriesListComponent } from './components/categories-list/categories-list.component';
 import { HomeRoutingModule } from './home-routing.module';
 
 @NgModule({
-    declarations: [HomePage, CategoryButtonComponent],
     imports: [CommonModule, FormsModule, IonicModule, HomeRoutingModule],
+    declarations: [HomePage, CategoryButtonComponent, CategoriesListComponent],
 })
 export class HomePageModule {}
