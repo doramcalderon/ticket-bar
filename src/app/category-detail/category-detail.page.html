@@ -4,10 +4,7 @@
             <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>{{ category?.name }}</ion-title>
-        <ion-chip slot="end">
-            <ion-icon name="cart"></ion-icon>
-            <ion-badge>{{ total }}</ion-badge>
-        </ion-chip>
+        <tb-cart-button slot="end"></tb-cart-button>
     </ion-toolbar>
 </ion-header>
 

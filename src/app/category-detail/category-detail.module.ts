@@ -10,12 +10,7 @@ import { CategoryDetailPage } from './category-detail.page';
 import { CartModule } from '../cart/cart.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    CategoryDetailPageRoutingModule
-  ],
-  declarations: [CategoryDetailPage]
+    imports: [CommonModule, FormsModule, IonicModule, CategoryDetailPageRoutingModule, CartModule],
+    declarations: [CategoryDetailPage],
 })
 export class CategoryDetailPageModule {}

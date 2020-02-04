@@ -14,9 +14,8 @@ import { Observable } from 'rxjs';
 export class CategoryDetailPage implements OnInit {
     category: Category;
     summary: { [type: string]: number } = {};
-    total = 0;
 
-    constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) {}
+    constructor(private route: ActivatedRoute, private categoriesService: CategoriesService, private cartService: CartService) {}
 
     ngOnInit() {
         this.route.paramMap.pipe(map(params => this.categoriesService.getCategory(params.get('categoryId')))).subscribe(c => {
@@ -28,7 +27,8 @@ export class CategoryDetailPage implements OnInit {
     public addTicket(type: TicketType) {
         console.log('ticket click', type);
         this.summary[type.name]++;
-        this.total++;
+
+        this.cartService.addTicket(type);
     }
 
     private initSummary() {
