@@ -7,10 +7,12 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromCart from '../cart/store/cart.reducer';
 import { CartComponent } from './components/cart/cart.component';
+import { CartButtonComponent } from './components/cart-button/cart-button.component';
 
 @NgModule({
     imports: [CommonModule, FormsModule, IonicModule, StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer)],
-    declarations: [CartComponent],
+    declarations: [CartComponent, CartButtonComponent],
     entryComponents: [CartComponent],
+    exports: [CartButtonComponent],
 })
 export class CartModule {}
