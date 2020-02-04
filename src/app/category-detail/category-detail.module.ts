@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CategoryDetailPageRoutingModule } from './category-detail-routing.module';
 
 import { CategoryDetailPage } from './category-detail.page';
+import { CartModule } from '../cart/cart.module';
 
 @NgModule({
   imports: [

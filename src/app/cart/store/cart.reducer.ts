@@ -1,4 +1,4 @@
-import { Action, createReducer, on, State } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import * as CartActions from './cart.actions';
 import { Cart } from './cart.model';
 

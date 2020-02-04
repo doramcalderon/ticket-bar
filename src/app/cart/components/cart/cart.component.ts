@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CartService } from './store/cart.service';
+import { CartService } from '../../store/cart.service';
 import { Observable } from 'rxjs';
-import { TicketType } from 'src/app/common/model/category.model';
+import { TicketType } from '../../../common/model/category.model';
 
 @Component({
-    selector: 'app-cart',
+    selector: 'tb-cart',
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss'],
 })

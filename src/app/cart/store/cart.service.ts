@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { TicketType } from '../../../../common/model/category.model';
+import { TicketType } from '../../common/model/category.model';
 import * as CartActions from './cart.actions';
 import { Cart } from './cart.model';
 import * as CartSelectors from './cart.selectors';
@@ -23,5 +23,9 @@ export class CartService {
 
     public getSelectCartTickets(): Observable<TicketType[]> {
         return this.store.select(CartSelectors.selectCartTickets);
+    }
+
+    public getTotal(): Observable<number> {
+        return this.store.select(CartSelectors.selectCartTotal);
     }
 }
