@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Category, TicketType } from '../common/model/category.model';
 import { ActivatedRoute } from '@angular/router';
-import { CategoriesService } from '../common/services/categories.service';
+
 import { map } from 'rxjs/operators';
+
 import { CartService } from '../cart/store/cart.service';
-import { Observable } from 'rxjs';
+import { Category, TicketType } from '../common/model/category.model';
+import { CategoriesService } from '../common/services/categories.service';
 
 @Component({
     selector: 'tb-category-detail',
@@ -32,8 +33,10 @@ export class CategoryDetailPage implements OnInit {
     }
 
     private initSummary() {
-        this.category.tickets.forEach(ticketType => {
-            this.summary[ticketType.name] = 0;
-        });
+        if (!!this.category.tickets) {
+            this.category.tickets.forEach(ticketType => {
+                this.summary[ticketType.name] = 0;
+            });
+        }
     }
 }
