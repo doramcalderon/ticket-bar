@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { TicketType } from '../../common/model/category.model';
+import { Ticket } from './cart.model';
 
 export const loadCart = createAction('[Cart] Load Cart');
 
@@ -7,4 +7,4 @@ export const loadCartSuccess = createAction('[Cart] Load Cart Success', props<{ 
 
 export const loadCartFailure = createAction('[Cart] Load Cart Failure', props<{ error: any }>());
 
-export const addTicket = createAction('[Cart] Add Ticket', props<{ ticket: TicketType }>());
+export const addTicket = createAction('[Cart] Add Ticket', props<{ ticket: Ticket }>());

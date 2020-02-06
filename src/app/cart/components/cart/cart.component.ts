@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CartService } from '../../store/cart.service';
+
 import { Observable } from 'rxjs';
-import { TicketType } from '../../../common/model/category.model';
+
+import { Ticket } from '../../store/cart.model';
+import { CartService } from '../../store/cart.service';
 
 @Component({
     selector: 'tb-cart',
@@ -10,7 +12,7 @@ import { TicketType } from '../../../common/model/category.model';
     styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-    public cartTickets$: Observable<TicketType[]>;
+    public cartTickets$: Observable<Ticket[]>;
     constructor(private modalCtrl: ModalController, private cartService: CartService) {}
 
     ngOnInit() {

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+
 import { Observable } from 'rxjs';
 
-import { TicketType } from '../../common/model/category.model';
 import * as CartActions from './cart.actions';
-import { Cart } from './cart.model';
+import { Cart, Ticket } from './cart.model';
 import * as CartSelectors from './cart.selectors';
 
 @Injectable({
@@ -17,11 +17,11 @@ export class CartService {
         this.store.dispatch(CartActions.loadCart());
     }
 
-    public addTicket(ticket: TicketType) {
+    public addTicket(ticket: Ticket) {
         this.store.dispatch(CartActions.addTicket({ ticket }));
     }
 
-    public getSelectCartTickets(): Observable<TicketType[]> {
+    public getSelectCartTickets(): Observable<Ticket[]> {
         return this.store.select(CartSelectors.selectCartTickets);
     }
 

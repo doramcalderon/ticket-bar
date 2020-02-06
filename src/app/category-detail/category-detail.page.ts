@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { map } from 'rxjs/operators';
 
+import { Ticket } from '../cart/store/cart.model';
 import { CartService } from '../cart/store/cart.service';
 import { Category, TicketType } from '../common/model/category.model';
 import { CategoriesService } from '../common/services/categories.service';
@@ -26,10 +27,7 @@ export class CategoryDetailPage implements OnInit {
     }
 
     public addTicket(type: TicketType) {
-        console.log('ticket click', type);
-        this.summary[type.name]++;
-
-        this.cartService.addTicket(type);
+        this.cartService.addTicket({ type, category: this.category });
     }
 
     private initSummary() {
