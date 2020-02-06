@@ -1,4 +1,4 @@
-import { TicketType } from '../../common/model/category.model';
+import { Ticket } from './cart.model';
 import * as fromCart from './cart.reducer';
 import { selectCartState, selectCartTickets, selectCartTotal } from './cart.selectors';
 
@@ -11,7 +11,7 @@ describe('Cart Selectors', () => {
     });
 
     it('should select the cart tickets', () => {
-        const tickets: TicketType[] = selectCartTickets({ cart: { cart: { tickets: [] } } });
+        const tickets: Ticket[] = selectCartTickets({ cart: { cart: { tickets: [] } } });
         expect(tickets).toEqual([]);
     });
 
