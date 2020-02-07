@@ -1,15 +1,26 @@
 import { Action, createReducer, on } from '@ngrx/store';
+
+import { Category } from '../../common/model/category.model';
 import * as CartActions from './cart.actions';
-import { Cart } from './cart.model';
+import { Ticket } from './cart.model';
 
 export const cartFeatureKey = 'cart';
 
+interface TicketSummary {
+    [type: string]: { ticket: Ticket; units?: number; total?: number };
+}
+export interface CategorySummary {
+    category?: Category;
+    tickets?: TicketSummary;
+}
+
 export interface CartState {
-    cart: Cart;
+    summary?: { [category: string]: CategorySummary };
+    ticketsCount?: number;
 }
 
 export const initialState: CartState = {
-    cart: { tickets: [] },
+    ticketsCount: 0,
 };
 
 const cartReducer = createReducer(
@@ -18,14 +29,46 @@ const cartReducer = createReducer(
     on(CartActions.loadCart, state => state),
     on(CartActions.loadCartSuccess, (state, action) => state),
     on(CartActions.loadCartFailure, (state, action) => state),
-    on(CartActions.addTicket, (state, action) => {
-        return {
-            cart: {
-                tickets: state.cart.tickets.concat(action.ticket),
-            },
-        };
-    }),
+    on(CartActions.addTicket, (state: CartState, action) => addTicketToState(state, action.ticket)),
 );
+
+const addTicketToState = (state: CartState, ticket: Ticket): CartState => {
+    const category: Category = ticket.category;
+    const categorySumm: CategorySummary = !!state.summary && state.summary[category.name] ? state.summary[category.name] : {};
+    const ticketSumm: TicketSummary = !!state.summary && state.summary[category.name] ? state.summary[category.name].tickets : {};
+
+    return {
+        summary: {
+            ...state.summary,
+            [category.name]: {
+                ...categorySumm,
+                category,
+                tickets: createOrUpdateTicketSummary(ticket, ticketSumm),
+            },
+        },
+        ticketsCount: state.ticketsCount + 1,
+    };
+};
+
+/**
+ * If the ticket type not already exists in the tickets summary, this is created.
+ * Otherwise, the units and total are updated.
+ */
+const createOrUpdateTicketSummary = (ticket: Ticket, ticketsSumm: TicketSummary): TicketSummary => {
+    const ticketType: string = ticket.type.name;
+    const ticketTypeFound: { ticket: Ticket; units?: number; total?: number } = ticketsSumm[ticketType];
+
+    const units: number = !!ticketTypeFound ? ticketTypeFound.units + 1 : 1;
+    const total: number = ticket.type.price * units;
+    return {
+        ...ticketsSumm,
+        [ticket.type.name]: {
+            ticket,
+            units,
+            total,
+        },
+    };
+};
 
 export function reducer(state: CartState | undefined, action: Action) {
     return cartReducer(state, action);

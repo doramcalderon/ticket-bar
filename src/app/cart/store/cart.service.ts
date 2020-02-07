@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import * as CartActions from './cart.actions';
 import { Cart, Ticket } from './cart.model';
 import * as CartSelectors from './cart.selectors';
+import { CartState } from './cart.reducer';
 
 @Injectable({
     providedIn: 'root',
@@ -21,11 +22,11 @@ export class CartService {
         this.store.dispatch(CartActions.addTicket({ ticket }));
     }
 
-    public getSelectCartTickets(): Observable<Ticket[]> {
-        return this.store.select(CartSelectors.selectCartTickets);
-    }
-
     public getTotal(): Observable<number> {
         return this.store.select(CartSelectors.selectCartTotal);
+    }
+
+    public getCart(): Observable<CartState> {
+        return this.store.select(CartSelectors.selectCartState);
     }
 }
