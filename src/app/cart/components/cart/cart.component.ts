@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { Observable } from 'rxjs';
-
-import { Ticket } from '../../store/cart.model';
+import { CategorySummary } from '../../store/cart.reducer';
 import { CartService } from '../../store/cart.service';
 
 @Component({
@@ -12,11 +10,16 @@ import { CartService } from '../../store/cart.service';
     styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-    public cartTickets$: Observable<Ticket[]>;
+    public cartStateSummary: { [category: string]: CategorySummary } = {};
+
     constructor(private modalCtrl: ModalController, private cartService: CartService) {}
 
     ngOnInit() {
-        this.cartTickets$ = this.cartService.getSelectCartTickets();
+        this.cartService.getCart().subscribe({
+            next: cartState => {
+                this.cartStateSummary = cartState.summary;
+            },
+        });
     }
 
     public dismiss() {

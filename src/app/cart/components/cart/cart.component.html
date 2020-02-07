@@ -10,13 +10,35 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-list>
-        <ion-item *ngFor="let ticket of cartTickets$ | async">
-            <ion-avatar slot="start">
-                <ion-icon [name]="ticket.category.icon" size="large"></ion-icon>
-            </ion-avatar>
-            <ion-label>{{ ticket.type.name }}</ion-label>
-            <div class="item-note" slot="end">{{ ticket.type.price }} €</div>
+    <ion-list *ngFor="let categorySumm of cartStateSummary | keyvalue">
+        <ion-list-header>
+            <div class="category-title">
+                <ion-icon [name]="categorySumm.value.category.icon"></ion-icon>
+                <ion-label>{{ categorySumm.key }}</ion-label>
+            </div>
+        </ion-list-header>
+        <ion-item *ngFor="let typeTickets of categorySumm.value.tickets | keyvalue">
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <tb-ticket [ticket]="typeTickets.value.ticket"></tb-ticket>
+                    </ion-col>
+                    <ion-col>
+                        <ion-label> X {{ typeTickets.value.units }}</ion-label>
+                    </ion-col>
+                    <ion-col> = {{ typeTickets.value.total }} € </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-item>
     </ion-list>
+    <!-- <ion-list>
+        <ion-item *ngFor="let item of ticketsByType | keyvalue">
+            <ion-avatar slot="start">
+                <ion-icon [name]="item.value.ticket.category.icon" size="large"></ion-icon>
+            </ion-avatar>
+            <ion-label>{{ item.key }}</ion-label>
+            <div class="item-note" slot="end">{{ item.value.units }}</div>
+            <div class="item-note" slot="end">{{ item.value.total }} €</div>
+        </ion-item>
+    </ion-list> -->
 </ion-content>
