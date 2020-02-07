@@ -1,0 +1,29 @@
+ion-card {
+    width: 16rem;
+}
+.ticket-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ticket-content {
+    display: flex;
+    align-items: flex-end;
+
+    ion-label {
+        font-size: 1.4rem;
+    }
+    ion-icon {
+        padding-right: 1rem;
+    }
+}
+.ticket-price {
+    display: block;
+    float: right;
+
+    ion-label {
+        font-size: x-large;
+        font-weight: bold;
+        padding-left: 1rem;
+    }
+}

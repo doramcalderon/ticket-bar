@@ -1,0 +1,14 @@
+<ion-card>
+    <ion-card-header>
+        <ion-label>Kiosko El Korner</ion-label>
+    </ion-card-header>
+    <ion-card-content *ngIf="!!ticket">
+        <div class="ticket-content">
+            <ion-icon [name]="ticket.category.icon" size="large"></ion-icon>
+            <ion-label>{{ ticket.type.name | uppercase }}</ion-label>
+        </div>
+        <div class="ticket-price">
+            <ion-label slot="end">{{ ticket.type.price }} €</ion-label>
+        </div>
+    </ion-card-content>
+</ion-card>
