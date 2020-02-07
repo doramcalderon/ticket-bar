@@ -15,7 +15,22 @@ describe('Cart Reducer', () => {
 
     describe('`[Cart] Add Ticket action`', () => {
         it('should return the state with the ticket selected added', () => {
-            const state: CartState = { cart: { tickets: [] } };
+            const state: CartState = { ticketsCount: 0 };
+            const expectedState: CartState = {
+                ticketsCount: 1,
+                summary: {
+                    bar: {
+                        category: { id: 'foo', name: 'bar' },
+                        tickets: {
+                            foo: {
+                                ticket: { type: { name: 'foo', price: 4 }, category: { id: 'foo', name: 'bar' } },
+                                units: 1,
+                                total: 4,
+                            },
+                        },
+                    },
+                },
+            };
             const ticket: Ticket = {
                 type: { name: 'foo', price: 4 },
                 category: { id: 'foo', name: 'bar' },
@@ -25,7 +40,7 @@ describe('Cart Reducer', () => {
             });
             const newState: CartState = reducer(state, addTicketAction);
 
-            expect(newState).toEqual({ cart: { tickets: [ticket] } });
+            expect(newState).toEqual(expectedState);
         });
     });
 });
