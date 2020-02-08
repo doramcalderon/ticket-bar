@@ -6,7 +6,7 @@ import { Ticket } from './cart.model';
 
 export const cartFeatureKey = 'cart';
 
-interface TicketSummary {
+export interface TicketSummary {
     [type: string]: { ticket: Ticket; units?: number; total?: number };
 }
 export interface CategorySummary {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Ticket } from '../cart/store/cart.model';
 import { CartService } from '../cart/store/cart.service';
 import { Category, TicketType } from '../common/model/category.model';
 import { CategoriesService } from '../common/services/categories.service';
@@ -16,6 +16,7 @@ import { CategoriesService } from '../common/services/categories.service';
 export class CategoryDetailPage implements OnInit {
     category: Category;
     summary: { [type: string]: number } = {};
+    ticketsCountByType$: { [type: string]: Observable<number> } = {};
 
     constructor(private route: ActivatedRoute, private categoriesService: CategoriesService, private cartService: CartService) {}
 
@@ -33,7 +34,7 @@ export class CategoryDetailPage implements OnInit {
     private initSummary() {
         if (!!this.category.tickets) {
             this.category.tickets.forEach(ticketType => {
-                this.summary[ticketType.name] = 0;
+                this.ticketsCountByType$[ticketType.name] = this.cartService.getTicketsTypeCount(ticketType);
             });
         }
     }

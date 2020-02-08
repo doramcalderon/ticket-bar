@@ -16,7 +16,7 @@
                     <ion-card-header>
                         <ion-item lines="none">
                             <ion-label>{{ ticketType.name }}</ion-label>
-                            <ion-badge slot="end">{{ summary[ticketType.name] }}</ion-badge>
+                            <ion-badge slot="end">{{ ticketsCountByType$[ticketType.name] | async }}</ion-badge>
                         </ion-item>
                     </ion-card-header>
                     <ion-card-content><ion-label class="price">{{ ticketType.price }} €</ion-label></ion-card-content>

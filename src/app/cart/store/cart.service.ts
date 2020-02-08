@@ -3,10 +3,11 @@ import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 
+import { TicketType } from '../../common/model/category.model';
 import * as CartActions from './cart.actions';
 import { Cart, Ticket } from './cart.model';
-import * as CartSelectors from './cart.selectors';
 import { CartState } from './cart.reducer';
+import * as CartSelectors from './cart.selectors';
 
 @Injectable({
     providedIn: 'root',
@@ -24,6 +25,10 @@ export class CartService {
 
     public getTotal(): Observable<number> {
         return this.store.select(CartSelectors.selectCartTotal);
+    }
+
+    public getTicketsTypeCount(ticketType: TicketType): Observable<number> {
+        return this.store.select(CartSelectors.selectTicketsTypeCount, ticketType.name);
     }
 
     public getCart(): Observable<CartState> {

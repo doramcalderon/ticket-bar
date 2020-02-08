@@ -1,5 +1,5 @@
 import * as fromCart from './cart.reducer';
-import { selectCartState, selectCartTotal } from './cart.selectors';
+import { selectCartState, selectCartTotal, selectTicketsTypeCount } from './cart.selectors';
 
 describe('Cart Selectors', () => {
     const emptyCartState: fromCart.CartState = { ticketsCount: 0 };
@@ -33,5 +33,10 @@ describe('Cart Selectors', () => {
     it('should select the cart tickets length when there is tickets in the cart', () => {
         const total: number = selectCartTotal.projector(cartState);
         expect(total).toEqual(1);
+    });
+
+    it('should count the tickets of a type', () => {
+        const ticketTypeCount: number = selectTicketsTypeCount.projector(cartState, 'foo');
+        expect(ticketTypeCount).toEqual(1);
     });
 });
