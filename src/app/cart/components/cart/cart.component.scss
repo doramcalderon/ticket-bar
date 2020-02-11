@@ -7,3 +7,21 @@
         padding-right: 1rem;
     }
 }
+
+.input-units {
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
+    text-align: right;
+}
+.input-units::before {
+    content: 'X';
+}
+
+ion-col {
+    display: flex;
+    justify-content: flex-end;
+
+    * {
+        align-self: flex-end;
+    }
+}
