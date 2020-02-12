@@ -20,7 +20,7 @@
         <ion-item *ngFor="let typeTickets of categorySumm.value.tickets | keyvalue">
             <ion-grid>
                 <ion-row>
-                    <ion-col>
+                    <ion-col size-sm size="12">
                         <tb-ticket [ticket]="typeTickets.value.ticket"></tb-ticket>
                     </ion-col>
                     <ion-col>
