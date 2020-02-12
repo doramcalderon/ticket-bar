@@ -7,4 +7,6 @@ export const loadCartSuccess = createAction('[Cart] Load Cart Success', props<{ 
 
 export const loadCartFailure = createAction('[Cart] Load Cart Failure', props<{ error: any }>());
 
-export const addTicket = createAction('[Cart] Add Ticket', props<{ ticket: Ticket }>());
+export const addTicket = createAction('[Cart] Add Ticket', props<{ ticket: Ticket; count?: number }>());
+
+export const setTicketsNumber = createAction('[Cart] Set Tickets Number', props<{ ticket: Ticket; count: number }>());

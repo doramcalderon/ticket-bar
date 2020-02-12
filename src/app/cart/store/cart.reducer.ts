@@ -29,10 +29,10 @@ const cartReducer = createReducer(
     on(CartActions.loadCart, state => state),
     on(CartActions.loadCartSuccess, (state, action) => state),
     on(CartActions.loadCartFailure, (state, action) => state),
-    on(CartActions.addTicket, (state: CartState, action) => addTicketToState(state, action.ticket)),
+    on(CartActions.addTicket, (state: CartState, action) => addTicketToState(state, action.ticket, action.count)),
 );
 
-const addTicketToState = (state: CartState, ticket: Ticket): CartState => {
+const addTicketToState = (state: CartState, ticket: Ticket, count?: number): CartState => {
     const category: Category = ticket.category;
     const categorySumm: CategorySummary = !!state.summary && state.summary[category.name] ? state.summary[category.name] : {};
     const ticketSumm: TicketSummary = !!state.summary && state.summary[category.name] ? state.summary[category.name].tickets : {};
@@ -43,10 +43,10 @@ const addTicketToState = (state: CartState, ticket: Ticket): CartState => {
             [category.name]: {
                 ...categorySumm,
                 category,
-                tickets: createOrUpdateTicketSummary(ticket, ticketSumm),
+                tickets: createOrUpdateTicketSummary(ticket, ticketSumm, count),
             },
         },
-        ticketsCount: state.ticketsCount + 1,
+        ticketsCount: !!count ? count : state.ticketsCount + 1,
     };
 };
 
@@ -54,11 +54,11 @@ const addTicketToState = (state: CartState, ticket: Ticket): CartState => {
  * If the ticket type not already exists in the tickets summary, this is created.
  * Otherwise, the units and total are updated.
  */
-const createOrUpdateTicketSummary = (ticket: Ticket, ticketsSumm: TicketSummary): TicketSummary => {
+const createOrUpdateTicketSummary = (ticket: Ticket, ticketsSumm: TicketSummary, count?: number): TicketSummary => {
     const ticketType: string = ticket.type.name;
     const ticketTypeFound: { ticket: Ticket; units?: number; total?: number } = ticketsSumm[ticketType];
 
-    const units: number = !!ticketTypeFound ? ticketTypeFound.units + 1 : 1;
+    const units: number = !!count ? count : !!ticketTypeFound ? ticketTypeFound.units + 1 : 1;
     const total: number = ticket.type.price * units;
     return {
         ...ticketsSumm,

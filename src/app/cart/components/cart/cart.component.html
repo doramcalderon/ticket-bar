@@ -24,7 +24,13 @@
                         <tb-ticket [ticket]="typeTickets.value.ticket"></tb-ticket>
                     </ion-col>
                     <ion-col>
-                        <ion-input class="input-units" type="number" [value]="typeTickets.value.units" min="1"></ion-input>
+                        <ion-input
+                            class="input-units"
+                            type="number"
+                            min="1"
+                            [value]="typeTickets.value.units"
+                            (ionChange)="unitsChange($event, typeTickets.value.ticket)"
+                        ></ion-input>
                     </ion-col>
                     <ion-col>
                         <ion-label> = {{ typeTickets.value.total }} € </ion-label>

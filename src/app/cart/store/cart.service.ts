@@ -19,8 +19,8 @@ export class CartService {
         this.store.dispatch(CartActions.loadCart());
     }
 
-    public addTicket(ticket: Ticket) {
-        this.store.dispatch(CartActions.addTicket({ ticket }));
+    public addTicket(ticket: Ticket, count?: number) {
+        this.store.dispatch(CartActions.addTicket({ ticket, count }));
     }
 
     public getTotal(): Observable<number> {

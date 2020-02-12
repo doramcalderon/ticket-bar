@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
+import { Ticket } from '../../store/cart.model';
 import { CategorySummary } from '../../store/cart.reducer';
 import { CartService } from '../../store/cart.service';
 
@@ -24,5 +25,9 @@ export class CartComponent implements OnInit {
 
     public dismiss() {
         this.modalCtrl.dismiss();
+    }
+
+    public unitsChange(event: CustomEvent, ticket: Ticket): void {
+        this.cartService.addTicket(ticket, +event.detail.value);
     }
 }
