@@ -30,4 +30,8 @@ export class CartComponent implements OnInit {
     public unitsChange(event: CustomEvent, ticket: Ticket): void {
         this.cartService.addTicket(ticket, +event.detail.value);
     }
+
+    public deleteTicket(ticket: Ticket): void {
+        this.cartService.removeTicket(ticket);
+    }
 }
