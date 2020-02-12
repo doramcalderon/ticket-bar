@@ -30,7 +30,46 @@ const cartReducer = createReducer(
     on(CartActions.loadCartSuccess, (state, action) => state),
     on(CartActions.loadCartFailure, (state, action) => state),
     on(CartActions.addTicket, (state: CartState, action) => addTicketToState(state, action.ticket, action.count)),
+    on(CartActions.deleteTicket, (state: CartState, action) => deleteTicketFromState(state, action.ticket)),
 );
+
+/**
+ * Delete all tickets of a ticket type from the state.
+ * @param state Current state.
+ * @param ticket Ticket.
+ */
+const deleteTicketFromState = (state: CartState, ticket: Ticket): CartState => {
+    const categoryName: string = ticket.category.name;
+    const categorySumm: CategorySummary = { ...state.summary[categoryName] };
+    const tickets: TicketSummary = !!categorySumm ? { ...categorySumm.tickets } : undefined;
+
+    const ticketsCount = state.ticketsCount - countTicketsByType(ticket.type.name, tickets);
+    if (!!tickets) {
+        delete tickets[ticket.type.name];
+    }
+
+    const isTicketsEmtpty = Object.keys(tickets).length === 0;
+
+    if (isTicketsEmtpty) {
+        const summary: { [category: string]: CategorySummary } = { ...state.summary };
+        delete summary[categoryName];
+        return {
+            summary,
+            ticketsCount,
+        };
+    } else {
+        return {
+            summary: {
+                ...state.summary,
+                [categoryName]: {
+                    ...categorySumm,
+                    tickets,
+                },
+            },
+            ticketsCount,
+        };
+    }
+};
 
 const addTicketToState = (state: CartState, ticket: Ticket, count?: number): CartState => {
     const category: Category = ticket.category;
@@ -68,6 +107,14 @@ const createOrUpdateTicketSummary = (ticket: Ticket, ticketsSumm: TicketSummary,
             total,
         },
     };
+};
+
+const countTicketsByType = (ticketType: string, ticketSummary: TicketSummary): number => {
+    return !!ticketSummary
+        ? Object.keys(ticketSummary)
+              .filter(tt => tt === ticketType)
+              .reduce((count, tt) => ticketSummary[tt].units + count, 0)
+        : 0;
 };
 
 export function reducer(state: CartState | undefined, action: Action) {

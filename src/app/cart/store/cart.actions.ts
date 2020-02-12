@@ -9,4 +9,4 @@ export const loadCartFailure = createAction('[Cart] Load Cart Failure', props<{ 
 
 export const addTicket = createAction('[Cart] Add Ticket', props<{ ticket: Ticket; count?: number }>());
 
-export const setTicketsNumber = createAction('[Cart] Set Tickets Number', props<{ ticket: Ticket; count: number }>());
+export const deleteTicket = createAction('[Cart] Delete Ticket', props<{ ticket: Ticket }>());

@@ -23,6 +23,10 @@ export class CartService {
         this.store.dispatch(CartActions.addTicket({ ticket, count }));
     }
 
+    public removeTicket(ticket: Ticket): void {
+        this.store.dispatch(CartActions.deleteTicket({ ticket }));
+    }
+
     public getTotal(): Observable<number> {
         return this.store.select(CartSelectors.selectCartTotal);
     }
