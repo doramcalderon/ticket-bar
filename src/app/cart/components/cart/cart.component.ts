@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
+import { Observable } from 'rxjs';
+
 import { Ticket } from '../../store/cart.model';
 import { CategorySummary } from '../../store/cart.reducer';
 import { CartService } from '../../store/cart.service';
@@ -12,6 +14,7 @@ import { CartService } from '../../store/cart.service';
 })
 export class CartComponent implements OnInit {
     public cartStateSummary: { [category: string]: CategorySummary } = {};
+    public cartTotal$: Observable<number>;
 
     constructor(private modalCtrl: ModalController, private cartService: CartService) {}
 
@@ -21,6 +24,7 @@ export class CartComponent implements OnInit {
                 this.cartStateSummary = cartState.summary;
             },
         });
+        this.cartTotal$ = this.cartService.getTotal();
     }
 
     public dismiss() {
