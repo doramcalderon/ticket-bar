@@ -22,7 +22,11 @@ export class TicketTypeCardComponent implements OnInit {
 
     ngOnInit() {}
 
-    public addTicket(type: TicketType) {
-        this.cartService.addTicket({ type, category: this.category });
+    public addTicket() {
+        this.cartService.addTicket({ type: this.type, category: this.category }, this.count);
+    }
+
+    public clear() {
+        this.cartService.removeTicket({ type: this.type, category: this.category });
     }
 }

@@ -1,11 +1,22 @@
-<ion-card button="true" (click)="addTicket(ticketType)">
+<ion-card button="true">
     <ion-card-header>
         <ion-item lines="none">
             <ion-label>{{ type.name }}</ion-label>
-            <ion-badge slot="end">{{ count }}</ion-badge>
         </ion-item>
     </ion-card-header>
     <ion-card-content>
         <ion-label class="price">{{ type.price }} €</ion-label>
+        <ion-toolbar>
+            <ion-buttons slot="end">
+                <ion-button (click)="clear()">
+                    <ion-icon slot="icon-only" name="trash" size="small"></ion-icon>
+                </ion-button>
+                <ion-input type="number" [(ngModel)]="count" min="1"></ion-input>
+                <ion-button color="primary" (click)="addTicket()">
+                    <ion-icon name="pricetag"></ion-icon>
+                    Add Ticket
+                </ion-button>
+            </ion-buttons>
+        </ion-toolbar>
     </ion-card-content>
 </ion-card>

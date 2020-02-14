@@ -5,3 +5,11 @@
 ion-card-header {
     font-size: x-large;
 }
+
+ion-card-content {
+    ion-toolbar {
+        ion-button {
+            text-transform: capitalize;
+        }
+    }
+}
