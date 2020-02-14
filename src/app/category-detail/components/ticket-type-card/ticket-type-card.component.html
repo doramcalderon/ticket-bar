@@ -1,0 +1,11 @@
+<ion-card button="true" (click)="addTicket(ticketType)">
+    <ion-card-header>
+        <ion-item lines="none">
+            <ion-label>{{ type.name }}</ion-label>
+            <ion-badge slot="end">{{ count }}</ion-badge>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-label class="price">{{ type.price }} €</ion-label>
+    </ion-card-content>
+</ion-card>

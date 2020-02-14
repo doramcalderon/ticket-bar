@@ -8,9 +8,10 @@ import { CategoryDetailPageRoutingModule } from './category-detail-routing.modul
 
 import { CategoryDetailPage } from './category-detail.page';
 import { CartModule } from '../cart/cart.module';
+import { TicketTypeCardComponent } from './components/ticket-type-card/ticket-type-card.component';
 
 @NgModule({
     imports: [CommonModule, FormsModule, IonicModule, CategoryDetailPageRoutingModule, CartModule],
-    declarations: [CategoryDetailPage],
+    declarations: [CategoryDetailPage, TicketTypeCardComponent],
 })
 export class CategoryDetailPageModule {}
