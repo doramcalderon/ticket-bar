@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { CartService } from '../cart/store/cart.service';
-import { Category, TicketType } from '../common/model/category.model';
+import { Category } from '../common/model/category.model';
 import { CategoriesService } from '../common/services/categories.service';
 
 @Component({
@@ -25,10 +25,6 @@ export class CategoryDetailPage implements OnInit {
             this.category = c;
             this.initSummary();
         });
-    }
-
-    public addTicket(type: TicketType) {
-        this.cartService.addTicket({ type, category: this.category });
     }
 
     private initSummary() {
