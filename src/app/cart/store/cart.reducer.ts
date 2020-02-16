@@ -71,10 +71,11 @@ const deleteTicketFromState = (state: CartState, ticket: Ticket): CartState => {
     }
 };
 
-const addTicketToState = (state: CartState, ticket: Ticket, count?: number): CartState => {
+const addTicketToState = (state: CartState, ticket: Ticket, count = 1): CartState => {
     const category: Category = ticket.category;
     const categorySumm: CategorySummary = !!state.summary && state.summary[category.name] ? state.summary[category.name] : {};
     const ticketSumm: TicketSummary = !!state.summary && state.summary[category.name] ? state.summary[category.name].tickets : {};
+    const ticketCountByType = countTicketsByType(ticket.type.name, ticketSumm);
 
     return {
         summary: {
@@ -85,7 +86,7 @@ const addTicketToState = (state: CartState, ticket: Ticket, count?: number): Car
                 tickets: createOrUpdateTicketSummary(ticket, ticketSumm, count),
             },
         },
-        ticketsCount: !!count ? count : state.ticketsCount + 1,
+        ticketsCount: state.ticketsCount - ticketCountByType + count,
     };
 };
 
