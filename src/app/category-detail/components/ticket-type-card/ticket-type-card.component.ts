@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-
-import { TicketType, Category } from '../../../common/model/category.model';
+import { Component, Input, OnInit } from '@angular/core';
 import { CartService } from '../../../cart/store/cart.service';
+import { Category, TicketType } from '../../../common/model/category.model';
 
 @Component({
     selector: 'tb-ticket-type-card',
@@ -15,15 +14,39 @@ export class TicketTypeCardComponent implements OnInit {
     @Input()
     public type: TicketType;
 
+    /**
+     * Tickets added to the cart.
+     */
     @Input()
     public count: number;
+
+    /**
+     * Tickets to add.
+     */
+    public ticketsNumber: number;
 
     constructor(private cartService: CartService) {}
 
     ngOnInit() {}
 
-    public addTicket() {
-        this.cartService.addTicket({ type: this.type, category: this.category }, this.count);
+    public addTicket(event: any) {
+        if (!this.ticketsNumber) {
+            this.ticketsNumber = 1;
+        }
+        this.cartService.addTicket({ type: this.type, category: this.category }, this.count + this.ticketsNumber);
+    }
+
+    public removeTicket() {
+        if (!this.ticketsNumber) {
+            this.ticketsNumber = 1;
+        }
+        const ticketsToRemove: number = this.count - this.ticketsNumber;
+
+        if (ticketsToRemove <= 0) {
+            this.clear();
+        } else {
+            this.cartService.addTicket({ type: this.type, category: this.category }, this.count - this.ticketsNumber);
+        }
     }
 
     public clear() {

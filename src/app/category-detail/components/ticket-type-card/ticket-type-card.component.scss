@@ -9,6 +9,9 @@
 .price:after {
     content: ' €';
 }
+ion-card {
+    max-width: 17rem;
+}
 ion-card-header {
     font-size: x-large;
 }
@@ -17,6 +20,9 @@ ion-card-content {
     ion-toolbar {
         ion-button {
             text-transform: capitalize;
+        }
+        ion-input {
+            min-width: 2.5rem;
         }
     }
 }
