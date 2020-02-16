@@ -1,6 +1,13 @@
 .price {
     font-size: x-large;
     padding-left: 20%;
+    // position: absolute;
+    // left: 50%;
+    // right: 50%;
+    // transform: translate(-50%, -50%);
+}
+.price:after {
+    content: ' €';
 }
 ion-card-header {
     font-size: x-large;

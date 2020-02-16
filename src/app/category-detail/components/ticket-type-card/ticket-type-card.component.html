@@ -5,7 +5,7 @@
         </ion-item>
     </ion-card-header>
     <ion-card-content>
-        <ion-label class="price">{{ type.price }} €</ion-label>
+        <ion-label class="price">{{ type.price }}</ion-label>
         <ion-toolbar>
             <ion-buttons slot="end">
                 <ion-button (click)="clear()">
@@ -14,7 +14,7 @@
                 <ion-input type="number" [(ngModel)]="count" min="1"></ion-input>
                 <ion-button color="primary" (click)="addTicket()">
                     <ion-icon name="pricetag"></ion-icon>
-                    Add Ticket
+                    Añadir Ticket
                 </ion-button>
             </ion-buttons>
         </ion-toolbar>
