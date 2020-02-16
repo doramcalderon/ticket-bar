@@ -4,12 +4,29 @@
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
-            Inicio
+            Korner Tickets
         </ion-title>
         <tb-cart-button slot="end"></tb-cart-button>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <tb-categories-list></tb-categories-list>
+    <tb-category-filter [categories]="categories" (select)="filterCategories($event)"></tb-category-filter>
+    <ion-list *ngFor="let category of categoriesSelected">
+        <ion-list-header>
+            <ion-item lines="none">
+                <ion-icon [name]="category.icon" size="large"></ion-icon>
+                <h1>{{ category.name }}</h1>
+            </ion-item>
+        </ion-list-header>
+
+        <ion-grid>
+            <ion-row>
+                <ion-col col-md-4 *ngFor="let ticketType of category.tickets">
+                    <tb-ticket-type-card [category]="category" [type]="ticketType" [count]="ticketsCountByType$[ticketType.name] | async">
+                    </tb-ticket-type-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
 </ion-content>

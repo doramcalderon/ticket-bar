@@ -13,5 +13,6 @@ import { TicketTypeCardComponent } from './components/ticket-type-card/ticket-ty
 @NgModule({
     imports: [CommonModule, FormsModule, IonicModule, CategoryDetailPageRoutingModule, CartModule],
     declarations: [CategoryDetailPage, TicketTypeCardComponent],
+    exports: [TicketTypeCardComponent],
 })
 export class CategoryDetailPageModule {}
