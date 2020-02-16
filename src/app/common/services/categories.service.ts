@@ -17,8 +17,8 @@ export class CategoriesService {
         { name: 'Agua', price: 1 },
     ];
     private readonly categories: Category[] = [
-        { id: '1', name: 'Bebida', icon: 'beer', color: 'food', tickets: this.drinkTickets },
-        { id: '2', name: 'Comida', icon: 'pizza', color: 'drink', tickets: this.foodTickets },
+        { id: '1', name: 'Bebida', icon: 'pint', color: 'food', tickets: this.drinkTickets },
+        { id: '2', name: 'Comida', icon: 'restaurant', color: 'drink', tickets: this.foodTickets },
         { id: '3', name: 'Otros', icon: 'wine', color: 'warning' },
     ];
 
