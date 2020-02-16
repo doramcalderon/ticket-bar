@@ -29,7 +29,7 @@ export class TicketTypeCardComponent implements OnInit {
 
     ngOnInit() {}
 
-    public addTicket(event: any) {
+    public addTicket() {
         if (!this.ticketsNumber) {
             this.ticketsNumber = 1;
         }

@@ -13,12 +13,12 @@
                     <ion-icon name="remove"></ion-icon>
                 </ion-button>
                 <ion-input type="number" [(ngModel)]="ticketsNumber" min="0" placeholder="0"></ion-input>
-                <ion-button (click)="addTicket($event)">
+                <ion-button (click)="addTicket()">
                     <ion-icon name="add"></ion-icon>
                 </ion-button>
             </ion-buttons>
             <ion-buttons slot="end">
-                <ion-button (click)="clear($event)">
+                <ion-button (click)="clear()">
                     <ion-icon slot="icon-only" name="trash" size="small"></ion-icon>
                 </ion-button>
             </ion-buttons>
