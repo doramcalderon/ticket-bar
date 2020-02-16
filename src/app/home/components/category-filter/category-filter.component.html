@@ -1,0 +1,7 @@
+<div class="categories-filter">
+    <ion-chip *ngFor="let category of categories" [outline]="!isSelected(category)" (click)="toggle(category)">
+        <ion-icon [name]="category.icon"></ion-icon>
+        <ion-label>{{ category.name }}</ion-label>
+        <ion-icon name="checkmark" *ngIf="isSelected(category)"></ion-icon>
+    </ion-chip>
+</div>
