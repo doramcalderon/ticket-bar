@@ -49,7 +49,7 @@ describe('AppComponent', () => {
         const app = fixture.nativeElement;
         const menuItems = app.querySelectorAll('ion-label');
         expect(menuItems.length).toEqual(2);
-        expect(menuItems[0].textContent).toContain('Inicio');
+        expect(menuItems[0].textContent).toContain('Korner Tickets');
         expect(menuItems[1].textContent).toContain('Configuracion');
     });
 
