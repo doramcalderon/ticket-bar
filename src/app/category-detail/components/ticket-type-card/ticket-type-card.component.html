@@ -8,17 +8,7 @@
     <ion-card-content>
         <ion-label class="price">{{ type.price }}</ion-label>
         <ion-toolbar>
-            <ion-buttons slot="start" style="max-width: 50%;">
-                <ion-button slot="icon-only" (click)="removeTicket()">
-                    <ion-icon name="remove"></ion-icon>
-                </ion-button>
-                <ion-select [(ngModel)]="ticketsNumber" interface="popover">
-                    <ion-select-option *ngFor="let unit of units" [value]="unit">{{ unit }}</ion-select-option>
-                </ion-select>
-                <ion-button (click)="addTicket()">
-                    <ion-icon name="add"></ion-icon>
-                </ion-button>
-            </ion-buttons>
+            <tb-ticket-units-selector slot="start" (add)="addTicket($event)" (remove)="removeTicket($event)"></tb-ticket-units-selector>
             <ion-buttons slot="end">
                 <ion-button (click)="clear()">
                     <ion-icon slot="icon-only" name="trash" size="small"></ion-icon>

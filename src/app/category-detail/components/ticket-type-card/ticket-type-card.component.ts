@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { CartService } from '../../../cart/store/cart.service';
 import { Category, TicketType } from '../../../common/model/category.model';
 
@@ -20,34 +21,21 @@ export class TicketTypeCardComponent implements OnInit {
     @Input()
     public count: number;
 
-    public units: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    /**
-     * Tickets to add.
-     */
-    public ticketsNumber = 1;
-
     constructor(private cartService: CartService) {}
 
     ngOnInit() {}
 
-    public addTicket() {
-        if (!this.ticketsNumber) {
-            this.ticketsNumber = 1;
-        }
-        this.cartService.addTicket({ type: this.type, category: this.category }, this.count + this.ticketsNumber);
+    public addTicket(ticketsNumber: number) {
+        this.cartService.addTicket({ type: this.type, category: this.category }, this.count + ticketsNumber);
     }
 
-    public removeTicket() {
-        if (!this.ticketsNumber) {
-            this.ticketsNumber = 1;
-        }
-        const ticketsToRemove: number = this.count - this.ticketsNumber;
+    public removeTicket(ticketsNumber: number) {
+        const ticketsToRemove: number = this.count - ticketsNumber;
 
         if (ticketsToRemove <= 0) {
             this.clear();
         } else {
-            this.cartService.addTicket({ type: this.type, category: this.category }, this.count - this.ticketsNumber);
+            this.cartService.addTicket({ type: this.type, category: this.category }, this.count - ticketsNumber);
         }
     }
 
