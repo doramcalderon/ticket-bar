@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-    <tb-category-filter [categories]="categories" (select)="filterCategories($event)"></tb-category-filter>
+    <tb-category-filter [categories]="categories" [multipleSelection]="false" (select)="filterCategories($event)"></tb-category-filter>
     <ion-list *ngFor="let category of categoriesSelected">
         <ion-list-header>
             <ion-item lines="none">

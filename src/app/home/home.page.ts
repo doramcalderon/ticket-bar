@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
 
     ngOnInit() {
         this.categories = this.categoriesService.getAllCategories();
-        this.categoriesSelected = this.categories;
+        this.categoriesSelected = [this.categories[0]];
         this.categories.forEach(c => this.initSummary(c));
     }
 

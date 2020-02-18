@@ -11,6 +11,9 @@ export class CategoryFilterComponent implements OnInit {
     @Input()
     public categories: Category[];
 
+    @Input()
+    public multipleSelection = true;
+
     @Output()
     public select: EventEmitter<Category[]> = new EventEmitter();
 
@@ -19,7 +22,11 @@ export class CategoryFilterComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {
-        this.categoriesSelected = this.categories;
+        if (!this.multipleSelection) {
+            this.categoriesSelected = [this.categories[0]];
+        } else {
+            this.categoriesSelected = this.categories;
+        }
     }
 
     isSelected(category: Category): boolean {
@@ -27,10 +34,19 @@ export class CategoryFilterComponent implements OnInit {
     }
 
     toggle(category: Category): void {
-        this.categoriesSelected = this.isSelected(category)
-            ? this.categoriesSelected.filter(c => c.id !== category.id)
-            : this.categoriesSelected.concat(category);
-
+        if (this.isSelected(category)) {
+            this.unselectCategory(category);
+        } else {
+            this.selectCategory(category);
+        }
         this.select.emit(this.categoriesSelected);
+    }
+
+    private selectCategory(category: Category): void {
+        this.categoriesSelected = this.multipleSelection ? this.categoriesSelected.concat(category) : [category];
+    }
+
+    private unselectCategory(category: Category): void {
+        this.categoriesSelected = this.multipleSelection ? this.categoriesSelected.filter(c => c.id !== category.id) : [];
     }
 }
