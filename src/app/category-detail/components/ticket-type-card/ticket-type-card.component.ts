@@ -20,10 +20,12 @@ export class TicketTypeCardComponent implements OnInit {
     @Input()
     public count: number;
 
+    public units: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
     /**
      * Tickets to add.
      */
-    public ticketsNumber: number;
+    public ticketsNumber = 1;
 
     constructor(private cartService: CartService) {}
 
