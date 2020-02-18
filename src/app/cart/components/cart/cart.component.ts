@@ -15,6 +15,7 @@ import { CartService } from '../../store/cart.service';
 export class CartComponent implements OnInit {
     public cartStateSummary: { [category: string]: CategorySummary } = {};
     public cartTotal$: Observable<number>;
+    public units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     constructor(private modalCtrl: ModalController, private cartService: CartService) {}
 

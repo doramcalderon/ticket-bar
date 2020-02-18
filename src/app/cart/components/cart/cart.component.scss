@@ -9,8 +9,8 @@
 }
 
 .input-units {
-    --padding-top: 0 !important;
-    --padding-bottom: 0 !important;
+    padding: 0;
+    max-width: 100%;
     text-align: right;
 }
 .input-units::before {
