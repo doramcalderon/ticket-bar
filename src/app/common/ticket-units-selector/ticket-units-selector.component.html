@@ -1,0 +1,11 @@
+<ion-buttons>
+    <ion-button slot="icon-only" (click)="removeTicket()" class="button_remove">
+        <ion-icon name="remove"></ion-icon>
+    </ion-button>
+    <ion-select [(ngModel)]="ticketsNumber" interface="popover">
+        <ion-select-option *ngFor="let unit of units" [value]="unit">{{ unit }}</ion-select-option>
+    </ion-select>
+    <ion-button (click)="addTicket()" class="button_add">
+        <ion-icon name="add"></ion-icon>
+    </ion-button>
+</ion-buttons>
