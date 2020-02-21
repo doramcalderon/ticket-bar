@@ -38,4 +38,8 @@ export class CartService {
     public getCart(): Observable<CartState> {
         return this.store.select(CartSelectors.selectCartState);
     }
+
+    public getBill(): Observable<number> {
+        return this.store.select(CartSelectors.selectBill);
+    }
 }

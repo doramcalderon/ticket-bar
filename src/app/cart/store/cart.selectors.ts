@@ -11,6 +11,12 @@ export const selectTicketsTypeCount = createSelector(selectCartState, (state: fr
           )
         : 0,
 );
+export const selectBill = createSelector(selectCartState, (state: fromCart.CartState) => {
+    const ticketsSumm: fromCart.TicketSummary[] = Object.values(state.summary).map(catSummary => catSummary.tickets);
+    const categoryTotal = (ts: fromCart.TicketSummary) =>
+        Object.values(ts).reduce((acc: number, current: any): number => acc + current.total, 0);
+    return ticketsSumm.reduce((acc, current) => acc + categoryTotal(current), 0);
+});
 
 const countTicketsByType = (ticketType: string, ticketSummary: fromCart.TicketSummary): number => {
     return !!ticketSummary

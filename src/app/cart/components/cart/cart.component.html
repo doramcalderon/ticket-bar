@@ -4,8 +4,9 @@
             <ion-button slot="icon-only" (click)="dismiss()"><ion-icon name="close"></ion-icon></ion-button>
         </ion-buttons>
         <ion-title>Resumen</ion-title>
-        <ion-buttons slot="end">
+        <ion-buttons slot="end" collapse="true">
             <ion-button slot="icon-only"><ion-icon name="print"></ion-icon></ion-button>
+            <ion-button slot="icon-only"><ion-icon name="trash" (click)="emptyCart()"></ion-icon></ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -54,3 +55,8 @@
         </div>
     </ng-template>
 </ion-content>
+<ion-footer *ngIf="(cartTotal$ | async) > 0">
+    <ion-item>
+        <h2 slot="end">Total: {{ bill$ | async }} €</h2>
+    </ion-item>
+</ion-footer>
