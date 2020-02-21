@@ -1,4 +1,4 @@
-<div class="categories-filter">
+<div class="categories-filter" *ngIf="!!categories && categories.length > 0">
     <ion-chip *ngFor="let category of categories" [outline]="!isSelected(category)" (click)="toggle(category)">
         <ion-icon [name]="category.icon"></ion-icon>
         <ion-label>{{ category.name }}</ion-label>
