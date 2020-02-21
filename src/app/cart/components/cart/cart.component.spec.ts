@@ -19,6 +19,7 @@ describe('CartComponent', () => {
     const cartServiceStub = {
         getCart: (): Observable<CartState> => of({ ticketsCount: 0 }),
         getTotal: (): Observable<number> => of(0),
+        getBill: (): Observable<number> => of(0),
     };
 
     const cartState: CartState = {
