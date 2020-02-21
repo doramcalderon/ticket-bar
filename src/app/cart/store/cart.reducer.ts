@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { Category } from '../../common/model/category.model';
 import * as CartActions from './cart.actions';
-import { Ticket } from './cart.model';
+import { Ticket, Cart } from './cart.model';
 
 export const cartFeatureKey = 'cart';
 
@@ -29,6 +29,7 @@ const cartReducer = createReducer(
     on(CartActions.loadCart, state => state),
     on(CartActions.loadCartSuccess, (state, action) => state),
     on(CartActions.loadCartFailure, (state, action) => state),
+    on(CartActions.emptyCart, (state: CartState, action) => initialState),
     on(CartActions.addTicket, (state: CartState, action) => addTicketToState(state, action.ticket, action.count)),
     on(CartActions.deleteTicket, (state: CartState, action) => deleteTicketFromState(state, action.ticket)),
 );

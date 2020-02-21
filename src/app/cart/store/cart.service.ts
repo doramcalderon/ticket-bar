@@ -19,6 +19,10 @@ export class CartService {
         this.store.dispatch(CartActions.loadCart());
     }
 
+    public emptyCart() {
+        this.store.dispatch(CartActions.emptyCart());
+    }
+
     public addTicket(ticket: Ticket, count?: number) {
         this.store.dispatch(CartActions.addTicket({ ticket, count }));
     }
