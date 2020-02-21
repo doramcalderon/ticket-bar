@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { AlertController, IonicModule, ModalController } from '@ionic/angular';
 
 import { Observable, of } from 'rxjs';
 
@@ -20,6 +20,15 @@ describe('CartComponent', () => {
         getCart: (): Observable<CartState> => of({ ticketsCount: 0 }),
         getTotal: (): Observable<number> => of(0),
         getBill: (): Observable<number> => of(0),
+    };
+
+    const alertControllerStub = {
+        create: (opts: any): Promise<HTMLIonAlertElement> => {
+            const alert = {
+                present: (): Promise<void> => Promise.resolve(),
+            };
+            return Promise.resolve(alert as HTMLIonAlertElement);
+        },
     };
 
     const cartState: CartState = {
@@ -61,6 +70,7 @@ describe('CartComponent', () => {
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: ModalController, useValue: modalCtrlStub },
+                { provide: AlertController, useValue: alertControllerStub },
                 { provide: CartService, useValue: cartServiceStub },
             ],
         }).compileComponents();

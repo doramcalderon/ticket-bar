@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 import { Observable } from 'rxjs';
 
@@ -18,7 +18,7 @@ export class CartComponent implements OnInit {
     public bill$: Observable<number>;
     public units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-    constructor(private modalCtrl: ModalController, private cartService: CartService) {}
+    constructor(private modalCtrl: ModalController, private cartService: CartService, private alertCtl: AlertController) {}
 
     ngOnInit() {
         this.cartService.getCart().subscribe({
@@ -40,5 +40,30 @@ export class CartComponent implements OnInit {
 
     public deleteTicket(ticket: Ticket): void {
         this.cartService.removeTicket(ticket);
+    }
+
+    public empty(): void {
+        this.cartService.emptyCart();
+    }
+
+    public async confirmEmptyCart(): Promise<void> {
+        const alert = await this.alertCtl.create({
+            header: 'Vaciar carro',
+            message: '¿Estás seguro de que quieres vaciar el carro?',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: blah => {},
+                },
+                {
+                    text: 'OK',
+                    handler: () => this.cartService.emptyCart(),
+                },
+            ],
+        });
+
+        await alert.present();
     }
 }
