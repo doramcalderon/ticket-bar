@@ -2,9 +2,9 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromCart from './cart.reducer';
 
 export const selectCartState = createFeatureSelector<fromCart.CartState>(fromCart.cartFeatureKey);
-export const selectCartTotal = createSelector(selectCartState, (state: fromCart.CartState) => state.ticketsCount);
+export const selectCartTotal = createSelector(selectCartState, (state: fromCart.CartState) => (!!state ? state.ticketsCount : 0));
 export const selectTicketsTypeCount = createSelector(selectCartState, (state: fromCart.CartState, ticketType: string) =>
-    !!state.summary
+    !!state && !!state.summary
         ? Object.keys(state.summary).reduce(
               (acc: number, categoryName) => acc + countTicketsByType(ticketType, state.summary[categoryName].tickets),
               0,

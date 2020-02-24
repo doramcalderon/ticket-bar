@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { CartService } from '../../../cart/store/cart.service';
-import { Category, TicketType } from '../../../common/model/category.model';
+import { Category, TicketType } from '../../model/category.model';
 
 @Component({
     selector: 'tb-ticket-type-card',

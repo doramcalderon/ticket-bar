@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 
 import { CartButtonComponent } from './cart-button.component';
 import { Observable, of } from 'rxjs';
-import { CartService } from '../../store/cart.service';
+import { CartService } from '../../../cart/store/cart.service';
 
 describe('CartButtonComponent', () => {
     let component: CartButtonComponent;

@@ -1,17 +1,21 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-button slot="icon-only" (click)="dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+            <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>Resumen</ion-title>
         <ion-buttons slot="end" collapse="true">
-            <ion-button slot="icon-only"><ion-icon name="print"></ion-icon></ion-button>
-            <ion-button slot="icon-only" (click)="confirmEmptyCart()"><ion-icon name="trash"></ion-icon></ion-button>
+            <ion-button slot="icon-only">
+                <ion-icon name="print"> </ion-icon>
+            </ion-button>
+            <ion-button slot="icon-only" (click)="confirmEmptyCart()">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div *ngIf="(cartTotal$ | async) > 0; else emptyCart">
+    <div *ngIf="(cartTotal$ | async) > 0; else emptyCart" id="tickets-list">
         <ion-list *ngFor="let categorySumm of cartStateSummary | keyvalue">
             <ion-list-header>
                 <div class="category-title">

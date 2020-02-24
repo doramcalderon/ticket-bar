@@ -1,16 +1,17 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
-import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AlertController, IonicModule } from '@ionic/angular';
 
 import { Observable, of } from 'rxjs';
 
-import { CartState } from '../../store/cart.reducer';
-import { CartService } from '../../store/cart.service';
-import { CartComponent } from './cart.component';
+import { CartPage } from './cart.page';
+import { CartState } from './store/cart.reducer';
+import { CartService } from './store/cart.service';
 
-describe('CartComponent', () => {
-    let component: CartComponent;
-    let fixture: ComponentFixture<CartComponent>;
+describe('CartPage', () => {
+    let component: CartPage;
+    let fixture: ComponentFixture<CartPage>;
     let service: CartService;
 
     const modalCtrlStub = {
@@ -65,17 +66,16 @@ describe('CartComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [CartComponent],
-            imports: [IonicModule.forRoot()],
+            declarations: [CartPage],
+            imports: [IonicModule.forRoot(), RouterTestingModule],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                { provide: ModalController, useValue: modalCtrlStub },
                 { provide: AlertController, useValue: alertControllerStub },
                 { provide: CartService, useValue: cartServiceStub },
             ],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(CartComponent);
+        fixture = TestBed.createComponent(CartPage);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));
