@@ -4,13 +4,21 @@
             <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>Resumen</ion-title>
+
         <ion-buttons slot="end" collapse="true">
-            <ion-button slot="icon-only">
+            <button
+                ion-button
+                ngxPrint
+                printSectionId="print-section"
+                styleSheetFile="assets/css/cart-preview.css"
+                slot="icon-only"
+                class="print-button"
+            >
                 <ion-icon name="print"> </ion-icon>
-            </ion-button>
-            <ion-button slot="icon-only" (click)="confirmEmptyCart()">
+            </button>
+            <button ion-button slot="icon-only" (click)="confirmEmptyCart()">
                 <ion-icon name="trash"></ion-icon>
-            </ion-button>
+            </button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
