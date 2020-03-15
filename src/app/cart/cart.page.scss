@@ -53,3 +53,15 @@ ion-col {
         align-self: flex-end;
     }
 }
+
+@media screen {
+    #print-section {
+        display: none;
+    }
+}
+
+@media print {
+    tb-cart-preview {
+        display: block;
+    }
+}

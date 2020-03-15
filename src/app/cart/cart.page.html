@@ -11,6 +11,7 @@
                 ngxPrint
                 printSectionId="print-section"
                 styleSheetFile="assets/css/cart-preview.css"
+                printDelay="200"
                 slot="icon-only"
                 class="print-button"
             >
@@ -23,7 +24,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div *ngIf="(cartTotal$ | async) > 0; else emptyCart" id="tickets-list">
+    <div *ngIf="(cartTotal$ | async) > 0; else emptyCart">
         <ion-list *ngFor="let categorySumm of cartStateSummary | keyvalue">
             <ion-list-header>
                 <div class="category-title">
@@ -66,6 +67,9 @@
             <ion-label>No hay tickets seleccionados</ion-label>
         </div>
     </ng-template>
+    <div id="print-section">
+        <tb-cart-preview [cartStateSummary]="cartStateSummary"></tb-cart-preview>
+    </div>
 </ion-content>
 <ion-footer *ngIf="(cartTotal$ | async) > 0">
     <ion-item>
