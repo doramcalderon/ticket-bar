@@ -1,0 +1,73 @@
+@media print {
+    ion-item {
+        display: block;
+        border-bottom: 1px;
+        border-bottom-style: dashed;
+        height: auto;
+    }
+
+    ion-card {
+        font-family: Roboto, 'Helvetica Neue', sans-serif;
+        width: 16rem;
+        height: 12rem;
+        display: block;
+        border: 1px;
+        border-style: outset;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        page-break-inside: avoid;
+    }
+    ion-card-content {
+        display: flex;
+        flex-wrap: row;
+        padding-inline-start: 16px;
+        padding-inline-end: 16px;
+    }
+
+    .ticket-title {
+        padding: 1rem;
+        display: block;
+        font-size: large;
+    }
+
+    .ticket-content {
+        padding-inline-start: 1rem;
+        padding-inline-end: 1rem;
+        flex-grow: 2;
+    }
+
+    /** Image **/
+    .ticket-image {
+        display: flex;
+    }
+
+    /* ion-thumbnail > img {
+        width: 8rem;
+        height: 8rem;
+    } */
+
+    /** Name **/
+    .ticket-name {
+        font-size: large;
+        border-bottom-style: ridge;
+        display: flex;
+        justify-content: center;
+    }
+
+    /** Price **/
+    .ticket-price {
+        display: flex;
+        justify-content: center;
+        border-bottom-style: ridge;
+        font-size: xx-large;
+        font-weight: bold;
+        padding: 1rem;
+    }
+
+    /** ID **/
+    .ticket-id {
+        display: flex;
+        justify-content: right;
+        padding-top: 0.5rem;
+    }
+}

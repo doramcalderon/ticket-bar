@@ -7,10 +7,11 @@ import { NgxPrintModule } from 'ngx-print';
 
 import { CartPageRoutingModule } from './cart-routing.module';
 import { CartPage } from './cart.page';
+import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
 import { TicketComponent } from './components/ticket/ticket.component';
 
 @NgModule({
     imports: [CommonModule, FormsModule, IonicModule, NgxPrintModule, CartPageRoutingModule],
-    declarations: [CartPage, TicketComponent],
+    declarations: [CartPage, TicketComponent, CartPreviewComponent],
 })
 export class CartPageModule {}
