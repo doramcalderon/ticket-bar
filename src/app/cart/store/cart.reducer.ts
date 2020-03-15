@@ -2,7 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 
 import { Category } from '../../common/model/category.model';
 import * as CartActions from './cart.actions';
-import { Ticket, Cart } from './cart.model';
+import { Ticket } from './cart.model';
 
 export const cartFeatureKey = 'cart';
 
