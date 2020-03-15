@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 import { CategoriesService } from '../common/services/categories.service';
 import { CartService } from '../cart/store/cart.service';
 import { TicketType } from '../common/model/category.model';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HomePage', () => {
     let component: HomePage;
@@ -22,7 +23,7 @@ describe('HomePage', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [HomePage],
-            imports: [IonicModule.forRoot()],
+            imports: [IonicModule.forRoot(), RouterTestingModule],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: CategoriesService, useValue: categoriesServiceStub },
