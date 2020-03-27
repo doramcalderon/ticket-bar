@@ -1,5 +1,7 @@
 {
   "name": "ticket-bar",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
