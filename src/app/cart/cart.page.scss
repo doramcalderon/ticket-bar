@@ -54,12 +54,6 @@ ion-col {
     }
 }
 
-@media screen {
-    #print-section {
-        display: none;
-    }
-}
-
 @media print {
     tb-cart-preview {
         display: block;

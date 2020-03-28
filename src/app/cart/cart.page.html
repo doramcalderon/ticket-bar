@@ -6,10 +6,14 @@
         <ion-title>Resumen</ion-title>
 
         <ion-buttons slot="end" collapse="true">
+            <button *ngIf="isAndroid" ion-button (click)="print()" slot="icon-only" class="print-button">
+                <ion-icon name="print"> </ion-icon>
+            </button>
             <button
+                *ngIf="!isAndroid"
                 ion-button
                 ngxPrint
-                printSectionId="print-section"
+                printSectionId="preview"
                 styleSheetFile="assets/css/cart-preview.css"
                 printDelay="200"
                 slot="icon-only"
@@ -67,8 +71,8 @@
             <ion-label>No hay tickets seleccionados</ion-label>
         </div>
     </ng-template>
-    <div id="print-section">
-        <tb-cart-preview [cartStateSummary]="cartStateSummary"></tb-cart-preview>
+    <div id="preview">
+        <tb-cart-preview #preview [cartStateSummary]="cartStateSummary"></tb-cart-preview>
     </div>
 </ion-content>
 <ion-footer *ngIf="(cartTotal$ | async) > 0">

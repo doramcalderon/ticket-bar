@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AlertController, Platform } from '@ionic/angular';
 
 import { Observable } from 'rxjs';
 
+import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
 import { Ticket } from './store/cart.model';
 import { CategorySummary } from './store/cart.reducer';
 import { CartService } from './store/cart.service';
@@ -17,10 +18,14 @@ export class CartPage implements OnInit {
     public cartTotal$: Observable<number>;
     public bill$: Observable<number>;
     public units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    public isAndroid;
 
-    constructor(private cartService: CartService, private alertCtl: AlertController) {}
+    @ViewChild('preview', { static: true }) preview: CartPreviewComponent;
+
+    constructor(private cartService: CartService, private alertCtl: AlertController, private platform: Platform) {}
 
     ngOnInit() {
+        this.isAndroid = this.platform.is('android');
         this.cartService.getCart().subscribe({
             next: cartState => {
                 this.cartStateSummary = cartState.summary;
@@ -61,5 +66,9 @@ export class CartPage implements OnInit {
         });
 
         await alert.present();
+    }
+
+    public async print(): Promise<void> {
+        this.preview.print();
     }
 }
