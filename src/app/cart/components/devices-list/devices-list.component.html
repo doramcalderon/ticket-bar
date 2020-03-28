@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Dispositivos Bluetooth</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="selectDevice(null)" slot="icon-only">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngIf="!!devices; else noDevices">
+        <ion-item *ngFor="let device of devices" (click)="selectDevice(device)">
+            <ion-label>
+                <h2>{{ device.name }}</h2>
+                <p>{{ device.address }}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+
+    <ng-template #noDevices>
+        <div class="no-devices">
+            <ion-icon name="bluetooth"></ion-icon>
+            <ion-label>No se han encontrado dispositivos emparejados</ion-label>
+        </div>
+    </ng-template>
+</ion-content>
