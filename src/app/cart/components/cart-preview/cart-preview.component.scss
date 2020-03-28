@@ -1,3 +1,71 @@
 ion-thumbnail {
-    --size: 2rem;
+    --size: 32px;
+}
+
+ion-item {
+    display: block;
+    border-bottom: 1px;
+    border-bottom-style: dashed;
+    height: auto;
+}
+
+ion-card {
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+    width: 100%;
+    height: 224px;
+    display: block;
+    border-style: none;
+    margin: 0;
+    page-break-inside: avoid;
+}
+ion-card-content {
+    display: flex;
+    flex-wrap: row;
+    align-items: center;
+    padding-inline-start: 16px;
+    padding-inline-end: 16px;
+}
+
+.ticket-title {
+    padding: 16px;
+    display: block;
+    font-size: large;
+}
+
+.ticket-content {
+    padding-inline-start: 16px;
+    padding-inline-end: 16px;
+    flex-grow: 2;
+}
+
+/** Name **/
+.ticket-name {
+    font-size: xx-large;
+    border-bottom-style: ridge;
+    display: flex;
+    justify-content: center;
+}
+
+/** Price **/
+.ticket-price {
+    display: flex;
+    justify-content: center;
+    border-bottom-style: ridge;
+    font-size: 48px;
+    font-weight: bold;
+    padding: 8px;
+}
+
+/** ID **/
+.ticket-id {
+    display: flex;
+    justify-content: right;
+    padding-top: 8px;
+}
+
+// no visible in app
+.print-section {
+    width: 400px;
+    position: absolute;
+    left: -9999px;
 }

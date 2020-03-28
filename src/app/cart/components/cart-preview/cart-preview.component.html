@@ -1,20 +1,23 @@
-<ion-list>
-    <ion-item *ngFor="let ticket of tickets">
-        <div id="print-section">
+<div class="print-section" #printSection>
+    <ion-list>
+        <ion-item *ngFor="let ticket of tickets">
             <ion-card>
                 <ion-card-header class="ticket-title">
-                    <ion-label>Kiosko El Korner</ion-label>
+                    <ion-label>Kiosko El Corner</ion-label>
                 </ion-card-header>
                 <ion-card-content *ngIf="!!ticket">
-                    <ion-thumbnail class="ticket-image">
-                        <img src="assets/icon/favicon.png" />
-                    </ion-thumbnail>
+                    <div class="ticket-image">
+                        <ion-thumbnail>
+                            <img src="assets/icon/favicon.png" />
+                        </ion-thumbnail>
+                    </div>
+
                     <div class="ticket-content">
                         <ion-label class="ticket-name">{{ ticket.type.name | uppercase }}</ion-label>
                         <ion-label class="ticket-price" slot="end">{{ ticket.type.price }} €</ion-label>
                     </div>
                 </ion-card-content>
             </ion-card>
-        </div>
-    </ion-item>
-</ion-list>
+        </ion-item>
+    </ion-list>
+</div>
