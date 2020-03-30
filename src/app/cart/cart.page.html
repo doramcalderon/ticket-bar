@@ -18,6 +18,7 @@
                 printDelay="200"
                 slot="icon-only"
                 class="print-button"
+                (click)="printFinished()"
             >
                 <ion-icon name="print"> </ion-icon>
             </button>
@@ -72,7 +73,7 @@
         </div>
     </ng-template>
     <div id="preview">
-        <tb-cart-preview #preview [cartStateSummary]="cartStateSummary"></tb-cart-preview>
+        <tb-cart-preview #preview [cartStateSummary]="cartStateSummary" (printFinished)="printFinished()"></tb-cart-preview>
     </div>
 </ion-content>
 <ion-footer *ngIf="(cartTotal$ | async) > 0">

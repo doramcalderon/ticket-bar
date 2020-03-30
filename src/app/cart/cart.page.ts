@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, Platform, NavController } from '@ionic/angular';
 
 import { Observable } from 'rxjs';
 
@@ -22,7 +22,12 @@ export class CartPage implements OnInit {
 
     @ViewChild('preview', { static: true }) preview: CartPreviewComponent;
 
-    constructor(private cartService: CartService, private alertCtl: AlertController, private platform: Platform) {}
+    constructor(
+        private cartService: CartService,
+        private alertCtl: AlertController,
+        private platform: Platform,
+        private navCtrl: NavController,
+    ) {}
 
     ngOnInit() {
         this.isAndroid = this.platform.is('android');
@@ -70,5 +75,28 @@ export class CartPage implements OnInit {
 
     public async print(): Promise<void> {
         this.preview.print();
+    }
+
+    public async printFinished(): Promise<void> {
+        const alert = await this.alertCtl.create({
+            header: 'Vaciar carro',
+            message: 'Impresión finalizada.<br>¿Quieres vaciar el carro?',
+            buttons: [
+                {
+                    text: 'No',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                },
+                {
+                    text: 'Sí',
+                    handler: () => {
+                        this.empty();
+                        this.navCtrl.back();
+                    },
+                },
+            ],
+        });
+
+        await alert.present();
     }
 }

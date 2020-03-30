@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import domToImage from 'dom-to-image';
@@ -17,6 +17,9 @@ import { BTPrinterService } from './btprinter.service';
 export class CartPreviewComponent implements OnInit {
     @Input()
     public cartStateSummary: { [category: string]: CategorySummary } = {};
+    @Output()
+    public printFinished: EventEmitter<void> = new EventEmitter();
+
     @ViewChild('printSection', { static: true }) printSectionElref: ElementRef;
 
     public tickets: Ticket[];
@@ -28,7 +31,9 @@ export class CartPreviewComponent implements OnInit {
     }
 
     public print(): void {
-        this.selectPrinter().then(printer => this.connectAndPrint(printer));
+        this.selectPrinter()
+            .then(printer => this.connectAndPrint(printer))
+            .then(result => this.printFinished.emit());
     }
 
     /**

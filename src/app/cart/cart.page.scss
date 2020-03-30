@@ -53,6 +53,9 @@ ion-col {
         align-self: flex-end;
     }
 }
+.alert-print-finished {
+    text-align: center;
+}
 
 @media print {
     tb-cart-preview {
