@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { AlertController, IonicModule } from '@ionic/angular';
 
 import { Observable, of } from 'rxjs';
@@ -14,8 +15,9 @@ describe('CartPage', () => {
     let fixture: ComponentFixture<CartPage>;
     let service: CartService;
 
-    const modalCtrlStub = {
-        dismiss: (): Promise<boolean> => Promise.resolve(false),
+    const bluetoothSerialStub = {
+        isEnabled: (): Promise<boolean> => Promise.resolve(false),
+        enable: (): Promise<any> => Promise.resolve(),
     };
     const cartServiceStub = {
         getCart: (): Observable<CartState> => of({ ticketsCount: 0 }),
@@ -71,6 +73,7 @@ describe('CartPage', () => {
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: AlertController, useValue: alertControllerStub },
+                { provide: BluetoothSerial, useValue: bluetoothSerialStub },
                 { provide: CartService, useValue: cartServiceStub },
             ],
         }).compileComponents();

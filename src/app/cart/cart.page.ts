@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, Platform, NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+import { AlertController, NavController, Platform, IonButton } from '@ionic/angular';
 
 import { Observable } from 'rxjs';
 
@@ -27,6 +28,7 @@ export class CartPage implements OnInit {
         private alertCtl: AlertController,
         private platform: Platform,
         private navCtrl: NavController,
+        private bluetoothSerial: BluetoothSerial,
     ) {}
 
     ngOnInit() {
@@ -61,7 +63,6 @@ export class CartPage implements OnInit {
                     text: 'Cancelar',
                     role: 'cancel',
                     cssClass: 'secondary',
-                    handler: blah => {},
                 },
                 {
                     text: 'OK',
@@ -73,8 +74,20 @@ export class CartPage implements OnInit {
         await alert.present();
     }
 
-    public async print(): Promise<void> {
-        this.preview.print();
+    public async bluetoothPrinting(): Promise<void> {
+        try {
+            await this.bluetoothSerial.isEnabled();
+            this.preview.print();
+        } catch (error) {
+            // the plugin throws an error when the BT is disabled
+            try {
+                await this.bluetoothSerial.enable();
+                this.preview.print();
+            } catch (error) {
+                // the plugin throws an error when the user does not enable the BT
+                console.warn('The Bluetooth have not been enabled');
+            }
+        }
     }
 
     public async printFinished(): Promise<void> {
