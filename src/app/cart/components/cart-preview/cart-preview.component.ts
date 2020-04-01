@@ -1,13 +1,16 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import domToImage from 'dom-to-image';
 
+import { Keys } from '../../../storage.model';
+import { StorageService } from '../../../storage.service';
 import { Ticket } from '../../store/cart.model';
 import { CartState, CategorySummary, TicketSummary } from '../../store/cart.reducer';
 import { CartService } from '../../store/cart.service';
 import { DevicesListComponent } from '../devices-list/devices-list.component';
 import { BTPrinterService } from './btprinter.service';
+import { BluetoothDevice } from './cart-preview.model';
 
 @Component({
     selector: 'tb-cart-preview',
@@ -24,16 +27,25 @@ export class CartPreviewComponent implements OnInit {
 
     public tickets: Ticket[];
 
-    constructor(private cartService: CartService, private modalCtl: ModalController, private printerService: BTPrinterService) {}
+    constructor(
+        private cartService: CartService,
+        private modalCtl: ModalController,
+        private printerService: BTPrinterService,
+        private storageService: StorageService,
+    ) {}
 
     ngOnInit() {
         this.cartService.getCart().subscribe(state => (this.tickets = this.getTicketsArray(state)));
     }
 
-    public print(): void {
-        this.selectPrinter()
-            .then(printer => this.connectAndPrint(printer))
-            .then(result => this.printFinished.emit());
+    public async print(): Promise<void> {
+        let printer: BluetoothDevice = await this.storageService.getObject(Keys.Printer);
+
+        if (!printer) {
+            printer = (await this.selectPrinter()).data;
+        }
+        await this.connectAndPrint(printer);
+        await this.printFinished.emit();
     }
 
     /**
@@ -49,11 +61,11 @@ export class CartPreviewComponent implements OnInit {
     }
 
     private async connectAndPrint(printer: any): Promise<any> {
-        if (!!printer.data) {
+        if (!!printer) {
             const cartPreviewNode: HTMLElement = this.printSectionElref.nativeElement;
             const base64Img = await domToImage.toPng(cartPreviewNode, { style: { position: 'relative', left: '0px', top: '0px' } });
 
-            return this.printerService.connectAndPrint(printer.data, base64Img);
+            return this.printerService.connectAndPrint(printer, base64Img);
         } else {
             return Promise.reject('No printer selected');
         }

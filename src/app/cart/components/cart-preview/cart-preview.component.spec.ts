@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 
 import { Observable, of } from 'rxjs';
 
+import { StorageService } from '../../../storage.service';
 import { CartState } from '../../store/cart.reducer';
 import { CartService } from '../../store/cart.service';
 import { CartPreviewComponent } from './cart-preview.component';
@@ -24,6 +25,9 @@ describe('CartPreviewComponent', () => {
     const printerServiceStub = {
         connectAndPrint: (printer: any, base64Img: string) => Promise.resolve(),
     };
+    const storageServiceStub = {
+        getObject: (key: string) => Promise.resolve({}),
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -32,6 +36,7 @@ describe('CartPreviewComponent', () => {
             providers: [
                 { provide: CartService, useValue: cartServiceStub },
                 { provide: PrinterService, useValue: printerServiceStub },
+                { provide: StorageService, useValue: storageServiceStub },
                 { provide: ModalController, useValue: modalControllerStub },
             ],
         }).compileComponents();
