@@ -17,7 +17,7 @@ export class AppComponent {
             icon: 'home',
         },
         {
-            title: 'Configuracion',
+            title: 'Ajustes',
             url: '/config',
             icon: 'settings',
         },
