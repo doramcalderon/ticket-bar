@@ -2,6 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular';
 
+import { StorageService } from '../../../storage.service';
 import { PrinterService } from '../cart-preview/printer.service';
 import { DevicesListComponent } from './devices-list.component';
 
@@ -17,6 +18,11 @@ describe('DevicesListComponent', () => {
         listDevices: () => [],
     };
 
+    const storageServiceStub = {
+        getObject: (key: string) => Promise.resolve({}),
+        setObject: (key: string, value: any) => Promise.resolve(true),
+    };
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [DevicesListComponent],
@@ -24,6 +30,7 @@ describe('DevicesListComponent', () => {
             providers: [
                 { provide: ModalController, useValue: modalControllerStub },
                 { provide: PrinterService, useValue: printServiceStub },
+                { provide: StorageService, useValue: storageServiceStub },
             ],
         }).compileComponents();
     }));
