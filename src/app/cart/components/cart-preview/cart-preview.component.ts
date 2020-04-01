@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 import domToImage from 'dom-to-image';
 
@@ -28,8 +28,9 @@ export class CartPreviewComponent implements OnInit {
     public tickets: Ticket[];
 
     constructor(
-        private cartService: CartService,
+        private alertCtrl: AlertController,
         private modalCtl: ModalController,
+        private cartService: CartService,
         private printerService: BTPrinterService,
         private storageService: StorageService,
     ) {}
@@ -44,8 +45,18 @@ export class CartPreviewComponent implements OnInit {
         if (!printer) {
             printer = (await this.selectPrinter()).data;
         }
-        await this.connectAndPrint(printer);
-        await this.printFinished.emit();
+
+        try {
+            await this.connectAndPrint(printer);
+            await this.printFinished.emit();
+        } catch (error) {
+            const alert = await this.alertCtrl.create({
+                header: 'Error de impresión',
+                message: 'Ups! Ha habido un error de impresión. <br> Comprueba que la impresora está conectada.',
+                buttons: ['OK'],
+            });
+            await alert.present();
+        }
     }
 
     /**

@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 import { Observable, of } from 'rxjs';
 
@@ -22,6 +22,10 @@ describe('CartPreviewComponent', () => {
         present: () => Promise.resolve(),
         onDidDismiss: () => Promise.resolve(),
     };
+    const alertControllerStub = {
+        create: (options: any) => Promise.resolve({}),
+        present: () => Promise.resolve(),
+    };
     const printerServiceStub = {
         connectAndPrint: (printer: any, base64Img: string) => Promise.resolve(),
     };
@@ -38,6 +42,7 @@ describe('CartPreviewComponent', () => {
                 { provide: PrinterService, useValue: printerServiceStub },
                 { provide: StorageService, useValue: storageServiceStub },
                 { provide: ModalController, useValue: modalControllerStub },
+                { provide: AlertController, useValue: alertControllerStub },
             ],
         }).compileComponents();
     }));
