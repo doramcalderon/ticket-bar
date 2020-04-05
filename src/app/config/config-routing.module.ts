@@ -8,6 +8,10 @@ const routes: Routes = [
         path: '',
         component: ConfigPage,
     },
+    {
+        path: 'categories-config',
+        loadChildren: () => import('./categories-config/categories-config.module').then(m => m.CategoriesConfigModule),
+    },
 ];
 
 @NgModule({
