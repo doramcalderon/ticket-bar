@@ -11,10 +11,14 @@ import { StorageService } from '../storage.service';
 })
 export class ConfigPage implements OnInit {
     public defaultPrinter: BluetoothDevice;
+    public categoriesNumber: number;
 
     constructor(private storageService: StorageService) {}
 
     async ngOnInit() {
+        const categories = await this.storageService.getObject(Keys.Categories);
+        this.categoriesNumber = !!categories ? categories.length : 0;
+
         this.defaultPrinter = await this.storageService.getObject(Keys.Printer);
     }
 }

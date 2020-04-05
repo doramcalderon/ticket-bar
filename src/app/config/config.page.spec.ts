@@ -1,4 +1,6 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { StorageService } from '../storage.service';
@@ -15,8 +17,9 @@ describe('ConfigPage', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [ConfigPage],
-            imports: [IonicModule.forRoot()],
+            imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
             providers: [{ provide: StorageService, useValue: storageServiceStub }],
+            schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
 
         fixture = TestBed.createComponent(ConfigPage);

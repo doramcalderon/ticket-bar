@@ -11,6 +11,14 @@
 
 <ion-content>
     <ion-list>
+        <ion-list>
+            <ion-list-header>
+                <ion-label color="primary">Categorías</ion-label>
+            </ion-list-header>
+            <ion-item lines="none" routerLink="categories-config">
+                {{ categoriesNumber }} {{ (categoriesNumber === 1 ? 'categoría' : 'categorías')}}
+            </ion-item>
+        </ion-list>
         <ion-list-header>
             <ion-label color="primary">Impresión</ion-label>
         </ion-list-header>
