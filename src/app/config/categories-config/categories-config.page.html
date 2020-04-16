@@ -12,9 +12,21 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-list>
-        <ion-item lines="none" *ngFor="let category of categories" routerLink="categories-config">
+    <ion-list *ngIf="!!categories; else noCategories">
+        <ion-item lines="none" *ngFor="let category of categories" routerLink="categories-config" [style.color]="category.color">
+            <ion-icon [name]="category.icon" slot="start" [color]="category.color"></ion-icon>
             {{ category.name }}
         </ion-item>
     </ion-list>
+    <ng-template #noCategories>
+        <div class="no-categories">
+            <ion-icon size="large" name="filing"></ion-icon>
+            <ion-label>No hay categorías configuradas</ion-label>
+        </div>
+    </ng-template>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="light" (click)="openNewCategory()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>
