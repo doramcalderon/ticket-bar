@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="dismiss()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-4 *ngFor="let icon of icons">
+                <ion-buttons>
+                    <ion-button slot="icon-only" (click)="select(icon)">
+                        <ion-icon [name]="icon" size="large"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
