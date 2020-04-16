@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button slot="icon-only" (click)="dismiss()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>Nueva Categoría</ion-title>
+        <ion-buttons slot="end">
+            <ion-button slot="icon-only" [disabled]="!categoriesForm.valid" (click)="save()">
+                <ion-icon name="checkmark"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <form [formGroup]="categoriesForm" novalidate>
+        <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input formControlName="name" placeholder="Introduce un nombre"></ion-input>
+        </ion-item>
+        <ion-item (click)="selectImage()">
+            <div>
+                <ion-label>Icono</ion-label>
+                <ion-label class="icon-placeholder" color="medium" *ngIf="!icon">Haz click para seleccionar un icono</ion-label>
+                <ion-icon [name]="icon" size="large" *ngIf="!!icon" slot="start"></ion-icon>
+            </div>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Color</ion-label>
+            <ion-input
+                class="input-color-picker"
+                [(colorPicker)]="black"
+                [style.background]="black"
+                [cpOKButton]="true"
+                [cpCancelButton]="true"
+                (colorPickerSelect)="changeColor($event)"
+            ></ion-input>
+        </ion-item>
+    </form>
+</ion-content>
