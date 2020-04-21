@@ -5,7 +5,7 @@ import { Category } from '../../common/model/category.model';
 import { Keys } from '../../storage.model';
 import { StorageService } from '../../storage.service';
 import { CategoriesConfigPopoverComponent } from './components/categories-config-popover/categories-config-popover.component';
-import { NewCategoryComponent } from './components/new-category/new-category.component';
+import { CategoryConfigComponent } from './components/category-config/category-config.component';
 
 @Component({
     selector: 'tb-categories-config',
@@ -28,9 +28,11 @@ export class CategoriesConfigPage implements OnInit {
         });
         await popover.present();
     }
-    public async openNewCategory(): Promise<void> {
+
+    public async openCategoryConfig(category?: Category): Promise<void> {
         const modal = await this.modalCtrl.create({
-            component: NewCategoryComponent,
+            component: CategoryConfigComponent,
+            componentProps: { category },
         });
         await modal.present();
     }
