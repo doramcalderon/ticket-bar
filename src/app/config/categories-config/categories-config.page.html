@@ -13,7 +13,7 @@
 </ion-header>
 <ion-content>
     <ion-list *ngIf="!!categories; else noCategories">
-        <ion-item lines="none" *ngFor="let category of categories" routerLink="categories-config" [style.color]="category.color">
+        <ion-item lines="none" *ngFor="let category of categories" [style.color]="category.color" (click)="openNewCategory(category)">
             <ion-icon [name]="category.icon" slot="start" [color]="category.color"></ion-icon>
             {{ category.name }}
         </ion-item>
