@@ -5,7 +5,7 @@
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>Nueva Categoría</ion-title>
+        <ion-title>{{ !!category ? category.name : 'Nueva Categoría' }}</ion-title>
         <ion-buttons slot="end">
             <ion-button slot="icon-only" [disabled]="!categoriesForm.valid" (click)="save()">
                 <ion-icon name="checkmark"></ion-icon>
