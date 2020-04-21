@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+
+import { get } from 'lodash';
 
 import { Category } from '../../../../common/model/category.model';
 import { Keys } from '../../../../storage.model';
@@ -13,18 +15,20 @@ import { IconPickerComponent } from '../icon-picker/icon-picker.component';
     styleUrls: ['new-category.component.scss'],
 })
 export class NewCategoryComponent implements OnInit {
+    @Input()
+    public category: Category;
     public categoriesForm: FormGroup;
-    // public image: string;
     public icon: string;
 
     constructor(private modalCtrl: ModalController, private storageService: StorageService) {}
 
     async ngOnInit() {
         this.categoriesForm = new FormGroup({
-            name: new FormControl('', Validators.required),
-            icon: new FormControl(''),
-            color: new FormControl(''),
+            name: new FormControl(get(this.category, 'name', ''), Validators.required),
+            icon: new FormControl(get(this.category, 'icon', '')),
+            color: new FormControl(get(this.category, 'color', '')),
         });
+        this.icon = get(this.category, 'icon');
     }
 
     public async dismiss(): Promise<void> {
@@ -42,12 +46,17 @@ export class NewCategoryComponent implements OnInit {
         if (!categories) {
             categories = [];
         }
-        categories.push({
+        const newCategory: Category = {
             id: name,
             name,
             icon: this.categoriesForm.get('icon').value,
             color: this.categoriesForm.get('color').value,
-        });
+        };
+        if (!!this.category && categories.length > 0) {
+            categories = this.update(this.category, newCategory, categories);
+        } else {
+            categories.push(newCategory);
+        }
 
         await this.storageService.setObject(Keys.Categories, categories);
         await this.modalCtrl.dismiss();
@@ -58,5 +67,16 @@ export class NewCategoryComponent implements OnInit {
         await modal.present();
         this.icon = (await modal.onDidDismiss()).data.icon;
         this.categoriesForm.patchValue({ icon: this.icon });
+    }
+
+    private update(category, newCategory, categories): Category[] {
+        // get the category if exists
+        const catIndex: number = categories.findIndex((c) => c.id === category.id);
+
+        if (catIndex >= 0) {
+            categories.splice(catIndex, 1, newCategory);
+        }
+
+        return categories;
     }
 }
