@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 
-import { NewCategoryComponent } from '../new-category/new-category.component';
+import { CategoryConfigComponent } from '../category-config/category-config.component';
 
 @Component({
     selector: 'tb-categories-config-popover',
@@ -18,7 +18,7 @@ export class CategoriesConfigPopoverComponent implements OnInit {
         this.popoverCtrl.dismiss();
 
         const modal = await this.modalCtrl.create({
-            component: NewCategoryComponent,
+            component: CategoryConfigComponent,
         });
         modal.present();
     }

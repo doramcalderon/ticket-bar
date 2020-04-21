@@ -3,11 +3,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, ModalController } from '@ionic/angular';
 
 import { StorageService } from '../../../../storage.service';
-import { NewCategoryComponent } from './new-category.component';
+import { CategoryConfigComponent } from './category-config.component';
 
-describe('NewCategoryComponent', () => {
-    let component: NewCategoryComponent;
-    let fixture: ComponentFixture<NewCategoryComponent>;
+describe('CategoryConfigComponent', () => {
+    let component: CategoryConfigComponent;
+    let fixture: ComponentFixture<CategoryConfigComponent>;
 
     const modalCtrlStub = {
         create: (opts: any) => Promise.resolve({}),
@@ -21,7 +21,7 @@ describe('NewCategoryComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [NewCategoryComponent],
+            declarations: [CategoryConfigComponent],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [IonicModule.forRoot()],
             providers: [
@@ -30,7 +30,7 @@ describe('NewCategoryComponent', () => {
             ],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(NewCategoryComponent);
+        fixture = TestBed.createComponent(CategoryConfigComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));

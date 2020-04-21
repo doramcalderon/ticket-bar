@@ -10,11 +10,11 @@ import { StorageService } from '../../../../storage.service';
 import { IconPickerComponent } from '../icon-picker/icon-picker.component';
 
 @Component({
-    selector: 'tb-new-category',
-    templateUrl: 'new-category.component.html',
-    styleUrls: ['new-category.component.scss'],
+    selector: 'tb-category-config',
+    templateUrl: 'category-config.component.html',
+    styleUrls: ['category-config.component.scss'],
 })
-export class NewCategoryComponent implements OnInit {
+export class CategoryConfigComponent implements OnInit {
     @Input()
     public category: Category;
     public categoriesForm: FormGroup;
