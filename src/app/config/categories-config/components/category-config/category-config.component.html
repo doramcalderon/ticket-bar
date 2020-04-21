@@ -31,7 +31,8 @@
             <ion-input
                 class="input-color-picker"
                 [(colorPicker)]="black"
-                [style.background]="black"
+                [style.background]="!!category ? category.color : '#000000'"
+                [style.border-color]="!!category ? category.color : '#000000'"
                 [cpOKButton]="true"
                 [cpCancelButton]="true"
                 (colorPickerSelect)="changeColor($event)"
