@@ -13,9 +13,16 @@
 </ion-header>
 <ion-content>
     <ion-list *ngIf="!!categories; else noCategories">
-        <ion-item lines="none" *ngFor="let category of categories" [style.color]="category.color" (click)="openCategoryConfig(category)">
-            <ion-icon [name]="category.icon" slot="start" [color]="category.color"></ion-icon>
-            {{ category.name }}
+        <ion-item lines="none" *ngFor="let category of categories">
+            <div [style.color]="category.color" (click)="openCategoryConfig(category)">
+                <ion-icon [name]="category.icon" slot="start" [color]="category.color"></ion-icon>
+                {{ category.name }}
+            </div>
+            <ion-buttons slot="end">
+                <ion-button slot="icon-only" (click)="delete(category)">
+                    <ion-icon name="close"></ion-icon>
+                </ion-button>
+            </ion-buttons>
         </ion-item>
     </ion-list>
     <ng-template #noCategories>

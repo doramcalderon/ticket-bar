@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { TicketType, Category } from '../model/category.model';
+
+import { Keys } from '../../storage.model';
+import { StorageService } from '../../storage.service';
+import { Category, TicketType } from '../model/category.model';
 
 @Injectable({
     providedIn: 'root',
@@ -22,13 +25,20 @@ export class CategoriesService {
         { id: '3', name: 'Otros', icon: 'wine', color: 'warning' },
     ];
 
-    constructor() {}
+    constructor(private storageService: StorageService) {}
 
     public getAllCategories(): Category[] {
         return this.categories;
     }
 
     public getCategory(id: string): Category {
-        return this.categories.find(c => c.id === id);
+        return this.categories.find((c) => c.id === id);
+    }
+
+    public async removeCategory(id: string): Promise<void> {
+        const categories: Category[] = await this.storageService.getObject(Keys.Categories);
+        const catIndex: number = categories.findIndex((c) => c.id === id);
+        categories.splice(catIndex, 1);
+        await this.storageService.setObject(Keys.Categories, categories);
     }
 }
