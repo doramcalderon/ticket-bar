@@ -4,10 +4,11 @@ import { ModalController } from '@ionic/angular';
 
 import { get } from 'lodash';
 
-import { Category } from '../../../../common/model/category.model';
+import { Category, TicketType } from '../../../../common/model/category.model';
 import { Keys } from '../../../../storage.model';
 import { StorageService } from '../../../../storage.service';
 import { IconPickerComponent } from '../icon-picker/icon-picker.component';
+import { TicketConfigComponent } from '../ticket-config/ticket-config.component';
 
 @Component({
     selector: 'tb-category-config',
@@ -19,6 +20,7 @@ export class CategoryConfigComponent implements OnInit {
     public category: Category;
     public categoriesForm: FormGroup;
     public icon: string;
+    public tickets: TicketType[];
 
     constructor(private modalCtrl: ModalController, private storageService: StorageService) {}
 
@@ -51,6 +53,7 @@ export class CategoryConfigComponent implements OnInit {
             name,
             icon: this.categoriesForm.get('icon').value,
             color: this.categoriesForm.get('color').value,
+            tickets: this.tickets,
         };
         if (!!this.category && categories.length > 0) {
             categories = this.update(this.category, newCategory, categories);
@@ -69,6 +72,25 @@ export class CategoryConfigComponent implements OnInit {
         this.categoriesForm.patchValue({ icon: this.icon });
     }
 
+    public async openTicketConfig(): Promise<void> {
+        const cat: Category = !!this.category
+            ? this.category
+            : {
+                  id: name,
+                  name,
+                  icon: this.categoriesForm.get('icon').value,
+                  color: this.categoriesForm.get('color').value,
+              };
+        const modal = await this.modalCtrl.create({ component: TicketConfigComponent, componentProps: { category: cat } });
+        await modal.present();
+        const newTicket: TicketType = (await modal.onDidDismiss()).data;
+        if (!!newTicket) {
+            if (!this.tickets) {
+                this.tickets = [];
+            }
+            this.tickets.push(newTicket);
+        }
+    }
     private update(category, newCategory, categories): Category[] {
         // get the category if exists
         const catIndex: number = categories.findIndex((c) => c.id === category.id);

@@ -38,5 +38,21 @@
                 (colorPickerSelect)="changeColor($event)"
             ></ion-input>
         </ion-item>
+        <ion-list>
+            <ion-list-header>
+                <ion-toolbar>
+                    Tickets
+
+                    <ion-buttons slot="end">
+                        <ion-button slot="icon-only" (click)="openTicketConfig()">
+                            <ion-icon name="add"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-list-header>
+            <ion-item *ngFor="let ticket of category?.tickets">
+                {{ ticket.name }}
+            </ion-item>
+        </ion-list>
     </form>
 </ion-content>
