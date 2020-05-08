@@ -3,7 +3,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
+import { Base64 } from '@ionic-native/base64/ngx';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -37,7 +40,15 @@ import { metaReducers, reducers } from './reducers';
         EffectsModule.forRoot([AppEffects]),
         ReactiveFormsModule,
     ],
-    providers: [BluetoothSerial, StatusBar, SplashScreen, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    providers: [
+        Base64,
+        BluetoothSerial,
+        FileChooser,
+        FilePath,
+        StatusBar,
+        SplashScreen,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

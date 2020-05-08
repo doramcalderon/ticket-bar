@@ -1,0 +1,36 @@
+ion-card {
+    margin: 1rem;
+}
+.ticket-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ticket-content {
+    display: flex;
+    align-items: flex-end;
+
+    ion-input {
+        font-size: 1.4rem;
+    }
+    ion-icon {
+        padding-right: 1rem;
+    }
+    .hide {
+        display: none;
+    }
+}
+.ticket-price {
+    display: block;
+    float: right;
+
+    ion-input {
+        text-align: right;
+        font-size: x-large;
+        font-weight: bold;
+        padding-left: 1rem;
+    }
+}
+.input__price:after {
+    content: '€';
+}

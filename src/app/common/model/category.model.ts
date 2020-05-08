@@ -9,4 +9,8 @@ export interface Category {
 export interface TicketType {
     name: string;
     price: number;
+    /**
+     * Base64 image.
+     */
+    image?: string;
 }

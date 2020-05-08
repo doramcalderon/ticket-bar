@@ -1,9 +1,38 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
+            <ion-button slot="icon-only" (click)="dismiss()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
         </ion-buttons>
-        <ion-title>Tickets</ion-title>
+        <ion-title>Nuevo Ticket</ion-title>
+        <ion-buttons slot="end">
+            <ion-button slot="icon-only" [disabled]="ticketForm.invalid" (click)="save()">
+                <ion-icon name="checkmark"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content> </ion-content>
+<ion-content>
+    <form [formGroup]="ticketForm" novalidate>
+        <ion-card>
+            <ion-card-header>
+                <ion-label>Kiosko El Corner</ion-label>
+            </ion-card-header>
+            <ion-card-content>
+                <div class="ticket-content">
+                    <div>
+                        <ion-input formControlName="image" [value]="b64Image" class="hide"></ion-input>
+                        <ion-thumbnail (click)="selectImage()">
+                            <ion-img [src]="b64Image"></ion-img>
+                        </ion-thumbnail>
+                    </div>
+                    <ion-input formControlName="name" placeholder="Introduce un nombre"></ion-input>
+                </div>
+                <div class="ticket-price">
+                    <ion-input formControlName="price" class="input__price" placeholder="0"></ion-input>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </form>
+</ion-content>
