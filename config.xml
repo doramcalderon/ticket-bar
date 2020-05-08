@@ -105,6 +105,9 @@
     <plugin name="cordova-plugin-bluetooth-serial" spec="^0.4.7" />
     <plugin name="cordova-plugin-btprinter" spec="https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git" />
     <plugin name="cordova-sqlite-storage" spec="^5.0.0" />
+    <plugin name="cordova-plugin-filechooser" spec="^1.2.0" />
+    <plugin name="com-badrit-base64" spec="^0.2.0" />
+    <plugin name="cordova-plugin-filepath" spec="^1.5.8" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="7.0.0" />
 </widget>
