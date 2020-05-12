@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 
+import { Store } from '@ngrx/store';
 import { get } from 'lodash';
 
 import { Category, TicketType } from '../../../../common/model/category.model';
-import { Keys } from '../../../../storage.model';
-import { StorageService } from '../../../../storage.service';
+import * as CategoriesActions from '../../store/categories.actions';
 import { IconPickerComponent } from '../icon-picker/icon-picker.component';
 import { TicketConfigComponent } from '../ticket-config/ticket-config.component';
 
@@ -22,7 +22,7 @@ export class CategoryConfigComponent implements OnInit {
     public icon: string;
     public tickets: TicketType[];
 
-    constructor(private modalCtrl: ModalController, private storageService: StorageService) {}
+    constructor(private modalCtrl: ModalController, private categoriesStore: Store<Category>) {}
 
     async ngOnInit() {
         this.categoriesForm = new FormGroup({
@@ -43,11 +43,6 @@ export class CategoryConfigComponent implements OnInit {
 
     public async save(): Promise<void> {
         const name: string = this.categoriesForm.get('name').value;
-        let categories: Category[] = await this.storageService.getObject(Keys.Categories);
-
-        if (!categories) {
-            categories = [];
-        }
         const newCategory: Category = {
             id: name,
             name,
@@ -55,13 +50,7 @@ export class CategoryConfigComponent implements OnInit {
             color: this.categoriesForm.get('color').value,
             tickets: this.tickets,
         };
-        if (!!this.category && categories.length > 0) {
-            categories = this.update(this.category, newCategory, categories);
-        } else {
-            categories.push(newCategory);
-        }
-
-        await this.storageService.setObject(Keys.Categories, categories);
+        this.categoriesStore.dispatch(CategoriesActions.addCategory({ category: newCategory }));
         await this.modalCtrl.dismiss();
     }
 
