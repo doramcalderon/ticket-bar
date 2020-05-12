@@ -26,13 +26,40 @@ export class CategoriesService {
     ];
 
     constructor(private storageService: StorageService) {}
-
     public getAllCategories(): Category[] {
         return this.categories;
     }
 
     public getCategory(id: string): Category {
         return this.categories.find((c) => c.id === id);
+    }
+
+    /**
+     * Add a category to storage.
+     * If the category already exists or is null or undefined, an error is returned.
+     * @param category Category.
+     */
+    public async addCategory(category: Category): Promise<Category[]> {
+        if (!category) {
+            return Promise.reject(`No category to add`);
+        }
+
+        // get current categories
+        let categories: Category[] = await this.storageService.getObject(Keys.Categories);
+        if (!categories) {
+            categories = [];
+        }
+
+        // check if the category to add already exists
+        const categoryFound: Category = categories.find((c) => c.name === category.name);
+        if (!!categoryFound) {
+            return Promise.reject(`The category ${categoryFound.name} already exists`);
+        }
+
+        // add the new category
+        categories.push(category);
+        const categoryAdded: boolean = await this.storageService.setObject(Keys.Categories, categories);
+        return categoryAdded ? categories : Promise.reject(`Error adding category to storage`);
     }
 
     public async removeCategory(id: string): Promise<void> {
