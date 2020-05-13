@@ -26,8 +26,9 @@ export class CategoriesService {
     ];
 
     constructor(private storageService: StorageService) {}
-    public getAllCategories(): Category[] {
-        return this.categories;
+
+    public async getAllCategories(): Promise<Category[]> {
+        return await this.storageService.getObject(Keys.Categories);
     }
 
     public getCategory(id: string): Category {
