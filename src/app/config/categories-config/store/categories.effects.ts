@@ -10,6 +10,14 @@ import * as CategoriesActions from './categories.actions';
 @Injectable()
 export class CategoriesEffects {
     @Effect()
+    loadCategories$ = this.actions$.pipe(
+        ofType(CategoriesActions.loadCategories),
+        switchMap(() => this.categoriesService.getAllCategories()),
+        map((categories) => CategoriesActions.loadCategoriesSuccess({ categories })),
+        catchError((error) => of(CategoriesActions.loadCategoriesFailure({ error }))),
+    );
+
+    @Effect()
     addCategory$ = this.actions$.pipe(
         ofType(CategoriesActions.addCategory),
         map((action) => action.category),
@@ -19,8 +27,8 @@ export class CategoriesEffects {
     );
 
     @Effect({ dispatch: false })
-    addCategoryFailure$ = this.actions$.pipe(
-        ofType(CategoriesActions.addCategoryFailure),
+    someFail$ = this.actions$.pipe(
+        ofType(CategoriesActions.addCategoryFailure, CategoriesActions.loadCategoriesFailure),
         map((action) => action.error),
         tap((error) => this.errorHandler.handleError(error)),
     );
