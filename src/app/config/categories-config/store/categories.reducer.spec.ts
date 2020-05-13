@@ -13,6 +13,49 @@ describe('Categories Reducer', () => {
         });
     });
 
+    describe(`[Categories] Load Categories actions`, () => {
+        it(`[Categories] loadCategories: should return the same state`, () => {
+            const state: CategoriesState = { categories: [] };
+
+            const loadCategoriesAction = CategoriesActions.loadCategories();
+            const newState: CategoriesState = reducer(state, loadCategoriesAction);
+
+            expect(newState).toEqual(state);
+        });
+
+        it(`[Categories] loadCategoriesSuccess: should return the state with the registered categories`, () => {
+            const categories: Category[] = [
+                {
+                    id: 'foo',
+                    name: 'bar',
+                },
+            ];
+            const state: CategoriesState = { categories: [] };
+            const expectedSstate: CategoriesState = { categories };
+
+            const loadCategoriesSuccessAction = CategoriesActions.loadCategoriesSuccess({
+                categories,
+            });
+            const newState: CategoriesState = reducer(state, loadCategoriesSuccessAction);
+
+            expect(newState).toEqual(expectedSstate);
+        });
+
+        it('[Categories] loadCategoriesFailure: should return the same state and the thrown error', () => {
+            const state: CategoriesState = { categories: [] };
+            const expectedState: CategoriesState = {
+                ...state,
+                error: 'Unknown error',
+            };
+
+            const loadCategoriesFailureAction = CategoriesActions.loadCategoriesFailure({
+                error: 'Unknown error',
+            });
+            const newState: CategoriesState = reducer(state, loadCategoriesFailureAction);
+
+            expect(newState).toEqual(expectedState);
+        });
+    });
     describe(`[Categories] Add Category actions`, () => {
         it(`[Categories] addCategory: should return the same state`, () => {
             const category: Category = {
