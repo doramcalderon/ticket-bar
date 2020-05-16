@@ -50,7 +50,7 @@ export class CategoryConfigComponent implements OnInit {
             color: this.categoriesForm.get('color').value,
             tickets: this.tickets,
         };
-        this.categoriesStore.dispatch(CategoriesActions.addCategory({ category: newCategory }));
+        this.categoriesStore.dispatch(CategoriesActions.addUpdateCategory({ category: newCategory }));
         await this.modalCtrl.dismiss();
     }
 
@@ -79,15 +79,5 @@ export class CategoryConfigComponent implements OnInit {
             }
             this.tickets.push(newTicket);
         }
-    }
-    private update(category, newCategory, categories): Category[] {
-        // get the category if exists
-        const catIndex: number = categories.findIndex((c) => c.id === category.id);
-
-        if (catIndex >= 0) {
-            categories.splice(catIndex, 1, newCategory);
-        }
-
-        return categories;
     }
 }

@@ -18,17 +18,17 @@ export class CategoriesEffects {
     );
 
     @Effect()
-    addCategory$ = this.actions$.pipe(
-        ofType(CategoriesActions.addCategory),
+    addUpdateCategory$ = this.actions$.pipe(
+        ofType(CategoriesActions.addUpdateCategory),
         map((action) => action.category),
-        switchMap((category) => this.categoriesService.addCategory(category)),
-        map((categories) => CategoriesActions.addCategorySuccess({ categories })),
-        catchError((error) => of(CategoriesActions.addCategoryFailure({ error }))),
+        switchMap((category) => this.categoriesService.addUpdateCategory(category)),
+        map((categories) => CategoriesActions.addUpdateCategorySuccess({ categories })),
+        catchError((error) => of(CategoriesActions.addUpdateCategoryFailure({ error }))),
     );
 
     @Effect({ dispatch: false })
     someFail$ = this.actions$.pipe(
-        ofType(CategoriesActions.addCategoryFailure, CategoriesActions.loadCategoriesFailure),
+        ofType(CategoriesActions.addUpdateCategoryFailure, CategoriesActions.loadCategoriesFailure),
         map((action) => action.error),
         tap((error) => this.errorHandler.handleError(error)),
     );

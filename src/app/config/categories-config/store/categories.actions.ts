@@ -8,8 +8,8 @@ export const loadCategoriesFailure = createAction('[Categories] Load Categories 
 
 export const emptyCategories = createAction('[Categories] Empty Categories');
 
-export const addCategory = createAction('[Categories] Add Category', props<{ category: Category }>());
-export const addCategorySuccess = createAction('[Categories] Add Category Success', props<{ categories: Category[] }>());
-export const addCategoryFailure = createAction('[Categories] Add Category Failure', props<{ error: any }>());
+export const addUpdateCategory = createAction('[Categories] Add or Update Category', props<{ category: Category }>());
+export const addUpdateCategorySuccess = createAction('[Categories] Add or Update Category Success', props<{ categories: Category[] }>());
+export const addUpdateCategoryFailure = createAction('[Categories] Add or Update Category Failure', props<{ error: any }>());
 
 export const deleteCategory = createAction('[Categories] Delete Category', props<{ id: string }>());

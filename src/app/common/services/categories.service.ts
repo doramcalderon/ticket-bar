@@ -40,7 +40,7 @@ export class CategoriesService {
      * If the category already exists or is null or undefined, an error is returned.
      * @param category Category.
      */
-    public async addCategory(category: Category): Promise<Category[]> {
+    public async addUpdateCategory(category: Category): Promise<Category[]> {
         if (!category) {
             return Promise.reject(`No category to add`);
         }
@@ -52,15 +52,26 @@ export class CategoriesService {
         }
 
         // check if the category to add already exists
-        const categoryFound: Category = categories.find((c) => c.name === category.name);
+        const categoryFound: Category = await this.findCategory(category.id);
         if (!!categoryFound) {
-            return Promise.reject(`The category ${categoryFound.name} already exists`);
+            return this.update(categoryFound, category, categories);
+        } else {
+            // add the new category
+            categories.push(category);
+            const categoryAdded: boolean = await this.storageService.setObject(Keys.Categories, categories);
+            return categoryAdded ? categories : Promise.reject(`Error adding category to storage`);
+        }
+    }
+
+    public update(category, newCategory, categories): Category[] {
+        // get the category if exists
+        const catIndex: number = categories.findIndex((c) => c.id === category.id);
+
+        if (catIndex >= 0) {
+            categories.splice(catIndex, 1, newCategory);
         }
 
-        // add the new category
-        categories.push(category);
-        const categoryAdded: boolean = await this.storageService.setObject(Keys.Categories, categories);
-        return categoryAdded ? categories : Promise.reject(`Error adding category to storage`);
+        return categories;
     }
 
     public async removeCategory(id: string): Promise<void> {
@@ -68,5 +79,16 @@ export class CategoriesService {
         const catIndex: number = categories.findIndex((c) => c.id === id);
         categories.splice(catIndex, 1);
         await this.storageService.setObject(Keys.Categories, categories);
+    }
+
+    private async findCategory(id: string): Promise<Category> {
+        // get current categories
+        let categories: Category[] = await this.storageService.getObject(Keys.Categories);
+        if (!categories) {
+            categories = [];
+        }
+
+        // check if the category to add already exists
+        return categories.find((c) => c.id === id);
     }
 }

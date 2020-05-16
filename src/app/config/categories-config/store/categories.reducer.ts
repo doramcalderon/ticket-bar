@@ -24,12 +24,12 @@ const categoriesReducer = createReducer(
 
     on(CategoriesActions.emptyCategories, (state: CategoriesState, action) => initialState),
 
-    on(CategoriesActions.addCategory, (state: CategoriesState) => state),
-    on(CategoriesActions.addCategorySuccess, (state: CategoriesState, action) => {
+    on(CategoriesActions.addUpdateCategory, (state: CategoriesState) => state),
+    on(CategoriesActions.addUpdateCategorySuccess, (state: CategoriesState, action) => {
         return { ...state, categories: action.categories };
     }),
 
-    on(CategoriesActions.addCategoryFailure, CategoriesActions.loadCategoriesFailure, (state: CategoriesState, action) => {
+    on(CategoriesActions.addUpdateCategoryFailure, CategoriesActions.loadCategoriesFailure, (state: CategoriesState, action) => {
         return { ...state, error: action.error };
     }),
 );

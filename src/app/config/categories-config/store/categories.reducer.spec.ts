@@ -64,7 +64,7 @@ describe('Categories Reducer', () => {
             };
             const state: CategoriesState = { categories: [] };
 
-            const addCategoryAction = CategoriesActions.addCategory({
+            const addCategoryAction = CategoriesActions.addUpdateCategory({
                 category,
             });
             const newState: CategoriesState = reducer(state, addCategoryAction);
@@ -72,7 +72,7 @@ describe('Categories Reducer', () => {
             expect(newState).toEqual(state);
         });
 
-        it(`[Categories] addCategorySuccess: should return the state with the new category added`, () => {
+        it(`[Categories] addUpdateCategorySuccess: should return the state with the new category added`, () => {
             const categories: Category[] = [
                 {
                     id: 'foo',
@@ -82,10 +82,10 @@ describe('Categories Reducer', () => {
             const state: CategoriesState = { categories: [] };
             const expectedSstate: CategoriesState = { categories };
 
-            const addCategorySuccessAction = CategoriesActions.addCategorySuccess({
+            const addUpdateCategorySuccessAction = CategoriesActions.addUpdateCategorySuccess({
                 categories,
             });
-            const newState: CategoriesState = reducer(state, addCategorySuccessAction);
+            const newState: CategoriesState = reducer(state, addUpdateCategorySuccessAction);
 
             expect(newState).toEqual(expectedSstate);
         });
@@ -97,10 +97,10 @@ describe('Categories Reducer', () => {
                 error: 'Unknown error',
             };
 
-            const addCategoryFailureAction = CategoriesActions.addCategoryFailure({
+            const addUpdateCategoryFailureAction = CategoriesActions.addUpdateCategoryFailure({
                 error: 'Unknown error',
             });
-            const newState: CategoriesState = reducer(state, addCategoryFailureAction);
+            const newState: CategoriesState = reducer(state, addUpdateCategoryFailureAction);
 
             expect(newState).toEqual(expectedState);
         });
