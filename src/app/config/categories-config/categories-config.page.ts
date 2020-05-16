@@ -8,6 +8,7 @@ import { Category } from '../../common/model/category.model';
 import { CategoriesService } from '../../common/services/categories.service';
 import { CategoriesConfigPopoverComponent } from './components/categories-config-popover/categories-config-popover.component';
 import { CategoryConfigComponent } from './components/category-config/category-config.component';
+import * as CategoriesActions from './store/categories.actions';
 import * as CategoriesSelectors from './store/categories.selectors';
 
 @Component({
@@ -58,7 +59,7 @@ export class CategoriesConfigPage implements OnInit {
                 {
                     text: 'Borrar',
                     handler: () => {
-                        this.categoriesService.removeCategory(category.id);
+                        this.categoriesStore.dispatch(CategoriesActions.deleteCategory({ id: category.id }));
                     },
                 },
             ],

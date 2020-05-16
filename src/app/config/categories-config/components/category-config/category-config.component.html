@@ -52,6 +52,11 @@
             </ion-list-header>
             <ion-item *ngFor="let ticket of category?.tickets">
                 {{ ticket.name }}
+                <ion-buttons slot="end">
+                    <ion-button slot="icon-only">
+                        <ion-icon name="close"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
             </ion-item>
         </ion-list>
     </form>

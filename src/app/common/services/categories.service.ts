@@ -74,11 +74,12 @@ export class CategoriesService {
         return categories;
     }
 
-    public async removeCategory(id: string): Promise<void> {
+    public async removeCategory(id: string): Promise<Category[]> {
         const categories: Category[] = await this.storageService.getObject(Keys.Categories);
         const catIndex: number = categories.findIndex((c) => c.id === id);
         categories.splice(catIndex, 1);
-        await this.storageService.setObject(Keys.Categories, categories);
+        const deleted: boolean = await this.storageService.setObject(Keys.Categories, categories);
+        return deleted ? categories : Promise.reject(`Error deleting the category with id ${id}`);
     }
 
     private async findCategory(id: string): Promise<Category> {
