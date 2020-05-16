@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+
 import { StorageService } from '../storage.service';
 import { ConfigPage } from './config.page';
 
@@ -13,12 +16,18 @@ describe('ConfigPage', () => {
     const storageServiceStub = {
         getObject: (key: string) => Promise.resolve({}),
     };
+    const storeStub = {
+        select: (selector: any) => of({}),
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [ConfigPage],
             imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
-            providers: [{ provide: StorageService, useValue: storageServiceStub }],
+            providers: [
+                { provide: StorageService, useValue: storageServiceStub },
+                { provide: Store, useValue: storeStub },
+            ],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
 

@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 import { BluetoothDevice } from '../cart/components/cart-preview/cart-preview.model';
+import { Category } from '../common/model/category.model';
 import { Keys } from '../storage.model';
 import { StorageService } from '../storage.service';
+import { selectCategoriesCount } from './categories-config/store/categories.selectors';
 
 @Component({
     selector: 'tb-config',
@@ -11,14 +16,12 @@ import { StorageService } from '../storage.service';
 })
 export class ConfigPage implements OnInit {
     public defaultPrinter: BluetoothDevice;
-    public categoriesNumber: number;
+    public categoriesNumber$: Observable<number>;
 
-    constructor(private storageService: StorageService) {}
+    constructor(private storageService: StorageService, private categoriesStore: Store<Category>) {}
 
     async ngOnInit() {
-        const categories = await this.storageService.getObject(Keys.Categories);
-        this.categoriesNumber = !!categories ? categories.length : 0;
-
+        this.categoriesNumber$ = this.categoriesStore.select(selectCategoriesCount);
         this.defaultPrinter = await this.storageService.getObject(Keys.Printer);
     }
 }
