@@ -9,19 +9,15 @@ const routes: Routes = [
     },
     {
         path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+        loadChildren: () => import('./home/home.module').then((m) => m.HomePageModule),
     },
     {
         path: 'config',
-        loadChildren: () => import('./config/config.module').then(m => m.ConfigPageModule),
-    },
-    {
-        path: 'category-detail/:categoryId',
-        loadChildren: () => import('./category-detail/category-detail.module').then(m => m.CategoryDetailPageModule),
+        loadChildren: () => import('./config/config.module').then((m) => m.ConfigPageModule),
     },
     {
         path: 'cart',
-        loadChildren: () => import('./cart/cart.module').then(m => m.CartPageModule),
+        loadChildren: () => import('./cart/cart.module').then((m) => m.CartPageModule),
     },
 ];
 
