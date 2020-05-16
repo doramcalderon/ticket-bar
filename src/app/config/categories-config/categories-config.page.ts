@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, PopoverController } from '@ionic/angular';
 
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 import { Category } from '../../common/model/category.model';
 import { CategoriesService } from '../../common/services/categories.service';
-import { Keys } from '../../storage.model';
-import { StorageService } from '../../storage.service';
 import { CategoriesConfigPopoverComponent } from './components/categories-config-popover/categories-config-popover.component';
 import { CategoryConfigComponent } from './components/category-config/category-config.component';
+import * as CategoriesActions from './store/categories.actions';
+import * as CategoriesSelectors from './store/categories.selectors';
 
 @Component({
     selector: 'tb-categories-config',
@@ -14,18 +17,19 @@ import { CategoryConfigComponent } from './components/category-config/category-c
     styleUrls: ['categories-config.page.scss'],
 })
 export class CategoriesConfigPage implements OnInit {
-    public categories: Category[];
+    public categories$: Observable<Category[]>;
 
     constructor(
         private modalCtrl: ModalController,
         private popoverCtrl: PopoverController,
         private alertCtrl: AlertController,
-        private storageService: StorageService,
+        private categoriesStore: Store<Category>,
         private categoriesService: CategoriesService,
     ) {}
 
     async ngOnInit() {
-        this.categories = await this.storageService.getObject(Keys.Categories);
+        this.categories$ = this.categoriesStore.select(CategoriesSelectors.selectCategories);
+        this.categoriesStore.dispatch(CategoriesActions.loadCategories());
     }
 
     public async showActions(): Promise<void> {

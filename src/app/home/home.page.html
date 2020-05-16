@@ -10,7 +10,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="!!categories && categories.length > 0">
+<ion-content *ngIf="!!(categories$ | async) && (categories$ | async).length > 0">
     <tb-category-filter [categories]="categories" [multipleSelection]="false" (select)="filterCategories($event)"></tb-category-filter>
     <ion-list *ngFor="let category of categoriesSelected">
         <ion-list-header>
