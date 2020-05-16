@@ -1,19 +1,22 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { HomePage } from './home.page';
-import { CategoriesService } from '../common/services/categories.service';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+
 import { CartService } from '../cart/store/cart.service';
 import { TicketType } from '../common/model/category.model';
-import { RouterTestingModule } from '@angular/router/testing';
+import { HomePage } from './home.page';
 
 describe('HomePage', () => {
     let component: HomePage;
     let fixture: ComponentFixture<HomePage>;
 
-    const categoriesServiceStub = {
-        getAllCategories: () => [],
+    const storeStub = {
+        select: (selector: any) => of({}),
+        dispatch: (action: any) => {},
     };
 
     const cartServiceStub = {
@@ -26,7 +29,7 @@ describe('HomePage', () => {
             imports: [IonicModule.forRoot(), RouterTestingModule],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                { provide: CategoriesService, useValue: categoriesServiceStub },
+                { provide: Store, useValue: storeStub },
                 { provide: CartService, useValue: cartServiceStub },
             ],
         }).compileComponents();

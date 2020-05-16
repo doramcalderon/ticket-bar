@@ -1,7 +1,10 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlertController, IonicModule, PopoverController, ModalController } from '@ionic/angular';
+import { AlertController, IonicModule, ModalController, PopoverController } from '@ionic/angular';
+
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
 import { CategoriesService } from '../../common/services/categories.service';
 import { StorageService } from '../../storage.service';
@@ -31,6 +34,11 @@ describe('CategoriesConfigPage', () => {
         create: (opts: any) => Promise.resolve({}),
     };
 
+    const storeStub = {
+        dispatch: (action: any) => {},
+        select: (selector: any) => of([]),
+    };
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [CategoriesConfigPage],
@@ -42,6 +50,7 @@ describe('CategoriesConfigPage', () => {
                 { provide: AlertController, useValue: alertCtrlStub },
                 { provide: ModalController, useValue: modalCtrlStub },
                 { provide: PopoverController, useValue: popoverCtrlStub },
+                { provide: Store, useValue: storeStub },
             ],
         }).compileComponents();
 
