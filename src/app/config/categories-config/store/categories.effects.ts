@@ -26,6 +26,15 @@ export class CategoriesEffects {
         catchError((error) => of(CategoriesActions.addUpdateCategoryFailure({ error }))),
     );
 
+    @Effect()
+    deleteCategory$ = this.actions$.pipe(
+        ofType(CategoriesActions.deleteCategory),
+        map((action) => action.id),
+        switchMap((id) => this.categoriesService.removeCategory(id)),
+        map((categories) => CategoriesActions.deleteCategorySuccess({ categories })),
+        catchError((error) => of(CategoriesActions.deleteCategoryFailure({ error }))),
+    );
+
     @Effect({ dispatch: false })
     someFail$ = this.actions$.pipe(
         ofType(CategoriesActions.addUpdateCategoryFailure, CategoriesActions.loadCategoriesFailure),

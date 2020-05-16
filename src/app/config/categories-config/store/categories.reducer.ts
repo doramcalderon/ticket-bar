@@ -24,14 +24,19 @@ const categoriesReducer = createReducer(
 
     on(CategoriesActions.emptyCategories, (state: CategoriesState, action) => initialState),
 
-    on(CategoriesActions.addUpdateCategory, (state: CategoriesState) => state),
-    on(CategoriesActions.addUpdateCategorySuccess, (state: CategoriesState, action) => {
+    on(CategoriesActions.addUpdateCategory, CategoriesActions.deleteCategory, (state: CategoriesState) => state),
+    on(CategoriesActions.addUpdateCategorySuccess, CategoriesActions.deleteCategorySuccess, (state: CategoriesState, action) => {
         return { ...state, categories: action.categories };
     }),
 
-    on(CategoriesActions.addUpdateCategoryFailure, CategoriesActions.loadCategoriesFailure, (state: CategoriesState, action) => {
-        return { ...state, error: action.error };
-    }),
+    on(
+        CategoriesActions.addUpdateCategoryFailure,
+        CategoriesActions.loadCategoriesFailure,
+        CategoriesActions.deleteCategoryFailure,
+        (state: CategoriesState, action) => {
+            return { ...state, error: action.error };
+        },
+    ),
 );
 
 export function reducer(state: CategoriesState | undefined, action: Action) {

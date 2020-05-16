@@ -105,4 +105,82 @@ describe('Categories Reducer', () => {
             expect(newState).toEqual(expectedState);
         });
     });
+    describe(`[Categories] Delete Category actions`, () => {
+        it(`[Categories] deleteCategory: should return the same state`, () => {
+            const id = 'bar';
+            const state: CategoriesState = {
+                categories: [
+                    {
+                        id: 'foo',
+                        name: 'foo',
+                    },
+                    {
+                        id: 'bar',
+                        name: 'bar',
+                    },
+                ],
+            };
+
+            const deleteCategoryAction = CategoriesActions.deleteCategory({
+                id,
+            });
+            const newState: CategoriesState = reducer(state, deleteCategoryAction);
+
+            expect(newState).toEqual(state);
+        });
+
+        it(`[Categories] deleteCategorySuccess: should return the state without the category removed`, () => {
+            const categories: Category[] = [
+                {
+                    id: 'foo',
+                    name: 'bar',
+                },
+            ];
+            const state: CategoriesState = {
+                categories: [
+                    {
+                        id: 'foo',
+                        name: 'foo',
+                    },
+                    {
+                        id: 'bar',
+                        name: 'bar',
+                    },
+                ],
+            };
+
+            const deleteCategorySuccessAction = CategoriesActions.deleteCategorySuccess({
+                categories,
+            });
+            const newState: CategoriesState = reducer(state, deleteCategorySuccessAction);
+
+            expect(newState.categories).toEqual(deleteCategorySuccessAction.categories);
+        });
+
+        it('[Categories] deleteCategoryFailure: should return the same state and the thrown error', () => {
+            const state: CategoriesState = {
+                categories: [
+                    {
+                        id: 'foo',
+                        name: 'foo',
+                    },
+                    {
+                        id: 'bar',
+                        name: 'bar',
+                    },
+                ],
+            };
+            const expectedState: CategoriesState = {
+                ...state,
+                error: 'Unknown error',
+            };
+
+            const deleteCategoryFailureAction = CategoriesActions.deleteCategoryFailure({
+                error: 'Unknown error',
+            });
+            const newState: CategoriesState = reducer(state, deleteCategoryFailureAction);
+
+            expect(newState).toEqual(expectedState);
+        });
+    });
 });
