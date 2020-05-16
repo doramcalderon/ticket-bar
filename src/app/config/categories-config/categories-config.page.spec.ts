@@ -35,7 +35,6 @@ describe('CategoriesConfigPage', () => {
     };
 
     const storeStub = {
-        dispatch: (action: any) => {},
         select: (selector: any) => of([]),
     };
 

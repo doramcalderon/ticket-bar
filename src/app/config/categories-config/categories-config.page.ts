@@ -8,7 +8,6 @@ import { Category } from '../../common/model/category.model';
 import { CategoriesService } from '../../common/services/categories.service';
 import { CategoriesConfigPopoverComponent } from './components/categories-config-popover/categories-config-popover.component';
 import { CategoryConfigComponent } from './components/category-config/category-config.component';
-import * as CategoriesActions from './store/categories.actions';
 import * as CategoriesSelectors from './store/categories.selectors';
 
 @Component({
@@ -29,7 +28,6 @@ export class CategoriesConfigPage implements OnInit {
 
     async ngOnInit() {
         this.categories$ = this.categoriesStore.select(CategoriesSelectors.selectCategories);
-        this.categoriesStore.dispatch(CategoriesActions.loadCategories());
     }
 
     public async showActions(): Promise<void> {
