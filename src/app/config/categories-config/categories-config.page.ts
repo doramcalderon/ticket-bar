@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Category } from '../../common/model/category.model';
-import { CategoriesService } from '../../common/services/categories.service';
 import { CategoriesConfigPopoverComponent } from './components/categories-config-popover/categories-config-popover.component';
 import { CategoryConfigComponent } from './components/category-config/category-config.component';
 import * as CategoriesActions from './store/categories.actions';
@@ -24,7 +23,6 @@ export class CategoriesConfigPage implements OnInit {
         private popoverCtrl: PopoverController,
         private alertCtrl: AlertController,
         private categoriesStore: Store<Category>,
-        private categoriesService: CategoriesService,
     ) {}
 
     async ngOnInit() {
