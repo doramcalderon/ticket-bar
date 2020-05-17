@@ -31,6 +31,7 @@ export class CategoryConfigComponent implements OnInit {
             color: new FormControl(get(this.category, 'color', '')),
         });
         this.icon = get(this.category, 'icon');
+        this.tickets = get(this.category, 'tickets', []);
     }
 
     public async dismiss(): Promise<void> {
@@ -74,10 +75,7 @@ export class CategoryConfigComponent implements OnInit {
         await modal.present();
         const newTicket: TicketType = (await modal.onDidDismiss()).data;
         if (!!newTicket) {
-            if (!this.tickets) {
-                this.tickets = [];
-            }
-            this.tickets.push(newTicket);
+            this.tickets = this.tickets.concat([newTicket]);
         }
     }
 }

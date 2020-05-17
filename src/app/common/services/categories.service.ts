@@ -33,13 +33,13 @@ export class CategoriesService {
         // check if the category to add already exists
         const categoryFound: Category = await this.findCategory(category.id);
         if (!!categoryFound) {
-            return this.update(categoryFound, category, categories);
+            categories = this.update(categoryFound, category, categories);
         } else {
             // add the new category
             categories.push(category);
-            const categoryAdded: boolean = await this.storageService.setObject(Keys.Categories, categories);
-            return categoryAdded ? categories : Promise.reject(`Error adding category to storage`);
         }
+        const categoryAdded: boolean = await this.storageService.setObject(Keys.Categories, categories);
+        return categoryAdded ? categories : Promise.reject(`Error adding category to storage`);
     }
 
     public update(category, newCategory, categories): Category[] {
