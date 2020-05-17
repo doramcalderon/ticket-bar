@@ -3,7 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, AlertController } from '@ionic/angular';
+
+import { get } from 'lodash';
 
 import { Ticket } from 'src/app/cart/store/cart.model';
 import { Category, TicketType } from 'src/app/common/model/category.model';
@@ -16,15 +18,17 @@ import { Category, TicketType } from 'src/app/common/model/category.model';
 export class TicketConfigComponent implements OnInit {
     @Input()
     public category: Category;
+    @Input()
+    public ticket: TicketType;
 
     public ticketForm: FormGroup;
-    public ticket: TicketType;
     public ticketPreview: Ticket;
     public b64Image: string;
 
     private isDesktop: boolean;
 
     constructor(
+        private alertCtrl: AlertController,
         private modalCtrl: ModalController,
         private base64: Base64,
         private fileChooser: FileChooser,
@@ -34,9 +38,9 @@ export class TicketConfigComponent implements OnInit {
 
     ngOnInit() {
         this.ticketForm = new FormGroup({
-            name: new FormControl('', Validators.required),
-            price: new FormControl(undefined),
-            image: new FormControl(undefined),
+            name: new FormControl(get(this.ticket, 'name', ''), Validators.required),
+            price: new FormControl(get(this.ticket, 'price')),
+            image: new FormControl(get(this.ticket, 'image')),
         });
         this.ticketPreview = {
             category: this.category,
@@ -45,17 +49,39 @@ export class TicketConfigComponent implements OnInit {
         this.isDesktop = this.platform.is('desktop');
     }
 
-    public dismiss(): void {
-        this.modalCtrl.dismiss(this.ticket);
+    public async dismiss(newTicket?: TicketType, oldTicket?: TicketType): Promise<void> {
+        this.modalCtrl.dismiss({ newTicket, oldTicket });
+    }
+
+    public async close(): Promise<void> {
+        if (this.ticketForm.dirty) {
+            const alert = await this.alertCtrl.create({
+                header: 'Descartar cambios',
+                message: '¿Deseas descartar los cambios?',
+                buttons: [
+                    {
+                        text: 'Cancelar',
+                        role: 'cancel',
+                    },
+                    {
+                        text: 'Descartar',
+                        handler: () => this.dismiss(),
+                    },
+                ],
+            });
+            await alert.present();
+        } else {
+            this.dismiss();
+        }
     }
 
     public async save(): Promise<void> {
-        this.ticket = {
+        const newTicket = {
             name: this.ticketForm.get('name').value,
             price: this.ticketForm.get('price').value,
             image: this.ticketForm.get('image').value,
         };
-        this.dismiss();
+        this.dismiss(newTicket, this.ticket);
     }
 
     public async selectImage(): Promise<void> {
@@ -64,6 +90,7 @@ export class TicketConfigComponent implements OnInit {
                 const imgNativePath: string = await this.fileChooser.open({ mime: 'image/*' });
                 const imgUri: string = await this.filePath.resolveNativePath(imgNativePath);
                 this.b64Image = await this.base64.encodeFile(imgUri);
+                this.ticketForm.get('image').markAsDirty();
             } catch (error) {
                 console.error('Error selecting an image', error);
             }

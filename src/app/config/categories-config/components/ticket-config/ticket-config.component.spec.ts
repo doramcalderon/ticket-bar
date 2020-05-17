@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule, ModalController, Platform } from '@ionic/angular';
+import { IonicModule, ModalController, Platform, AlertController } from '@ionic/angular';
 
 import { TicketConfigComponent } from './ticket-config.component';
 import { Base64 } from '@ionic-native/base64/ngx';
@@ -12,6 +12,9 @@ describe('TicketConfigComponent', () => {
     let component: TicketConfigComponent;
     let fixture: ComponentFixture<TicketConfigComponent>;
 
+    const alertCtrlStub = {
+        create: (opts: any) => Promise.resolve({}),
+    };
     const modalControllerStub = {
         dismiss: (data?: any, role?: string, id?: string) => Promise.resolve(true),
     };
@@ -34,6 +37,7 @@ describe('TicketConfigComponent', () => {
             schemas: [NO_ERRORS_SCHEMA],
             imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
             providers: [
+                { provide: AlertController, useValue: alertCtrlStub },
                 { provide: ModalController, useValue: modalControllerStub },
                 { provide: Base64, useValue: base64Stub },
                 { provide: FileChooser, useValue: fileChooserStub },
