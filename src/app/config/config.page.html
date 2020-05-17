@@ -19,7 +19,14 @@
                 {{ (categoriesNumber$ | async) }} {{ ((categoriesNumber$ | async) === 1 ? 'categoría' : 'categorías')}}
             </ion-item>
         </ion-list>
-
+        <ion-list>
+            <ion-list-header>
+                <ion-label color="primary">Tickets</ion-label>
+            </ion-list-header>
+            <ion-item lines="none">
+                {{ (ticketsNumber$ | async) }} {{ ((ticketsNumber$ | async) === 1 ? 'ticket' : 'tickets')}}
+            </ion-item>
+        </ion-list>
         <ion-list-header>
             <ion-label color="primary">Impresión</ion-label>
         </ion-list-header>
