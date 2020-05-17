@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
-import { get } from 'lodash';
+import { get, slice } from 'lodash';
 
 import { Category, TicketType } from '../../../../common/model/category.model';
 import * as CategoriesActions from '../../store/categories.actions';
@@ -22,7 +22,7 @@ export class CategoryConfigComponent implements OnInit {
     public icon: string;
     public tickets: TicketType[];
 
-    constructor(private modalCtrl: ModalController, private categoriesStore: Store<Category>) {}
+    constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private categoriesStore: Store<Category>) {}
 
     async ngOnInit() {
         this.categoriesForm = new FormGroup({
@@ -38,8 +38,31 @@ export class CategoryConfigComponent implements OnInit {
         await this.modalCtrl.dismiss();
     }
 
+    public async close(): Promise<void> {
+        if (this.categoriesForm.dirty) {
+            const alert = await this.alertCtrl.create({
+                header: 'Descartar cambios',
+                message: '¿Deseas descartar los cambios?',
+                buttons: [
+                    {
+                        text: 'Cancelar',
+                        role: 'cancel',
+                    },
+                    {
+                        text: 'Descartar',
+                        handler: () => this.dismiss(),
+                    },
+                ],
+            });
+            await alert.present();
+        } else {
+            this.dismiss();
+        }
+    }
+
     public changeColor(color: string) {
         this.categoriesForm.patchValue({ color });
+        this.categoriesForm.get('color').markAsDirty();
     }
 
     public async save(): Promise<void> {
@@ -60,9 +83,10 @@ export class CategoryConfigComponent implements OnInit {
         await modal.present();
         this.icon = (await modal.onDidDismiss()).data.icon;
         this.categoriesForm.patchValue({ icon: this.icon });
+        this.categoriesForm.get('icon').markAsDirty();
     }
 
-    public async openTicketConfig(): Promise<void> {
+    public async openTicketConfig(ticket?: TicketType): Promise<void> {
         const cat: Category = !!this.category
             ? this.category
             : {
@@ -71,11 +95,21 @@ export class CategoryConfigComponent implements OnInit {
                   icon: this.categoriesForm.get('icon').value,
                   color: this.categoriesForm.get('color').value,
               };
-        const modal = await this.modalCtrl.create({ component: TicketConfigComponent, componentProps: { category: cat } });
+        const modal = await this.modalCtrl.create({ component: TicketConfigComponent, componentProps: { category: cat, ticket } });
         await modal.present();
-        const newTicket: TicketType = (await modal.onDidDismiss()).data;
+        const result = (await modal.onDidDismiss()).data;
+        const { newTicket, oldTicket } = result;
+
         if (!!newTicket) {
-            this.tickets = this.tickets.concat([newTicket]);
+            if (!!oldTicket) {
+                const ticketIndex = this.tickets.findIndex((t) => t.name === oldTicket.name);
+                const ticketsCopy = Object.assign([], this.tickets);
+                ticketsCopy[ticketIndex] = newTicket;
+                this.tickets = ticketsCopy;
+            } else {
+                this.tickets = this.tickets.concat([newTicket]);
+            }
+            this.categoriesForm.markAsDirty();
         }
     }
 }

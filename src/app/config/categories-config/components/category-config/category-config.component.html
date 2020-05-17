@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-button slot="icon-only" (click)="dismiss()">
+            <ion-button slot="icon-only" (click)="close()">
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -51,7 +51,9 @@
                 </ion-toolbar>
             </ion-list-header>
             <ion-item *ngFor="let ticket of tickets">
-                {{ ticket.name }}
+                <div class="ticket-item" (click)="openTicketConfig(ticket)">
+                    {{ ticket.name }}
+                </div>
                 <ion-buttons slot="end">
                     <ion-button slot="icon-only">
                         <ion-icon name="close"></ion-icon>
