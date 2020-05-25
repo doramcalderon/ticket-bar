@@ -10,7 +10,11 @@ const routes: Routes = [
     },
     {
         path: 'categories-config',
-        loadChildren: () => import('./categories-config/categories-config.module').then(m => m.CategoriesConfigModule),
+        loadChildren: () => import('./categories-config/categories-config.module').then((m) => m.CategoriesConfigModule),
+    },
+    {
+        path: 'tickets-config',
+        loadChildren: () => import('./tickets-config/tickets-config.module').then((m) => m.TicketsConfigModule),
     },
 ];
 

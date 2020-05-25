@@ -23,7 +23,7 @@
             <ion-list-header>
                 <ion-label color="primary">Tickets</ion-label>
             </ion-list-header>
-            <ion-item lines="none">
+            <ion-item lines="none" routerLink="tickets-config">
                 {{ (ticketsNumber$ | async) }} {{ ((ticketsNumber$ | async) === 1 ? 'ticket' : 'tickets')}}
             </ion-item>
         </ion-list>
