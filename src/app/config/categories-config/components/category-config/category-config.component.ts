@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
-import { get, slice } from 'lodash';
+import { get } from 'lodash';
 
+import { TicketConfigComponent } from 'src/app/config/components/ticket-config/ticket-config.component';
 import { Category, TicketType } from '../../../../common/model/category.model';
 import * as CategoriesActions from '../../store/categories.actions';
 import { IconPickerComponent } from '../icon-picker/icon-picker.component';
-import { TicketConfigComponent } from '../ticket-config/ticket-config.component';
 
 @Component({
     selector: 'tb-category-config',

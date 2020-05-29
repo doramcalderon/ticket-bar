@@ -12,7 +12,6 @@ import { CategoriesConfigPage } from './categories-config.page';
 import { CategoriesConfigPopoverComponent } from './components/categories-config-popover/categories-config-popover.component';
 import { CategoryConfigComponent } from './components/category-config/category-config.component';
 import { IconPickerComponent } from './components/icon-picker/icon-picker.component';
-import { TicketConfigComponent } from './components/ticket-config/ticket-config.component';
 import { CategoriesEffects } from './store/categories.effects';
 import * as fromCategories from './store/categories.reducer';
 
@@ -27,14 +26,8 @@ import * as fromCategories from './store/categories.reducer';
         StoreModule.forFeature(fromCategories.categoriesFeatureKey, fromCategories.reducer),
         CategoriesConfigRoutingModule,
     ],
-    declarations: [
-        CategoriesConfigPage,
-        CategoryConfigComponent,
-        CategoriesConfigPopoverComponent,
-        TicketConfigComponent,
-        IconPickerComponent,
-    ],
-    entryComponents: [CategoriesConfigPopoverComponent, CategoryConfigComponent, TicketConfigComponent, IconPickerComponent],
+    declarations: [CategoriesConfigPage, CategoryConfigComponent, CategoriesConfigPopoverComponent, IconPickerComponent],
+    entryComponents: [CategoriesConfigPopoverComponent, CategoryConfigComponent, IconPickerComponent],
     exports: [CategoryConfigComponent],
 })
 export class CategoriesConfigModule {}
