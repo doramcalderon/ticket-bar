@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Keys } from '../../storage.model';
 import { StorageService } from '../../storage.service';
 import { Category, TicketType } from '../model/category.model';
+import { Ticket } from 'src/app/cart/store/cart.model';
 
 @Injectable({
     providedIn: 'root',
@@ -51,6 +52,61 @@ export class CategoriesService {
         }
 
         return categories;
+    }
+
+    public async addTicketToCategory(category: Category, newTicket: TicketType): Promise<Category[]> {
+        // get current categories
+        const categories: Category[] = await this.storageService.getObject(Keys.Categories);
+        if (!!categories) {
+            const catIndex: number = categories.findIndex((c) => c.id === category.id);
+            if (catIndex >= 0) {
+                const categoryTickets: TicketType[] = categories[catIndex].tickets || [];
+                categoryTickets.push(newTicket);
+                categories[catIndex].tickets = categoryTickets;
+            }
+            const added: boolean = await this.storageService.setObject(Keys.Categories, categories);
+            if (!added) {
+                return Promise.reject('The ticket has not been added correctly');
+            }
+        }
+
+        return categories;
+    }
+
+    public async updateTicketInCategories(newTicket: TicketType, oldTicket: TicketType): Promise<Category[]> {
+        // get current categories
+        let categories: Category[] = await this.storageService.getObject(Keys.Categories);
+        if (!!categories) {
+            categories = categories.map((category) => this.updateTicket(category, newTicket, oldTicket));
+
+            const updated: boolean = await this.storageService.setObject(Keys.Categories, categories);
+            if (!updated) {
+                return Promise.reject('The categories have not been updated correctly');
+            }
+        }
+        return categories;
+    }
+
+    /**
+     * Update a ticket in a category if exists. If it does not exist, it does nothing.
+     * @param category Category to update.
+     * @param newTicket Ticket with changes.
+     * @param oldTicket Old ticket.
+     */
+    private updateTicket(category: Category, newTicket: TicketType, oldTicket?: TicketType): Category {
+        const updatedTickets: TicketType[] = Object.assign([], category.tickets);
+
+        if (!!category.tickets) {
+            const ticketIndex = category.tickets.findIndex((t) => t.name === oldTicket.name);
+            if (ticketIndex >= 0) {
+                updatedTickets[ticketIndex] = newTicket;
+            }
+        }
+
+        return {
+            ...category,
+            tickets: updatedTickets,
+        };
     }
 
     public async removeCategory(id: string): Promise<Category[]> {

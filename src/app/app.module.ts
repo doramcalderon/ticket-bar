@@ -11,14 +11,15 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage';
-
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppEffects } from './app.effects';
+import { ConfigComponentsModule } from './config/components/config-components.module';
 import { metaReducers, reducers } from './reducers';
 
 @NgModule({
@@ -39,6 +40,7 @@ import { metaReducers, reducers } from './reducers';
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         EffectsModule.forRoot([AppEffects]),
         ReactiveFormsModule,
+        ConfigComponentsModule,
     ],
     providers: [
         Base64,

@@ -14,3 +14,4 @@ export const selectTickets = createSelector(selectCategories, (categories: Categ
     categories.reduce((acc: TicketType[], category) => (!!category.tickets ? acc.concat(category.tickets) : acc), []),
 );
 export const selectTicketsCount = createSelector(selectTickets, (tickets: TicketType[]) => (!!tickets ? tickets.length : 0));
+export const selectTicketsFromCategory = createSelector(selectCategory, (category: Category) => category.tickets);
