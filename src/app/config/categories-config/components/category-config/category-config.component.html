@@ -50,7 +50,7 @@
                     </ion-buttons>
                 </ion-toolbar>
             </ion-list-header>
-            <ion-item *ngFor="let ticket of tickets">
+            <ion-item *ngFor="let ticket of tickets$ | async">
                 <div class="ticket-item" (click)="openTicketConfig(ticket)">
                     {{ ticket.name }}
                 </div>

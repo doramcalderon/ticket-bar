@@ -4,10 +4,11 @@ import { AlertController, ModalController } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
 import { get } from 'lodash';
+import { Observable } from 'rxjs';
 
-import { TicketConfigComponent } from 'src/app/config/components/ticket-config/ticket-config.component';
 import { Category, TicketType } from '../../../../common/model/category.model';
 import * as CategoriesActions from '../../store/categories.actions';
+import * as CategoriesSelectors from '../../store/categories.selectors';
 import { IconPickerComponent } from '../icon-picker/icon-picker.component';
 
 @Component({
@@ -21,6 +22,7 @@ export class CategoryConfigComponent implements OnInit {
     public categoriesForm: FormGroup;
     public icon: string;
     public tickets: TicketType[];
+    public tickets$: Observable<TicketType[]>;
 
     constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private categoriesStore: Store<Category>) {}
 
@@ -31,7 +33,10 @@ export class CategoryConfigComponent implements OnInit {
             color: new FormControl(get(this.category, 'color', '')),
         });
         this.icon = get(this.category, 'icon');
-        this.tickets = get(this.category, 'tickets', []);
+        this.tickets$ = this.categoriesStore.select(CategoriesSelectors.selectTicketsFromCategory, this.category);
+        this.tickets$.subscribe((categoryTickets) => {
+            this.tickets = categoryTickets;
+        });
     }
 
     public async dismiss(): Promise<void> {
@@ -95,21 +100,6 @@ export class CategoryConfigComponent implements OnInit {
                   icon: this.categoriesForm.get('icon').value,
                   color: this.categoriesForm.get('color').value,
               };
-        const modal = await this.modalCtrl.create({ component: TicketConfigComponent, componentProps: { category: cat, ticket } });
-        await modal.present();
-        const result = (await modal.onDidDismiss()).data;
-        const { newTicket, oldTicket } = result;
-
-        if (!!newTicket) {
-            if (!!oldTicket) {
-                const ticketIndex = this.tickets.findIndex((t) => t.name === oldTicket.name);
-                const ticketsCopy = Object.assign([], this.tickets);
-                ticketsCopy[ticketIndex] = newTicket;
-                this.tickets = ticketsCopy;
-            } else {
-                this.tickets = this.tickets.concat([newTicket]);
-            }
-            this.categoriesForm.markAsDirty();
-        }
+        this.categoriesStore.dispatch(CategoriesActions.openTicketConfig({ category: cat, ticket }));
     }
 }
