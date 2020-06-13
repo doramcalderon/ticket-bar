@@ -3,8 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule, ModalController, AlertController } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
 import { CategoryConfigComponent } from './category-config.component';
+import { Category } from 'src/app/common/model/category.model';
 
 describe('CategoryConfigComponent', () => {
     let component: CategoryConfigComponent;
@@ -21,6 +23,7 @@ describe('CategoryConfigComponent', () => {
 
     const storeStub = {
         dispatch: (action: any) => {},
+        select: (selector: any, category: Category) => of([]),
     };
 
     beforeEach(async(() => {

@@ -1,5 +1,6 @@
 import { ErrorHandler } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { ModalController } from '@ionic/angular';
 
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable } from 'rxjs';
@@ -16,6 +17,10 @@ describe('CategoriesEffects', () => {
         handleError: (error) => {},
     };
 
+    const modalCtrlStub = {
+        create: (opts: any) => Promise.resolve({}),
+    };
+
     const categoriesServiceStub = {
         addCategory: (category: Category) => Promise.resolve([category]),
     };
@@ -26,6 +31,7 @@ describe('CategoriesEffects', () => {
                 CategoriesEffects,
                 provideMockActions(() => actions$),
                 { provide: ErrorHandler, useValue: errorHandlerStub },
+                { provide: ModalController, useValue: modalCtrlStub },
                 { provide: CategoriesService, useValue: categoriesServiceStub },
             ],
         });
