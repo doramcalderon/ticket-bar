@@ -7,7 +7,7 @@
         </ion-buttons>
         <ion-title>{{ !!category ? category.name : 'Nueva Categoría' }}</ion-title>
         <ion-buttons slot="end">
-            <ion-button slot="icon-only" [disabled]="!categoriesForm.valid" (click)="save()">
+            <ion-button slot="icon-only" [disabled]="categoriesForm.untouched || !categoriesForm.valid" (click)="saveAndDismiss()">
                 <ion-icon name="checkmark"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -44,13 +44,13 @@
                     Tickets
 
                     <ion-buttons slot="end">
-                        <ion-button slot="icon-only" (click)="openTicketConfig()">
+                        <ion-button slot="icon-only" (click)="showSaveBeforeAlert()">
                             <ion-icon name="add"></ion-icon>
                         </ion-button>
                     </ion-buttons>
                 </ion-toolbar>
             </ion-list-header>
-            <ion-item *ngFor="let ticket of tickets$ | async">
+            <ion-item *ngFor="let ticket of tickets">
                 <div class="ticket-item" (click)="openTicketConfig(ticket)">
                     {{ ticket.name }}
                 </div>

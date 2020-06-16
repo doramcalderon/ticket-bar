@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
 import { get } from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Category, TicketType } from '../../../../common/model/category.model';
 import * as CategoriesActions from '../../store/categories.actions';
@@ -16,13 +16,15 @@ import { IconPickerComponent } from '../icon-picker/icon-picker.component';
     templateUrl: 'category-config.component.html',
     styleUrls: ['category-config.component.scss'],
 })
-export class CategoryConfigComponent implements OnInit {
+export class CategoryConfigComponent implements OnInit, OnDestroy {
     @Input()
     public category: Category;
     public categoriesForm: FormGroup;
     public icon: string;
     public tickets: TicketType[];
-    public tickets$: Observable<TicketType[]>;
+    public categories$: Observable<Category[]>;
+
+    private ticketsSubscription: Subscription;
 
     constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private categoriesStore: Store<Category>) {}
 
@@ -33,10 +35,13 @@ export class CategoryConfigComponent implements OnInit {
             color: new FormControl(get(this.category, 'color', '')),
         });
         this.icon = get(this.category, 'icon');
-        this.tickets$ = this.categoriesStore.select(CategoriesSelectors.selectTicketsFromCategory, this.category);
-        this.tickets$.subscribe((categoryTickets) => {
-            this.tickets = categoryTickets;
-        });
+        this.initTickets();
+    }
+
+    ngOnDestroy(): void {
+        if (!!this.ticketsSubscription) {
+            this.ticketsSubscription.unsubscribe();
+        }
     }
 
     public async dismiss(): Promise<void> {
@@ -70,16 +75,8 @@ export class CategoryConfigComponent implements OnInit {
         this.categoriesForm.get('color').markAsDirty();
     }
 
-    public async save(): Promise<void> {
-        const name: string = this.categoriesForm.get('name').value;
-        const newCategory: Category = {
-            id: name,
-            name,
-            icon: this.categoriesForm.get('icon').value,
-            color: this.categoriesForm.get('color').value,
-            tickets: this.tickets,
-        };
-        this.categoriesStore.dispatch(CategoriesActions.addUpdateCategory({ category: newCategory }));
+    public async saveAndDismiss(): Promise<void> {
+        await this.save();
         await this.modalCtrl.dismiss();
     }
 
@@ -91,15 +88,63 @@ export class CategoryConfigComponent implements OnInit {
         this.categoriesForm.get('icon').markAsDirty();
     }
 
+    public async showSaveBeforeAlert(): Promise<void> {
+        if (!this.category && this.categoriesForm.dirty) {
+            const alert: HTMLIonAlertElement = await this.alertCtrl.create({
+                header: 'Guardar cambios',
+                message: 'Debes guardar la categoría antes de continuar. ¿Deseas guardar los cambios?',
+                buttons: [
+                    {
+                        text: 'Cancelar',
+                        role: 'cancel',
+                    },
+                    {
+                        text: 'Guardar',
+                        handler: () => this.saveAndOpenTicketConfig(),
+                    },
+                ],
+            });
+
+            await alert.present();
+            await alert.onDidDismiss();
+        } else {
+            this.openTicketConfig();
+        }
+    }
+
     public async openTicketConfig(ticket?: TicketType): Promise<void> {
-        const cat: Category = !!this.category
-            ? this.category
-            : {
-                  id: name,
-                  name,
-                  icon: this.categoriesForm.get('icon').value,
-                  color: this.categoriesForm.get('color').value,
-              };
-        this.categoriesStore.dispatch(CategoriesActions.openTicketConfig({ category: cat, ticket }));
+        this.categoriesStore.dispatch(CategoriesActions.openTicketConfig({ category: this.category, ticket }));
+    }
+
+    private initTickets(): void {
+        if (!!this.category && !this.categories$) {
+            this.categories$ = this.categoriesStore.select(CategoriesSelectors.selectCategories);
+            this.ticketsSubscription = this.categories$.subscribe((categories) => {
+                const cat = !!categories ? categories.find((c) => c.id === this.category.id) : undefined;
+                this.tickets = !!cat ? cat.tickets : [];
+            });
+        }
+    }
+
+    private async save(): Promise<void> {
+        if (this.categoriesForm.dirty) {
+            const name: string = this.categoriesForm.get('name').value;
+            const newCategory: Category = {
+                id: name,
+                name,
+                icon: this.categoriesForm.get('icon').value,
+                color: this.categoriesForm.get('color').value,
+                tickets: this.tickets,
+            };
+            this.categoriesStore.dispatch(CategoriesActions.addUpdateCategory({ category: newCategory }));
+            this.category = newCategory;
+            this.initTickets();
+            this.categoriesForm.markAsPristine();
+        }
+    }
+
+    private async saveAndOpenTicketConfig(): Promise<void> {
+        await this.save();
+        await this.openTicketConfig();
     }
 }

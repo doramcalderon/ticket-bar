@@ -59,11 +59,13 @@ export class CategoriesService {
         const categories: Category[] = await this.storageService.getObject(Keys.Categories);
         if (!!categories) {
             const catIndex: number = categories.findIndex((c) => c.id === category.id);
+
             if (catIndex >= 0) {
                 const categoryTickets: TicketType[] = categories[catIndex].tickets || [];
                 categoryTickets.push(newTicket);
                 categories[catIndex].tickets = categoryTickets;
             }
+
             const added: boolean = await this.storageService.setObject(Keys.Categories, categories);
             if (!added) {
                 return Promise.reject('The ticket has not been added correctly');
