@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { CartService } from '../cart/store/cart.service';
 import { Category } from '../common/model/category.model';
@@ -13,18 +13,24 @@ import { selectCategories } from '../config/categories-config/store/categories.s
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
     public categories$: Observable<Category[]>;
     public categories: Category[];
     public categoriesSelected: Category[];
     ticketsCountByType$: { [type: string]: Observable<number> } = {};
 
+    private categoriesSubscription: Subscription;
+
     constructor(private cartService: CartService, private categoriesStore: Store<Category>) {}
 
     ngOnInit() {
         this.categories$ = this.categoriesStore.select(selectCategories);
-        this.categories$.subscribe((categories) => this.initialize(categories));
+        this.categoriesSubscription = this.categories$.subscribe((categories) => this.initialize(categories));
         this.categoriesStore.dispatch(loadCategories());
+    }
+
+    ngOnDestroy() {
+        this.categoriesSubscription.unsubscribe();
     }
 
     filterCategories(categoriesFilter: Category[]): void {
