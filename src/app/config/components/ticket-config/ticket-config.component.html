@@ -5,7 +5,7 @@
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>Nuevo Ticket</ion-title>
+        <ion-title>{{ ticket?.name || 'Nuevo Ticket' }}</ion-title>
         <ion-buttons slot="end">
             <ion-button slot="icon-only" [disabled]="ticketForm.pristine || ticketForm.invalid" (click)="save()">
                 <ion-icon name="checkmark"></ion-icon>
