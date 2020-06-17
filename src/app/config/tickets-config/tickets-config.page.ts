@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
 import { Category, TicketType } from 'src/app/common/model/category.model';
+import * as CategoriesActions from '../categories-config/store/categories.actions';
 import * as CategoriesSelectors from '../categories-config/store/categories.selectors';
 
 @Component({
@@ -16,16 +17,25 @@ export class TicketsConfigPage implements OnInit, OnDestroy {
     public tickets: TicketType[];
 
     private ticketsSubscription: Subscription;
+    private categories: Category[];
 
     constructor(private categoriesStore: Store<Category>) {}
 
     async ngOnInit() {
         this.categories$ = this.categoriesStore.select(CategoriesSelectors.selectCategories);
-        this.ticketsSubscription = this.categories$.subscribe((categories) => this.concatTickets(categories));
+        this.ticketsSubscription = this.categories$.subscribe((categories) => {
+            this.categories = categories;
+            this.concatTickets(categories);
+        });
     }
 
     ngOnDestroy() {
         this.ticketsSubscription.unsubscribe();
+    }
+
+    public openTicketConfig(ticket: TicketType): void {
+        const category: Category = this.categories.find((c) => !!c.tickets.find((t) => t.name === ticket.name));
+        this.categoriesStore.dispatch(CategoriesActions.openTicketConfig({ category, ticket }));
     }
 
     private concatTickets(categories: Category[]): void {
