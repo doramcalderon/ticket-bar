@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { ModalController, Platform, AlertController } from '@ionic/angular';
+import { ModalController, Platform, AlertController, IonInput } from '@ionic/angular';
 
 import { get } from 'lodash';
 
@@ -15,11 +15,13 @@ import { Category, TicketType } from 'src/app/common/model/category.model';
     templateUrl: 'ticket-config.component.html',
     styleUrls: ['ticket-config.component.scss'],
 })
-export class TicketConfigComponent implements OnInit {
+export class TicketConfigComponent implements OnInit, AfterViewInit {
     @Input()
     public category: Category;
     @Input()
     public ticket: TicketType;
+    @ViewChild('ticketName', { static: true })
+    private nameInputRef: IonInput;
 
     public ticketForm: FormGroup;
     public ticketPreview: Ticket;
@@ -47,6 +49,12 @@ export class TicketConfigComponent implements OnInit {
             type: { name: '', price: undefined },
         };
         this.isDesktop = this.platform.is('desktop');
+    }
+
+    ngAfterViewInit() {
+        // ion-input autofocus property and IonInput.setFocus() method don't work
+        // Workoaround proposed in https://github.com/ionic-team/ionic/issues/18132
+        setTimeout(() => this.nameInputRef.setFocus(), 100);
     }
 
     public async dismiss(newTicket?: TicketType, oldTicket?: TicketType): Promise<void> {
