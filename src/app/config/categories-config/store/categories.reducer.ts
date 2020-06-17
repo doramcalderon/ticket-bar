@@ -25,11 +25,14 @@ const categoriesReducer = createReducer(
     on(CategoriesActions.emptyCategories, (state: CategoriesState, action) => initialState),
 
     on(CategoriesActions.addUpdateCategory, CategoriesActions.deleteCategory, (state: CategoriesState) => state),
+    on(CategoriesActions.removeTicketFromCategory, CategoriesActions.removeTicketFromCategory, (state: CategoriesState) => state),
+
     on(
         CategoriesActions.addUpdateCategorySuccess,
         CategoriesActions.deleteCategorySuccess,
         CategoriesActions.addTicketToCategorySuccess,
         CategoriesActions.updateTicketSuccess,
+        CategoriesActions.removeTicketFromCategorySuccess,
         (state: CategoriesState, action) => {
             return { ...state, categories: action.categories };
         },
@@ -42,6 +45,7 @@ const categoriesReducer = createReducer(
         CategoriesActions.openTicketConfigFailure,
         CategoriesActions.addTicketToCategoryFailure,
         CategoriesActions.updateTicketFailure,
+        CategoriesActions.removeTicketFromCategoryFailure,
         (state: CategoriesState, action) => {
             return { ...state, error: action.error };
         },

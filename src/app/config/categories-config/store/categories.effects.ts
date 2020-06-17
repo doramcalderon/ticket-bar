@@ -66,6 +66,14 @@ export class CategoriesEffects {
         catchError((error) => of(CategoriesActions.addTicketToCategoryFailure({ error }))),
     );
 
+    @Effect()
+    removeTicketFromCategory$ = this.actions$.pipe(
+        ofType(CategoriesActions.removeTicketFromCategory),
+        switchMap((action) => this.categoriesService.removeTicketFromCategory(action.category, action.ticket)),
+        map((categories) => CategoriesActions.removeTicketFromCategorySuccess({ categories })),
+        catchError((error) => of(CategoriesActions.removeTicketFromCategoryFailure({ error }))),
+    );
+
     @Effect({ dispatch: false })
     someFail$ = this.actions$.pipe(
         ofType(

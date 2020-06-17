@@ -55,8 +55,8 @@
                     {{ ticket.name }}
                 </div>
                 <ion-buttons slot="end">
-                    <ion-button slot="icon-only">
-                        <ion-icon name="close"></ion-icon>
+                    <ion-button slot="icon-only" (click)="showRemoveTicketConfirm(ticket)">
+                        <ion-icon name="trash" class="trash-icon"></ion-icon>
                     </ion-button>
                 </ion-buttons>
             </ion-item>

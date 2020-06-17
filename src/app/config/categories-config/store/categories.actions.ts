@@ -26,6 +26,16 @@ export const addTicketToCategory = createAction(
 export const addTicketToCategorySuccess = createAction('[Categories] Add Ticket to Category Success', props<{ categories: Category[] }>());
 export const addTicketToCategoryFailure = createAction('[Categories] Add Ticket to Category Failure', props<{ error: any }>());
 
+export const removeTicketFromCategory = createAction(
+    '[Categories] Remove Ticket from Category',
+    props<{ category: Category; ticket: TicketType }>(),
+);
+export const removeTicketFromCategorySuccess = createAction(
+    '[Categories] Remove Ticket from Category Success',
+    props<{ categories: Category[] }>(),
+);
+export const removeTicketFromCategoryFailure = createAction('[Categories] Remove Ticket from Category Failure', props<{ error: any }>());
+
 export const updateTicket = createAction(
     '[Categories] Update Ticket in Categories',
     props<{ newTicket: TicketType; oldTicket: TicketType }>(),

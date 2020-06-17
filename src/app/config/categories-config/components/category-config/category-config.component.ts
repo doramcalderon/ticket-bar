@@ -118,8 +118,32 @@ export class CategoryConfigComponent implements OnInit, OnDestroy, AfterViewInit
         }
     }
 
-    public async openTicketConfig(ticket?: TicketType): Promise<void> {
+    public async showRemoveTicketConfirm(ticket: TicketType): Promise<void> {
+        const alert: HTMLIonAlertElement = await this.alertCtrl.create({
+            header: 'Eliminar Ticket',
+            message: 'El ticket será eliminado permanentemente. ¿Deseas eliminar el ticket?',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                },
+                {
+                    text: 'Eliminar',
+                    handler: () => this.removeTicket(ticket),
+                },
+            ],
+        });
+
+        await alert.present();
+        await alert.onDidDismiss();
+    }
+
+    public openTicketConfig(ticket?: TicketType): void {
         this.categoriesStore.dispatch(CategoriesActions.openTicketConfig({ category: this.category, ticket }));
+    }
+
+    public removeTicket(ticket: TicketType): void {
+        this.categoriesStore.dispatch(CategoriesActions.removeTicketFromCategory({ category: this.category, ticket }));
     }
 
     private initTickets(): void {

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Keys } from '../../storage.model';
 import { StorageService } from '../../storage.service';
 import { Category, TicketType } from '../model/category.model';
-import { Ticket } from 'src/app/cart/store/cart.model';
 
 @Injectable({
     providedIn: 'root',
@@ -87,6 +86,31 @@ export class CategoriesService {
                 return Promise.reject('The categories have not been updated correctly');
             }
         }
+        return categories;
+    }
+
+    public async removeTicketFromCategory(category: Category, ticket: TicketType): Promise<Category[]> {
+        // get current categories
+        const categories: Category[] = await this.storageService.getObject(Keys.Categories);
+        if (!!categories) {
+            const catIndex: number = categories.findIndex((c) => c.id === category.id);
+            let removed = false;
+
+            if (catIndex >= 0) {
+                const categoryTickets: TicketType[] = categories[catIndex].tickets || [];
+                const ticketIndex: number = categoryTickets.findIndex((t) => t.name === ticket.name);
+                if (ticketIndex >= 0) {
+                    categoryTickets.splice(ticketIndex);
+                    categories[catIndex].tickets = categoryTickets;
+                    removed = await this.storageService.setObject(Keys.Categories, categories);
+                }
+            }
+
+            if (!removed) {
+                return Promise.reject('The ticket has not been added correctly');
+            }
+        }
+
         return categories;
     }
 
