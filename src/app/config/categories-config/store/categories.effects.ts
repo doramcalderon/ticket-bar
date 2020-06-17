@@ -89,7 +89,8 @@ export class CategoriesEffects {
         const modal = await this.modalCtrl.create({ component: TicketConfigComponent, componentProps: { category, ticket } });
         await modal.present();
         const result = (await modal.onDidDismiss()).data;
-        const { newTicket, oldTicket } = result;
+        // tslint:disable-next-line:no-unnecessary-initializer
+        const { newTicket = undefined, oldTicket = undefined } = result || {};
         return { category, newTicket, oldTicket };
     }
 }

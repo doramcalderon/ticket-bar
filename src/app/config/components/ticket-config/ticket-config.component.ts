@@ -50,7 +50,8 @@ export class TicketConfigComponent implements OnInit {
     }
 
     public async dismiss(newTicket?: TicketType, oldTicket?: TicketType): Promise<void> {
-        this.modalCtrl.dismiss({ newTicket, oldTicket });
+        const result = !newTicket && !oldTicket ? undefined : { newTicket, oldTicket };
+        this.modalCtrl.dismiss(result);
     }
 
     public async close(): Promise<void> {
