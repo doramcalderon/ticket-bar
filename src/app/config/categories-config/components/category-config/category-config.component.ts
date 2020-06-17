@@ -19,6 +19,7 @@ import { IconPickerComponent } from '../icon-picker/icon-picker.component';
 export class CategoryConfigComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input()
     public category: Category;
+    public color: string;
     public categoriesForm: FormGroup;
     public icon: string;
     public tickets: TicketType[];
@@ -36,6 +37,7 @@ export class CategoryConfigComponent implements OnInit, OnDestroy, AfterViewInit
             icon: new FormControl(get(this.category, 'icon', '')),
             color: new FormControl(get(this.category, 'color', '')),
         });
+        this.color = get(this.category, 'color', 'black');
         this.icon = get(this.category, 'icon');
         this.initTickets();
     }

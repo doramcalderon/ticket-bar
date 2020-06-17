@@ -30,9 +30,9 @@
             <ion-label position="floating">Color</ion-label>
             <ion-input
                 class="input-color-picker"
-                [(colorPicker)]="black"
-                [style.background]="!!category ? category.color : '#000000'"
-                [style.border-color]="!!category ? category.color : '#000000'"
+                [(colorPicker)]="color"
+                [style.background]="color"
+                [style.border-color]="color"
                 [cpOKButton]="true"
                 [cpCancelButton]="true"
                 (colorPickerSelect)="changeColor($event)"
