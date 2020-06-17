@@ -17,7 +17,7 @@
     <form [formGroup]="categoriesForm" novalidate>
         <ion-item>
             <ion-label position="floating">Nombre</ion-label>
-            <ion-input formControlName="name" placeholder="Introduce un nombre"></ion-input>
+            <ion-input #categoryName formControlName="name" placeholder="Introduce un nombre"></ion-input>
         </ion-item>
         <ion-item (click)="selectImage()">
             <div>

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, IonInput } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
 import { get } from 'lodash';
@@ -16,7 +16,7 @@ import { IconPickerComponent } from '../icon-picker/icon-picker.component';
     templateUrl: 'category-config.component.html',
     styleUrls: ['category-config.component.scss'],
 })
-export class CategoryConfigComponent implements OnInit, OnDestroy {
+export class CategoryConfigComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input()
     public category: Category;
     public categoriesForm: FormGroup;
@@ -24,6 +24,8 @@ export class CategoryConfigComponent implements OnInit, OnDestroy {
     public tickets: TicketType[];
     public categories$: Observable<Category[]>;
 
+    @ViewChild('categoryName', { static: true })
+    private nameInputRef: IonInput;
     private ticketsSubscription: Subscription;
 
     constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private categoriesStore: Store<Category>) {}
@@ -36,6 +38,10 @@ export class CategoryConfigComponent implements OnInit, OnDestroy {
         });
         this.icon = get(this.category, 'icon');
         this.initTickets();
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => this.nameInputRef.setFocus(), 100);
     }
 
     ngOnDestroy(): void {
