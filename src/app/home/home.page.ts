@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AlertController, Platform } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
 import { CartService } from '../cart/store/cart.service';
 import { Category } from '../common/model/category.model';
+import { RootPage } from '../common/root-page';
 import { loadCategories } from '../config/categories-config/store/categories.actions';
 import { selectCategories } from '../config/categories-config/store/categories.selectors';
 
@@ -13,7 +15,7 @@ import { selectCategories } from '../config/categories-config/store/categories.s
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage extends RootPage implements OnInit, OnDestroy {
     public categories$: Observable<Category[]>;
     public categories: Category[];
     public categoriesSelected: Category[];
@@ -21,7 +23,14 @@ export class HomePage implements OnInit, OnDestroy {
 
     private categoriesSubscription: Subscription;
 
-    constructor(private cartService: CartService, private categoriesStore: Store<Category>) {}
+    constructor(
+        alertCtrl: AlertController,
+        platform: Platform,
+        private cartService: CartService,
+        private categoriesStore: Store<Category>,
+    ) {
+        super(alertCtrl, platform);
+    }
 
     ngOnInit() {
         this.categories$ = this.categoriesStore.select(selectCategories);
