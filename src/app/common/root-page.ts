@@ -1,11 +1,12 @@
 import { AlertController, Platform } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 export class RootPage {
     private backButtonSubscription: Subscription;
 
-    constructor(private alertCtrl: AlertController, private platform: Platform) {}
+    constructor(private alertCtrl: AlertController, private platform: Platform, private translate: TranslateService) {}
 
     ionViewDidEnter() {
         this.backButtonSubscription = this.platform.backButton.subscribe(() => this.showExitAppConfirm());
@@ -16,16 +17,17 @@ export class RootPage {
     }
 
     private async showExitAppConfirm(): Promise<void> {
+        const translations: string[] = this.translate.instant(['APP.EXIT', 'APP.EXIT_APP_CONFIRM', 'COMMON.CANCEL']);
         const alert: HTMLIonAlertElement = await this.alertCtrl.create({
-            header: 'Salir',
-            message: '¿Quieres salir de la aplicación?',
+            header: this.translate.instant(translations['APP.EXIT']),
+            message: this.translate.instant(translations['APP.EXIT_APP_CONFIRM']),
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: translations['COMMON.CANCEL'],
                     role: 'cancel',
                 },
                 {
-                    text: 'Salir',
+                    text: translations['APP.EXIT'],
                     // tslint:disable-next-line:no-string-literal
                     handler: () => navigator['app'].exitApp(),
                 },

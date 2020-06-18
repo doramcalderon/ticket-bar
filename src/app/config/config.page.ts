@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, Platform } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { BluetoothDevice } from '../cart/components/cart-preview/cart-preview.model';
@@ -24,10 +25,11 @@ export class ConfigPage extends RootPage implements OnInit {
     constructor(
         alertCtrl: AlertController,
         platform: Platform,
+        translate: TranslateService,
         private storageService: StorageService,
         private categoriesStore: Store<Category>,
     ) {
-        super(alertCtrl, platform);
+        super(alertCtrl, platform, translate);
     }
 
     async ngOnInit() {

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, Platform } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 
 import { CartService } from '../cart/store/cart.service';
@@ -26,10 +27,11 @@ export class HomePage extends RootPage implements OnInit, OnDestroy {
     constructor(
         alertCtrl: AlertController,
         platform: Platform,
+        translate: TranslateService,
         private cartService: CartService,
         private categoriesStore: Store<Category>,
     ) {
-        super(alertCtrl, platform);
+        super(alertCtrl, platform, translate);
     }
 
     ngOnInit() {
