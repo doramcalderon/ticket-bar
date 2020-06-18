@@ -1,6 +1,8 @@
 {
     "APP.EXIT": "Salir",
     "APP.EXIT_APP_CONFIRM": "¿Quieres salir de la aplicación?",
+    "APP.MENU": "Menu",
     "COMMON.CANCEL": "Cancelar",
+    "CONFIG.TITLE": "Ajustes",
     "HOME.TITLE": "Korner Tickets"
 }
