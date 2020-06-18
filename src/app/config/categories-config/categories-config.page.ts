@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController, PopoverController } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { Category } from '../../common/model/category.model';
@@ -22,6 +23,7 @@ export class CategoriesConfigPage implements OnInit {
         private modalCtrl: ModalController,
         private popoverCtrl: PopoverController,
         private alertCtrl: AlertController,
+        private translate: TranslateService,
         private categoriesStore: Store<Category>,
     ) {}
 
@@ -46,16 +48,25 @@ export class CategoriesConfigPage implements OnInit {
     }
 
     public async delete(category: Category): Promise<void> {
+        const translations = this.translate.instant(
+            [
+                'CATEGORIES.REMOVE_CATEGORY_CONFIRM.TITLE',
+                'CATEGORIES.REMOVE_CATEGORY_CONFIRM.TEXT',
+                'CATEGORIES.REMOVE_CATEGORY_CONFIRM.REMOVE',
+                'COMMON.CANCEL',
+            ],
+            { categoryName: category.name },
+        );
         const alert = await this.alertCtrl.create({
-            header: 'Borrar categoría',
-            message: `¿Quieres borrar la categoría ${category.name} ?`,
+            header: translations['CATEGORIES.REMOVE_CATEGORY_CONFIRM.TITLE'],
+            message: translations['CATEGORIES.REMOVE_CATEGORY_CONFIRM.TEXT'],
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: translations['COMMON.CANCEL'],
                     role: 'cancel',
                 },
                 {
-                    text: 'Borrar',
+                    text: translations['CATEGORIES.REMOVE_CATEGORY_CONFIRM.REMOVE'],
                     handler: () => {
                         this.categoriesStore.dispatch(CategoriesActions.deleteCategory({ id: category.id }));
                     },

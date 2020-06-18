@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Categorías</ion-title>
+        <ion-title translate>CATEGORIES.TITLE</ion-title>
         <ion-buttons slot="end">
             <ion-button slot="icon-only" (click)="showActions()">
                 <ion-icon name="more"></ion-icon>
@@ -28,7 +28,7 @@
     <ng-template #noCategories>
         <div class="no-categories">
             <ion-icon size="large" name="filing"></ion-icon>
-            <ion-label>No hay categorías configuradas</ion-label>
+            <ion-label translate>CATEGORIES.EMPTY</ion-label>
         </div>
     </ng-template>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">

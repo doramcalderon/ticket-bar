@@ -14,6 +14,7 @@ import { CategoryConfigComponent } from './components/category-config/category-c
 import { IconPickerComponent } from './components/icon-picker/icon-picker.component';
 import { CategoriesEffects } from './store/categories.effects';
 import * as fromCategories from './store/categories.reducer';
+import { TicketBarCommonModule } from 'src/app/common/ticket-bar-common.module';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import * as fromCategories from './store/categories.reducer';
         EffectsModule.forFeature([CategoriesEffects]),
         StoreModule.forFeature(fromCategories.categoriesFeatureKey, fromCategories.reducer),
         CategoriesConfigRoutingModule,
+        TicketBarCommonModule,
     ],
     declarations: [CategoriesConfigPage, CategoryConfigComponent, CategoriesConfigPopoverComponent, IconPickerComponent],
     entryComponents: [CategoriesConfigPopoverComponent, CategoryConfigComponent, IconPickerComponent],
