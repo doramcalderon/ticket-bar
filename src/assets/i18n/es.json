@@ -3,6 +3,15 @@
     "APP.EXIT_APP_CONFIRM": "¿Quieres salir de la aplicación?",
     "APP.MENU": "Menu",
     "COMMON.CANCEL": "Cancelar",
+    "CONFIG.CATEGORIES.TITLE": "Categorías",
+    "CONFIG.CATEGORIES.CATEGORIES": "categorías",
+    "CONFIG.CATEGORIES.CATEGORY": "categoría",
+    "CONFIG.PRINTING.TITLE": "Impresión",
+    "CONFIG.PRINTING.FAVOURITE": "Impresora favorita",
+    "CONFIG.PRINTING.NOT_SET": "No configurada",
+    "CONFIG.TICKETS.TITLE": "Tickets",
+    "CONFIG.TICKETS.TICKETS": "tickets",
+    "CONFIG.TICKETS.TICKET": "ticket",
     "CONFIG.TITLE": "Ajustes",
     "HOME.TITLE": "Korner Tickets"
 }

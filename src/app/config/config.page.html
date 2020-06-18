@@ -3,8 +3,8 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>
-            Ajustes
+        <ion-title translate>
+            CONFIG.TITLE
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -13,27 +13,27 @@
     <ion-list>
         <ion-list>
             <ion-list-header>
-                <ion-label color="primary">Categorías</ion-label>
+                <ion-label color="primary" translate>CONFIG.CATEGORIES.TITLE</ion-label>
             </ion-list-header>
             <ion-item lines="none" routerLink="categories-config">
-                {{ (categoriesNumber$ | async) }} {{ ((categoriesNumber$ | async) === 1 ? 'categoría' : 'categorías')}}
+                {{ categoriesText }}
             </ion-item>
         </ion-list>
         <ion-list>
             <ion-list-header>
-                <ion-label color="primary">Tickets</ion-label>
+                <ion-label color="primary" translate>CONFIG.TICKETS.TITLE</ion-label>
             </ion-list-header>
             <ion-item lines="none" routerLink="tickets-config">
-                {{ (ticketsNumber$ | async) }} {{ ((ticketsNumber$ | async) === 1 ? 'ticket' : 'tickets')}}
+                {{ ticketsText }}
             </ion-item>
         </ion-list>
         <ion-list-header>
-            <ion-label color="primary">Impresión</ion-label>
+            <ion-label color="primary" translate>CONFIG.PRINTING.TITLE</ion-label>
         </ion-list-header>
         <ion-item lines="none">
             <ion-label>
-                <h2>Impresora favorita</h2>
-                <p>{{ defaultPrinter?.name || 'No configurada' }}</p>
+                <h2 translate>CONFIG.PRINTING.FAVOURITE</h2>
+                <p translate>{{ defaultPrinter?.name || 'CONFIG.PRINTING.NOT_SET' }}</p>
             </ion-label>
         </ion-item>
     </ion-list>
