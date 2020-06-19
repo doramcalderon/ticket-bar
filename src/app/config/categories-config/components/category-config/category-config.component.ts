@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, ModalController, IonInput } from '@ionic/angular';
+import { AlertController, IonInput, ModalController } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { get } from 'lodash';
 import { Observable, Subscription } from 'rxjs';
 
@@ -29,7 +30,12 @@ export class CategoryConfigComponent implements OnInit, OnDestroy, AfterViewInit
     private nameInputRef: IonInput;
     private ticketsSubscription: Subscription;
 
-    constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private categoriesStore: Store<Category>) {}
+    constructor(
+        private alertCtrl: AlertController,
+        private modalCtrl: ModalController,
+        private translate: TranslateService,
+        private categoriesStore: Store<Category>,
+    ) {}
 
     async ngOnInit() {
         this.categoriesForm = new FormGroup({
@@ -57,17 +63,18 @@ export class CategoryConfigComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     public async close(): Promise<void> {
+        const translations = this.translate.instant(['COMMON.DISCARD.TITLE', 'COMMON.DISCARD.CONFIRM', 'COMMON.CANCEL', 'COMMON.DISCARD']);
         if (this.categoriesForm.dirty) {
             const alert = await this.alertCtrl.create({
-                header: 'Descartar cambios',
-                message: '¿Deseas descartar los cambios?',
+                header: translations['COMMON.DISCARD.TITLE'],
+                message: translations['COMMON.DISCARD.CONFIRM'],
                 buttons: [
                     {
-                        text: 'Cancelar',
+                        text: translations['COMMON.CANCEL'],
                         role: 'cancel',
                     },
                     {
-                        text: 'Descartar',
+                        text: translations['COMMON.DISCARD'],
                         handler: () => this.dismiss(),
                     },
                 ],
@@ -97,17 +104,18 @@ export class CategoryConfigComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     public async showSaveBeforeAlert(): Promise<void> {
+        const translations = this.translate.instant(['COMMON.SAVE.TITLE', 'CATEGORY_CONFIG.SAVE_BEFORE', 'COMMON.CANCEL', 'COMMON.SAVE']);
         if (!this.category && this.categoriesForm.dirty) {
             const alert: HTMLIonAlertElement = await this.alertCtrl.create({
-                header: 'Guardar cambios',
-                message: 'Debes guardar la categoría antes de continuar. ¿Deseas guardar los cambios?',
+                header: translations['COMMON.SAVE.TITLE'],
+                message: translations['CATEGORY_CONFIG.SAVE_BEFORE'],
                 buttons: [
                     {
-                        text: 'Cancelar',
+                        text: translations['COMMON.CANCEL'],
                         role: 'cancel',
                     },
                     {
-                        text: 'Guardar',
+                        text: translations['COMMON.SAVE'],
                         handler: () => this.saveAndOpenTicketConfig(),
                     },
                 ],
@@ -121,16 +129,22 @@ export class CategoryConfigComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     public async showRemoveTicketConfirm(ticket: TicketType): Promise<void> {
+        const translations = this.translate.instant([
+            'CATEGORY_CONFIG.REMOVE_TICKET.TITLE',
+            'CATEGORY_CONFIG.REMOVE_TICKET.MESSAGE',
+            'COMMON.CANCEL',
+            'COMMON.REMOVE',
+        ]);
         const alert: HTMLIonAlertElement = await this.alertCtrl.create({
-            header: 'Eliminar Ticket',
-            message: 'El ticket será eliminado permanentemente. ¿Deseas eliminar el ticket?',
+            header: translations['CATEGORY_CONFIG.REMOVE_TICKET.TITLE'],
+            message: translations['CATEGORY_CONFIG.REMOVE_TICKET.MESSAGE'],
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: translations['COMMON.CANCEL'],
                     role: 'cancel',
                 },
                 {
-                    text: 'Eliminar',
+                    text: translations['COMMON.REMOVE'],
                     handler: () => this.removeTicket(ticket),
                 },
             ],

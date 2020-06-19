@@ -5,7 +5,7 @@
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>{{ !!category ? category.name : 'Nueva Categoría' }}</ion-title>
+        <ion-title translate>{{ !!category ? category.name : 'CATEGORY_CONFIG.DEFAULT_TITLE' }}</ion-title>
         <ion-buttons slot="end">
             <ion-button slot="icon-only" [disabled]="categoriesForm.untouched || !categoriesForm.valid" (click)="saveAndDismiss()">
                 <ion-icon name="checkmark"></ion-icon>
@@ -16,18 +16,18 @@
 <ion-content>
     <form [formGroup]="categoriesForm" novalidate>
         <ion-item>
-            <ion-label position="floating">Nombre</ion-label>
-            <ion-input #categoryName formControlName="name" placeholder="Introduce un nombre"></ion-input>
+            <ion-label position="floating" translate>CATEGORY_CONFIG.NAME</ion-label>
+            <ion-input #categoryName formControlName="name" placeholder="{{ 'CATEGORY_CONFIG.NAME_PLACEHOLDER' | translate }}"></ion-input>
         </ion-item>
         <ion-item (click)="selectImage()">
             <div>
-                <ion-label>Icono</ion-label>
-                <ion-label class="icon-placeholder" color="medium" *ngIf="!icon">Haz click para seleccionar un icono</ion-label>
+                <ion-label translate>CATEGORY_CONFIG.ICON</ion-label>
+                <ion-label class="icon-placeholder" color="medium" *ngIf="!icon" translate>CATEGORY_CONFIG.SELECT_ICON</ion-label>
                 <ion-icon [name]="icon" size="large" *ngIf="!!icon" slot="start"></ion-icon>
             </div>
         </ion-item>
         <ion-item>
-            <ion-label position="floating">Color</ion-label>
+            <ion-label position="floating" translate>CATEGORY_CONFIG.COLOR</ion-label>
             <ion-input
                 class="input-color-picker"
                 [(colorPicker)]="color"
@@ -40,8 +40,8 @@
         </ion-item>
         <ion-list>
             <ion-list-header>
-                <ion-toolbar>
-                    Tickets
+                <ion-toolbar translate>
+                    CATEGORY_CONFIG.TICKETS.TITLE
 
                     <ion-buttons slot="end">
                         <ion-button slot="icon-only" (click)="showSaveBeforeAlert()">
