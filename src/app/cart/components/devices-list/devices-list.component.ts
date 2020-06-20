@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { Keys } from '../../../storage.model';
 import { StorageService } from '../../../storage.service';
 import { BTPrinterService } from '../cart-preview/btprinter.service';
@@ -18,6 +20,7 @@ export class DevicesListComponent implements OnInit {
     constructor(
         private alertCtrl: AlertController,
         private modalCtrl: ModalController,
+        private translate: TranslateService,
         private printerService: BTPrinterService,
         private storageService: StorageService,
     ) {}
@@ -25,10 +28,10 @@ export class DevicesListComponent implements OnInit {
     ngOnInit() {
         this.printerService
             .listDevices()
-            .then(data => {
+            .then((data) => {
                 this.devices = data;
             })
-            .catch(error => (this.devices = null));
+            .catch((error) => (this.devices = null));
     }
 
     public async selectDevice(device: BluetoothDevice): Promise<void> {
@@ -41,17 +44,23 @@ export class DevicesListComponent implements OnInit {
     }
 
     private async showSaveAsDefaultAlert(device: BluetoothDevice): Promise<void> {
+        const translations = this.translate.instant([
+            'DEVICES_LIST.FAVOURITE_ALERT.TITLE',
+            'DEVICES_LIST.FAVOURITE_ALERT.MESSAGE',
+            'COMMON.CANCEL',
+            'COMMON.OK',
+        ]);
         const alert = await this.alertCtrl.create({
-            header: 'Guardar como favorito',
-            message: '¿Quieres usar este dispositivo por defecto?',
+            header: translations['DEVICES_LIST.FAVOURITE_ALERT.TITLE'],
+            message: translations['DEVICES_LIST.FAVOURITE_ALERT.MESSAGE'],
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: translations['COMMON.CANCEL'],
                     role: 'cancel',
                     cssClass: 'secondary',
                 },
                 {
-                    text: 'OK',
+                    text: translations['COMMON.OK'],
                     handler: () => this.storageService.setObject(Keys.Printer, device),
                 },
             ],

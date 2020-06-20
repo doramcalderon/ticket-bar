@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Resumen</ion-title>
+        <ion-title translate>CART.TITLE</ion-title>
 
         <ion-buttons slot="end" collapse="true">
             <button *ngIf="isAndroid" ion-button (click)="bluetoothPrinting()" slot="icon-only" class="print-button">
@@ -69,7 +69,7 @@
     <ng-template #emptyCart>
         <div class="empty-cart">
             <ion-icon size="large" name="cart"></ion-icon>
-            <ion-label>No hay tickets seleccionados</ion-label>
+            <ion-label translate>CART.NO_TICKETS</ion-label>
         </div>
     </ng-template>
     <div id="preview">
@@ -78,6 +78,6 @@
 </ion-content>
 <ion-footer *ngIf="(cartTotal$ | async) > 0">
     <ion-item>
-        <h2 slot="end">Total: {{ bill$ | async }} €</h2>
+        <h2 slot="end" translate [translateParams]="totalParam">CART.TOTAL</h2>
     </ion-item>
 </ion-footer>

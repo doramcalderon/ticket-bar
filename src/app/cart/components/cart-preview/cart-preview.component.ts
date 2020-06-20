@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
 import domToImage from 'dom-to-image';
 
 import { Keys } from '../../../storage.model';
@@ -30,13 +31,14 @@ export class CartPreviewComponent implements OnInit {
     constructor(
         private alertCtrl: AlertController,
         private modalCtl: ModalController,
+        private translate: TranslateService,
         private cartService: CartService,
         private printerService: BTPrinterService,
         private storageService: StorageService,
     ) {}
 
     ngOnInit() {
-        this.cartService.getCart().subscribe(state => (this.tickets = this.getTicketsArray(state)));
+        this.cartService.getCart().subscribe((state) => (this.tickets = this.getTicketsArray(state)));
     }
 
     public async print(): Promise<void> {
@@ -50,9 +52,10 @@ export class CartPreviewComponent implements OnInit {
             await this.connectAndPrint(printer);
             await this.printFinished.emit();
         } catch (error) {
+            const translations = this.translate.instant(['PRINT.ERROR.TITLE', 'PRINT.ERROR.MESSAGE']);
             const alert = await this.alertCtrl.create({
-                header: 'Error de impresión',
-                message: 'Ups! Ha habido un error de impresión. <br> Comprueba que la impresora está conectada.',
+                header: translations['PRINT.ERROR.TITLE'],
+                message: translations['PRINT.ERROR.MESSAGE'],
                 buttons: ['OK'],
             });
             await alert.present();

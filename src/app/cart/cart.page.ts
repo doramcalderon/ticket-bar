@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
-import { AlertController, NavController, Platform, IonButton } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 
-import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
 
 import { CartPreviewComponent } from './components/cart-preview/cart-preview.component';
 import { Ticket } from './store/cart.model';
@@ -14,12 +15,15 @@ import { CartService } from './store/cart.service';
     templateUrl: './cart.page.html',
     styleUrls: ['./cart.page.scss'],
 })
-export class CartPage implements OnInit {
+export class CartPage implements OnInit, OnDestroy {
     public cartStateSummary: { [category: string]: CategorySummary } = {};
     public cartTotal$: Observable<number>;
     public bill$: Observable<number>;
+    public totalParam: any;
     public units = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     public isAndroid;
+
+    private billSubscription: Subscription;
 
     @ViewChild('preview', { static: true }) preview: CartPreviewComponent;
 
@@ -28,18 +32,24 @@ export class CartPage implements OnInit {
         private alertCtl: AlertController,
         private platform: Platform,
         private navCtrl: NavController,
+        private translate: TranslateService,
         private bluetoothSerial: BluetoothSerial,
     ) {}
 
     ngOnInit() {
         this.isAndroid = this.platform.is('android');
         this.cartService.getCart().subscribe({
-            next: cartState => {
+            next: (cartState) => {
                 this.cartStateSummary = cartState.summary;
             },
         });
         this.cartTotal$ = this.cartService.getTotal();
         this.bill$ = this.cartService.getBill();
+        this.billSubscription = this.bill$.subscribe((bill) => (this.totalParam = { total: bill }));
+    }
+
+    ngOnDestroy() {
+        this.billSubscription.unsubscribe();
     }
 
     public unitsChange(event: CustomEvent, ticket: Ticket): void {
@@ -55,17 +65,18 @@ export class CartPage implements OnInit {
     }
 
     public async confirmEmptyCart(): Promise<void> {
+        const translatations = this.translate.instant(['CART.EMPTY.TITLE', 'CART.EMPTY.MESSAGE', 'COMMON.CANCEL', 'COMMON.OK']);
         const alert = await this.alertCtl.create({
-            header: 'Vaciar carro',
-            message: '¿Estás seguro de que quieres vaciar el carro?',
+            header: translatations['CART.EMPTY.TITLE'],
+            message: translatations['CART.EMPTY.MESSAGE'],
             buttons: [
                 {
-                    text: 'Cancelar',
+                    text: translatations['COMMON.CANCEL'],
                     role: 'cancel',
                     cssClass: 'secondary',
                 },
                 {
-                    text: 'OK',
+                    text: translatations['COMMON.OK'],
                     handler: () => this.cartService.emptyCart(),
                 },
             ],
@@ -91,17 +102,18 @@ export class CartPage implements OnInit {
     }
 
     public async printFinished(): Promise<void> {
+        const translatations = this.translate.instant(['CART.EMPTY.TITLE', 'CART.PRINT_FINISHED.MESSAGE', 'COMMON.CANCEL', 'COMMON.OK']);
         const alert = await this.alertCtl.create({
-            header: 'Vaciar carro',
-            message: 'Impresión finalizada.<br>¿Quieres vaciar el carro?',
+            header: translatations['CART.EMPTY.TITLE'],
+            message: translatations['CART.PRINT_FINISHED.MESSAGE'],
             buttons: [
                 {
-                    text: 'No',
+                    text: translatations['COMMON.CANCEL'],
                     role: 'cancel',
                     cssClass: 'secondary',
                 },
                 {
-                    text: 'Sí',
+                    text: translatations['COMMON.OK'],
                     handler: () => {
                         this.empty();
                         this.navCtrl.back();
