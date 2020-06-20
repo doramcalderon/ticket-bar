@@ -37,7 +37,7 @@
     "CONFIG.TITLE": "Ajustes",
     "HOME.TITLE": "Korner Tickets",
     "ICON_PICKER.TITLE": "Seleccionar icono",
-    "TICKET.CONFIG.DEFAULT_TITLE": "Nuevo Ticket",
-    "TICKET.CONFIG.TITLE": "Kiosko El Corner",
-    "TICKET.CONFIG.NAME_PLACEHOLDER": "Introduce un nombre"
+    "TICKET_CONFIG.DEFAULT_TITLE": "Nuevo Ticket",
+    "TICKET_CONFIG.TITLE": "Kiosko El Corner",
+    "TICKET_CONFIG.NAME_PLACEHOLDER": "Introduce un nombre"
 }

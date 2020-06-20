@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { ModalController, Platform, AlertController, IonInput } from '@ionic/angular';
+import { AlertController, IonInput, ModalController, Platform } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
 import { get } from 'lodash';
 
 import { Ticket } from 'src/app/cart/store/cart.model';
@@ -32,6 +33,7 @@ export class TicketConfigComponent implements OnInit, AfterViewInit {
     constructor(
         private alertCtrl: AlertController,
         private modalCtrl: ModalController,
+        private translate: TranslateService,
         private base64: Base64,
         private fileChooser: FileChooser,
         private filePath: FilePath,
@@ -64,16 +66,22 @@ export class TicketConfigComponent implements OnInit, AfterViewInit {
 
     public async close(): Promise<void> {
         if (this.ticketForm.dirty) {
+            const translations = this.translate.instant([
+                'COMMON.DISCARD.TITLE',
+                'COMMON.DISCARD.CONFIRM',
+                'COMMON.CANCEL',
+                'COMMON.DISCARD',
+            ]);
             const alert = await this.alertCtrl.create({
-                header: 'Descartar cambios',
-                message: '¿Deseas descartar los cambios?',
+                header: translations['COMMON.DISCARD.TITLE'],
+                message: translations['COMMON.DISCARD.CONFIRM'],
                 buttons: [
                     {
-                        text: 'Cancelar',
+                        text: translations['COMMON.CANCEL'],
                         role: 'cancel',
                     },
                     {
-                        text: 'Descartar',
+                        text: translations['COMMON.DISCARD'],
                         handler: () => this.dismiss(),
                     },
                 ],

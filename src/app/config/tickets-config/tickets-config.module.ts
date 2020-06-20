@@ -6,9 +6,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { TicketsConfigRoutingModule } from './tickets-config-routing.module';
 import { TicketsConfigPage } from './tickets-config.page';
+import { TicketBarCommonModule } from 'src/app/common/ticket-bar-common.module';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, TicketsConfigRoutingModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule, TicketsConfigRoutingModule, TicketBarCommonModule],
     declarations: [TicketsConfigPage],
     // providers: [ImagePicker],
 })

@@ -5,7 +5,7 @@
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>{{ ticket?.name || 'Nuevo Ticket' }}</ion-title>
+        <ion-title translate>{{ ticket?.name || 'TICKET_CONFIG.DEFAULT_TITLE' }}</ion-title>
         <ion-buttons slot="end">
             <ion-button slot="icon-only" [disabled]="ticketForm.pristine || ticketForm.invalid" (click)="save()">
                 <ion-icon name="checkmark"></ion-icon>
@@ -17,7 +17,7 @@
     <form [formGroup]="ticketForm" novalidate>
         <ion-card>
             <ion-card-header>
-                <ion-label>Kiosko El Corner</ion-label>
+                <ion-label translate>TICKET_CONFIG.TITLE</ion-label>
             </ion-card-header>
             <ion-card-content>
                 <div class="ticket-content">
@@ -27,7 +27,11 @@
                             <ion-img [src]="b64Image"></ion-img>
                         </ion-thumbnail>
                     </div>
-                    <ion-input #ticketName formControlName="name" placeholder="Introduce un nombre"></ion-input>
+                    <ion-input
+                        #ticketName
+                        formControlName="name"
+                        placeholder="{{ 'TICKET_CONFIG.NAME_PLACEHOLDER' | translate }}"
+                    ></ion-input>
                 </div>
                 <div class="ticket-price">
                     <ion-input formControlName="price" class="input__price" placeholder="0"></ion-input>
