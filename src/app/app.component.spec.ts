@@ -1,11 +1,13 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed, async } from '@angular/core/testing';
-
-import { Platform } from '@ionic/angular';
+import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Platform } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
+
+import { TranslateMockDirective, TranslateServiceMock } from '../mocks';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -18,12 +20,13 @@ describe('AppComponent', () => {
         platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
 
         TestBed.configureTestingModule({
-            declarations: [AppComponent],
+            declarations: [AppComponent, TranslateMockDirective],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
             providers: [
                 { provide: StatusBar, useValue: statusBarSpy },
                 { provide: SplashScreen, useValue: splashScreenSpy },
                 { provide: Platform, useValue: platformSpy },
+                { provide: TranslateService, useClass: TranslateServiceMock },
             ],
             imports: [RouterTestingModule.withRoutes([])],
         }).compileComponents();
@@ -49,8 +52,8 @@ describe('AppComponent', () => {
         const app = fixture.nativeElement;
         const menuItems = app.querySelectorAll('ion-label');
         expect(menuItems.length).toEqual(2);
-        expect(menuItems[0].textContent).toContain('Korner Tickets');
-        expect(menuItems[1].textContent).toContain('Ajustes');
+        expect(menuItems[0].textContent).toContain('HOME.TITLE');
+        expect(menuItems[1].textContent).toContain('CONFIG.TITLE');
     });
 
     it('should have urls', async () => {

@@ -1,9 +1,11 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalController, AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 
+import { TranslateServiceMock } from 'src/mocks';
 import { StorageService } from '../../../storage.service';
 import { CartState } from '../../store/cart.reducer';
 import { CartService } from '../../store/cart.service';
@@ -41,6 +43,7 @@ describe('CartPreviewComponent', () => {
                 { provide: CartService, useValue: cartServiceStub },
                 { provide: PrinterService, useValue: printerServiceStub },
                 { provide: StorageService, useValue: storageServiceStub },
+                { provide: TranslateService, useClass: TranslateServiceMock },
                 { provide: ModalController, useValue: modalControllerStub },
                 { provide: AlertController, useValue: alertControllerStub },
             ],

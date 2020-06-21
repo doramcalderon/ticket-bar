@@ -34,8 +34,6 @@ export class AppComponent {
 
         // the lang to use, if the lang isn't available, it will use the current loader to get them
         this.translate.use('es').subscribe(() => this.initializePages());
-
-        // this.initializePages();
     }
 
     private initializePages(): void {

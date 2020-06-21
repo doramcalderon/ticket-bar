@@ -4,8 +4,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
+import { TranslateServiceMock } from 'src/mocks';
 import { CartService } from '../cart/store/cart.service';
 import { TicketType } from '../common/model/category.model';
 import { HomePage } from './home.page';
@@ -30,6 +32,7 @@ describe('HomePage', () => {
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 { provide: Store, useValue: storeStub },
+                { provide: TranslateService, useClass: TranslateServiceMock },
                 { provide: CartService, useValue: cartServiceStub },
             ],
         }).compileComponents();

@@ -4,8 +4,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
+import { TranslateServiceMock } from 'src/mocks';
 import { StorageService } from '../storage.service';
 import { ConfigPage } from './config.page';
 
@@ -27,6 +29,7 @@ describe('ConfigPage', () => {
             providers: [
                 { provide: StorageService, useValue: storageServiceStub },
                 { provide: Store, useValue: storeStub },
+                { provide: TranslateService, useClass: TranslateServiceMock },
             ],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();

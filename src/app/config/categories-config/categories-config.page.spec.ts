@@ -4,8 +4,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AlertController, IonicModule, ModalController, PopoverController } from '@ionic/angular';
 
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
+import { TranslateServiceMock } from 'src/mocks';
 import { CategoriesService } from '../../common/services/categories.service';
 import { StorageService } from '../../storage.service';
 import { CategoriesConfigPage } from './categories-config.page';
@@ -49,6 +51,7 @@ describe('CategoriesConfigPage', () => {
                 { provide: AlertController, useValue: alertCtrlStub },
                 { provide: ModalController, useValue: modalCtrlStub },
                 { provide: PopoverController, useValue: popoverCtrlStub },
+                { provide: TranslateService, useClass: TranslateServiceMock },
                 { provide: Store, useValue: storeStub },
             ],
         }).compileComponents();

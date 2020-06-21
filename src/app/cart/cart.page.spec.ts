@@ -4,8 +4,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { AlertController, IonicModule } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 
+import { TranslateServiceMock } from 'src/mocks';
 import { CartPage } from './cart.page';
 import { CartState } from './store/cart.reducer';
 import { CartService } from './store/cart.service';
@@ -74,6 +76,7 @@ describe('CartPage', () => {
             providers: [
                 { provide: AlertController, useValue: alertControllerStub },
                 { provide: BluetoothSerial, useValue: bluetoothSerialStub },
+                { provide: TranslateService, useClass: TranslateServiceMock },
                 { provide: CartService, useValue: cartServiceStub },
             ],
         }).compileComponents();

@@ -2,6 +2,9 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular';
 
+import { TranslateService } from '@ngx-translate/core';
+
+import { TranslateServiceMock } from 'src/mocks';
 import { StorageService } from '../../../storage.service';
 import { PrinterService } from '../cart-preview/printer.service';
 import { DevicesListComponent } from './devices-list.component';
@@ -31,6 +34,7 @@ describe('DevicesListComponent', () => {
                 { provide: ModalController, useValue: modalControllerStub },
                 { provide: PrinterService, useValue: printServiceStub },
                 { provide: StorageService, useValue: storageServiceStub },
+                { provide: TranslateService, useClass: TranslateServiceMock },
             ],
         }).compileComponents();
     }));

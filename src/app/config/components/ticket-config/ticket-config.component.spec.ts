@@ -1,12 +1,15 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule, ModalController, Platform, AlertController } from '@ionic/angular';
-
-import { TicketConfigComponent } from './ticket-config.component';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { AlertController, IonicModule, ModalController, Platform } from '@ionic/angular';
+
+import { TranslateService } from '@ngx-translate/core';
+
+import { TranslatePipeMock, TranslateServiceMock } from 'src/mocks';
+import { TicketConfigComponent } from './ticket-config.component';
 
 describe('TicketConfigComponent', () => {
     let component: TicketConfigComponent;
@@ -33,7 +36,7 @@ describe('TicketConfigComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [TicketConfigComponent],
+            declarations: [TicketConfigComponent, TranslatePipeMock],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([])],
             providers: [
@@ -43,6 +46,7 @@ describe('TicketConfigComponent', () => {
                 { provide: FileChooser, useValue: fileChooserStub },
                 { provide: FilePath, useValue: filePathStub },
                 { provide: Platform, useValue: platformStub },
+                { provide: TranslateService, useClass: TranslateServiceMock },
             ],
         }).compileComponents();
 
